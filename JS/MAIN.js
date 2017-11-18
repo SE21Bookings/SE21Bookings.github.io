@@ -9,7 +9,7 @@ var getFunc = "msgRetrieve";
 var CombindedBookTimeTech1 ="";
 function combineString()
 {
-    CombindedBookTimeTech1 = ("<hr>TECH 1: <hr>Booked By:" + document.getElementById("name").value + "<hr>Email:" + document.getElementById("email").value + "<hr>Time:" + document.getElementById("PickPeriod").value+"<hr>")
+    CombindedBookTimeTech1 = "<hr>TECH 1:<hr>" + "Name:" + document.getElementById("name").value + "<hr>Email:" + document.getElementById("email").value + "<hr>Time:" + document.getElementById("PickPeriod").value+"<hr>"
     setValue();
 	
 }
@@ -30,7 +30,11 @@ window.setInterval(function() {
         $.getJSON(requestURL, function(json) {
                  document.getElementById("currentBook").innerHTML = json.result;
                  });
+
+
       }, 1000);
+
+
         
 
 
