@@ -253,7 +253,7 @@ window.setInterval(function() {
 
         requestURL = "https://api.spark.io/v1/devices/" + deviceID + "/" + GetFuncArr[2][1] + "/?access_token=" + accessToken;
         $.getJSON(requestURL, function(json) {
-				 var BookingDetails = json.result;
+				 BookingDetails = json.result;
 				 tech21AlreadyBooked = json.result;
 				 BookingDetails = BookingDetails.replace(//g,"");
 				 if((BookingDetails).includes("�") == true)
@@ -273,7 +273,7 @@ window.setInterval(function() {
 //Tech3
         requestURL = "https://api.spark.io/v1/devices/" + deviceID + "/" + GetFuncArr[3][1] + "/?access_token=" + accessToken;
         $.getJSON(requestURL, function(json) {
-				 var BookingDetails = json.result;
+				 BookingDetails = json.result;
 				 tech31AlreadyBooked = json.result;
 				 BookingDetails = BookingDetails.replace(//g,"");
 				 if((BookingDetails).includes("�") == true)
@@ -293,7 +293,7 @@ window.setInterval(function() {
 //Tech4
         requestURL = "https://api.spark.io/v1/devices/" + deviceID + "/" + GetFuncArr[4][1] + "/?access_token=" + accessToken;
         $.getJSON(requestURL, function(json) {
-				 var BookingDetails = json.result;
+				 BookingDetails = json.result;
 				 tech41AlreadyBooked = json.result;
 				 BookingDetails = BookingDetails.replace(//g,"");
 				 if((BookingDetails).includes("�") == true)
