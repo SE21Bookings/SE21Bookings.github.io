@@ -2,14 +2,25 @@
 <html>
  <head>
 	 <title>SE21 Bookings</title>
+	 <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+	 <script type="text/javascript">
+	   (function(){
+		  emailjs.init("user_dNUTnHrGIx2yGv4lkBnqw");
+	   })();
+	 </script> 
  </head>
   <script src="JS/jquery.js" type="text/javascript" charset="utf-8"></script>
   <script src="JS/MAIN.js" type="text/javascript" charset="utf-8"></script>
-  <link rel="stylesheet" href="CSS/MAIN.css">
+ 
+<link rel="stylesheet" href="CSS/MAIN.css">
 <body>
-    <button id=bookTech1Btn>Book Tech 1</button>
+    <button id="bookTech1Btn" onclick="ShowModal()">Book Tech 1</button>
     <br>
-    <button>Book Tech 2</button>
+    <button id="bookTech2Btn" onclick="ShowModal()">Book Tech 2</button>
+    <br>
+    <button id="bookTech3Btn" onclick="ShowModal()">Book Tech 3</button>
+    <br>
+    <button id="bookTech4Btn" onclick="ShowModal()">Book Tech 4</button>
     
     <div id="BookTech1Modal" class="modal">
 
@@ -18,13 +29,15 @@
           
         <div class="modal-header">
             <span class="close">&times;</span>
-            <h2>BOOK TECH 1</h2>
+            <h2 id="BookedRoom"></h2>
         </div>
         <center>
             <br><label>Enter Your Name:</label><br>
             <input id="name" type="text">
             <br><label>Enter Your Email:</label><br>
             <input id="email" type="email">
+            <br><label>Pick A Date:</label><br>
+			<input name="setTodaysDate" id="SetDate" type="date" style="width:30%;"><input id="day" type="text" style="width:20%" readonly>
             <br><label>Pick A Time:</label><br>
             <select id="PickPeriod" size="1">
                 <option selected="true" disabled="disabled">--Please Pick A Period--</option>    
@@ -40,30 +53,56 @@
                 <option value="AfterSchool Hour 2">AfterSchool Hour 2</option>
             </select>
             <br>
-            <button onClick="combineString()">SUBMIT BOOKING</button>
+            <button id="submit" onClick="validateTime()">SUBMIT BOOKING</button>
         </center>
         <br><br><br>
-      </div>
-        
+      </div>    
     </div>
     
     
-    <br><br>
-    <h1>Current Bookings</h1>
-    <h4 id="currentBook">No Current Bookings...</h4>
 
+	<ul id="upcomingBookings">
+    <h1>Upcoming Bookings</h1>
+    
+	<strong><p>TECH 1</p></strong>
+	    <div>
+			<p id="Tech1CurrentBookings">No Current Bookings...<br></p>
+	    </div>
+	<strong><p>TECH 2</p></strong>
+	    <div>
+			<p id="Tech2CurrentBookings">No Current Bookings...<br></p>
+	    </div>
+	<strong><p>TECH 3</p></strong>
+	    <div>
+			<p id="Tech3CurrentBookings">No Current Bookings...<br></p>
+	    </div>
+	<strong><p>TECH 4</p></strong>
+	    <div>
+			<p id="Tech4CurrentBookings">No Current Bookings...<br></p>
+	    </div>
+	</ul>
+   
+   
     <script type="text/javascript">
+		//Limits the Date Choosing to only future dates
+		var today = new Date().toISOString().split('T')[0];
+		document.getElementsByName("setTodaysDate")[0].setAttribute('min', today);
+		//gets the ID of the last button that was clicked
+		$("button").click(function() {
+    		localStorage.setItem("LastBtn",$(this).attr('id'));
+		});
+
+		
+
+		//MODAL JS
         var modal = document.getElementById('BookTech1Modal');
-
-        // Get the button that opens the modal
-        var btn = document.getElementById("bookTech1Btn");
-
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
 
         // When the user clicks on the button, open the modal 
-        btn.onclick = function() {
+        function ShowModal() {
             modal.style.display = "block";
+			setTimeout(BookRoom,100);
         }
 
         // When the user clicks on <span> (x), close the modal
@@ -79,6 +118,9 @@
         }
 		
 		
+
+
+
         
         
     </script>

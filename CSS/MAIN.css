@@ -1,3 +1,23 @@
+body 
+{
+	padding-left: 3em;
+    padding-right: 5em;
+    padding-top: 3em;
+	margin-bottom:3px;
+	display:block;
+}
+
+#upcomingBookings {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	position: absolute;
+	top: -1em;
+	right: 2em;
+	width: 20em
+}
+
+
 /*START MODAL CSS */
 /* The Modal (background) */
 .modal {
@@ -80,7 +100,7 @@
 }
 /*END MODAL CSS */
 
-
+/*INPUT MODAL BOX CSS START*/
 input
     {
         width: 50%;
@@ -99,3 +119,4 @@ select
         border: 1px solid #ccc;
         box-sizing: border-box;
     }
+/*INPUT MODAL BOX CSS END*/
