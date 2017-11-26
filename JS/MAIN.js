@@ -234,6 +234,7 @@ window.setInterval(function() {
         $.getJSON(requestURL, function(json) {
 				 var BookingDetails = json.result;
 				 tech11AlreadyBooked = json.result;
+				 BookingDetails = BookingDetails.replace("//","");
 				 if((BookingDetails).includes("�") == true)
 					{
 						 BookingDetails= BookingDetails.substr(BookingDetails.indexOf("<hr>"));
@@ -254,6 +255,7 @@ window.setInterval(function() {
         $.getJSON(requestURL, function(json) {
 				 var BookingDetails = json.result;
 				 tech21AlreadyBooked = json.result;
+				 BookingDetails = BookingDetails.replace("//","");
 				 if((BookingDetails).includes("�") == true)
 					{
 						 BookingDetails= BookingDetails.substr(BookingDetails.indexOf("<hr>"));
@@ -273,6 +275,7 @@ window.setInterval(function() {
         $.getJSON(requestURL, function(json) {
 				 var BookingDetails = json.result;
 				 tech31AlreadyBooked = json.result;
+				 BookingDetails = BookingDetails.replace("//","");
 				 if((BookingDetails).includes("�") == true)
 					{
 						 BookingDetails= BookingDetails.substr(BookingDetails.indexOf("<hr>"));
@@ -292,6 +295,7 @@ window.setInterval(function() {
         $.getJSON(requestURL, function(json) {
 				 var BookingDetails = json.result;
 				 tech41AlreadyBooked = json.result;
+				 BookingDetails = BookingDetails.replace("//","");
 				 if((BookingDetails).includes("�") == true)
 					{
 						 BookingDetails= BookingDetails.substr(BookingDetails.indexOf("<hr>"));
