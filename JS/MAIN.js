@@ -182,7 +182,7 @@ function combineString()
 	names= document.getElementById("name").value;
 	dates = (document.getElementById("SetDate").value);
 	day = document.getElementById("day").value;
-	//emailjs.send("default_service", "se21bookings", {ToEmail: emails, room: room, time: times, name:names, date: day + " " + dates})
+	emailjs.send("default_service", "se21bookings", {ToEmail: emails, room: room, time: times, name:names, date: day + " " + dates})
 	
     CombindedBookTimeTech = ("<hr>Name:" + names + "<hr>Email:" + emails + "<hr>Time: " +day+" " + dates + " " + times +"<hr>");
     setValue();
