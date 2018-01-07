@@ -11,6 +11,7 @@
  </head>
   <script src="JS/jquery.js" type="text/javascript" charset="utf-8"></script>
   <script src="JS/MAIN.js" type="text/javascript" charset="utf-8"></script>
+  <script src="JS/Moment.js" type="text/javascript" charset="utf-8"></script>
  
 <link rel="stylesheet" href="CSS/MAIN.css">
 <body>
@@ -41,16 +42,16 @@
             <br><label>Pick A Time:</label><br>
             <select id="PickPeriod" size="1">
                 <option selected="true" disabled="disabled">--Please Pick A Period--</option>    
-                <option value="Period 1">Period 1</option>
-                <option value="Period 2">Period 2</option>
-                <option value="Break">Break</option>
-                <option value="Period 3">Period 3</option>
-                <option value="Period 4">Period 4</option>
-                <option value="Lunch">Lunch</option>
-                <option value="Period 5">Period 5</option>
-                <option value="Period 6">Period 6</option>
-                <option value="AfterSchool Hour 1">AfterSchool Hour 1</option>
-                <option value="AfterSchool Hour 2">AfterSchool Hour 2</option>
+                <option value="8:35">Period 1</option>
+                <option value="9:35">Period 2</option>
+                <option value="10:30">Break</option>
+                <option value="10:50">Period 3</option>
+                <option value="11:45">Period 4</option>
+                <option value="12:45">Lunch</option>
+                <option value="13:40">Period 5</option>
+                <option value="14:35">Period 6</option>
+                <option value="15:35">AfterSchool Hour 1</option>
+                <option value="16:35">AfterSchool Hour 2</option>
             </select>
             <br>
             <button id="submit" onClick="validateTime()">SUBMIT BOOKING</button>
@@ -82,7 +83,13 @@
 	    </div>
 	</ul>
    
-   
+	
+   	<div id="myProgress">
+	  <div id="myBar"><strong>Updating......</strong></div>
+	</div>
+
+
+
     <script type="text/javascript">
 		//Limits the Date Choosing to only future dates
 		var today = new Date().toISOString().split('T')[0];
@@ -117,10 +124,22 @@
             }
         }
 		
-		
 
+		var width = 0;
 
+		function move() {
+			var elem = document.getElementById("myBar");   
+			if (width >= 100) 
+			{
+			  width = -20
+			} 
 
+			else 
+			{
+			  width+=20; 
+			  elem.style.width = width + '%'; 
+			}
+		  }
         
         
     </script>

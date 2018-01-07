@@ -120,3 +120,20 @@ select
         box-sizing: border-box;
     }
 /*INPUT MODAL BOX CSS END*/
+
+#myProgress {
+  width: 100%;
+  background-color: #ddd;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  bottom: 0em;
+  left:0em;
+}
+
+#myBar {
+  width: 1%;
+  height: 20px;
+  background-color: #4CAF50;
+  
+}
