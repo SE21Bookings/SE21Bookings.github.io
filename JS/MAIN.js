@@ -110,10 +110,10 @@ var confirmBox;
 var CurrentTime;
 var CurrentDay;
 
-var Smallest1 = 999999999999999999999999;
-var Smallest2 = 999999999999999999999999;
-var Smallest3 = 999999999999999999999999;
-var Smallest4 = 999999999999999999999999;
+var Smallest1 = 9999999999999999999999999999999999999999;
+var Smallest2 = 9999999999999999999999999999999999999999;
+var Smallest3 = 9999999999999999999999999999999999999999;
+var Smallest4 = 9999999999999999999999999999999999999999;
 
 
 function validateTime()
@@ -152,7 +152,70 @@ function validateTime()
 							{
 								emailjs.send("default_service","se21bookingerror", {"ToEmail":alreadybookedEmail[1], "FromEmail":emails, "beforeName":alreadybookedName[1], "FromName":names, "room": room})
 							}
+					}
+				else if(tech12AlreadyBooked.includes(chosenTime) == true)
+					{
+						alreadybookedName = tech12AlreadyBooked.match("Name:(.*)Email:");
+						alreadybookedName[1] = alreadybookedName[1].replace("<hr>","");
+						alreadybookedEmail = tech12AlreadyBooked.match("Email:(.*)Time:");
+						alreadybookedEmail[1] = alreadybookedEmail[1].replace("<hr>","");
 
+						combinedErrorMessage = ("Hi There " + names +"! \nUnfortunatly " + room + " has already been booked at this time by " + alreadybookedName[1] + "(" + alreadybookedEmail[1] + ")\n\nWould you like me to Contact Him?");
+
+						confirmBox = confirm(combinedErrorMessage);
+
+						if(confirmBox == true)
+							{
+								emailjs.send("default_service","se21bookingerror", {"ToEmail":alreadybookedEmail[1], "FromEmail":emails, "beforeName":alreadybookedName[1], "FromName":names, "room": room})
+							}
+					}
+				else if(tech13AlreadyBooked.includes(chosenTime) == true)
+					{
+						alreadybookedName = tech13AlreadyBooked.match("Name:(.*)Email:");
+						alreadybookedName[1] = alreadybookedName[1].replace("<hr>","");
+						alreadybookedEmail = tech13AlreadyBooked.match("Email:(.*)Time:");
+						alreadybookedEmail[1] = alreadybookedEmail[1].replace("<hr>","");
+
+						combinedErrorMessage = ("Hi There " + names +"! \nUnfortunatly " + room + " has already been booked at this time by " + alreadybookedName[1] + "(" + alreadybookedEmail[1] + ")\n\nWould you like me to Contact Him?");
+
+						confirmBox = confirm(combinedErrorMessage);
+
+						if(confirmBox == true)
+							{
+								emailjs.send("default_service","se21bookingerror", {"ToEmail":alreadybookedEmail[1], "FromEmail":emails, "beforeName":alreadybookedName[1], "FromName":names, "room": room})
+							}
+					}
+				else if(tech14AlreadyBooked.includes(chosenTime) == true)
+					{
+						alreadybookedName = tech14AlreadyBooked.match("Name:(.*)Email:");
+						alreadybookedName[1] = alreadybookedName[1].replace("<hr>","");
+						alreadybookedEmail = tech14AlreadyBooked.match("Email:(.*)Time:");
+						alreadybookedEmail[1] = alreadybookedEmail[1].replace("<hr>","");
+
+						combinedErrorMessage = ("Hi There " + names +"! \nUnfortunatly " + room + " has already been booked at this time by " + alreadybookedName[1] + "(" + alreadybookedEmail[1] + ")\n\nWould you like me to Contact Him?");
+
+						confirmBox = confirm(combinedErrorMessage);
+
+						if(confirmBox == true)
+							{
+								emailjs.send("default_service","se21bookingerror", {"ToEmail":alreadybookedEmail[1], "FromEmail":emails, "beforeName":alreadybookedName[1], "FromName":names, "room": room})
+							}
+					}
+				else if(tech15AlreadyBooked.includes(chosenTime) == true)
+					{
+						alreadybookedName = tech15AlreadyBooked.match("Name:(.*)Email:");
+						alreadybookedName[1] = alreadybookedName[1].replace("<hr>","");
+						alreadybookedEmail = tech15AlreadyBooked.match("Email:(.*)Time:");
+						alreadybookedEmail[1] = alreadybookedEmail[1].replace("<hr>","");
+
+						combinedErrorMessage = ("Hi There " + names +"! \nUnfortunatly " + room + " has already been booked at this time by " + alreadybookedName[1] + "(" + alreadybookedEmail[1] + ")\n\nWould you like me to Contact Him?");
+
+						confirmBox = confirm(combinedErrorMessage);
+
+						if(confirmBox == true)
+							{
+								emailjs.send("default_service","se21bookingerror", {"ToEmail":alreadybookedEmail[1], "FromEmail":emails, "beforeName":alreadybookedName[1], "FromName":names, "room": room})
+							}
 					}
 				else
 					{
@@ -178,6 +241,70 @@ function validateTime()
 							}
 
 					}
+				else if(tech22AlreadyBooked.includes(chosenTime) == true)
+					{
+						alreadybookedName = tech22AlreadyBooked.match("Name:(.*)Email:");
+						alreadybookedName[1] = alreadybookedName[1].replace("<hr>","");
+						alreadybookedEmail = tech22AlreadyBooked.match("Email:(.*)Time:");
+						alreadybookedEmail[1] = alreadybookedEmail[1].replace("<hr>","");
+
+						combinedErrorMessage = ("Hi There " + names +"! \nUnfortunatly " + room + " has already been booked at this time by " + alreadybookedName[1] + "(" + alreadybookedEmail[1] + ")\n\nWould you like me to Contact Him?");
+
+						confirmBox = confirm(combinedErrorMessage);
+
+						if(confirmBox == true)
+							{
+								emailjs.send("default_service","se21bookingerror", {"ToEmail":alreadybookedEmail[1], "FromEmail":emails, "beforeName":alreadybookedName[1], "FromName":names, "room": room})
+							}
+					}
+				else if(tech23AlreadyBooked.includes(chosenTime) == true)
+					{
+						alreadybookedName = tech23AlreadyBooked.match("Name:(.*)Email:");
+						alreadybookedName[1] = alreadybookedName[1].replace("<hr>","");
+						alreadybookedEmail = tech23AlreadyBooked.match("Email:(.*)Time:");
+						alreadybookedEmail[1] = alreadybookedEmail[1].replace("<hr>","");
+
+						combinedErrorMessage = ("Hi There " + names +"! \nUnfortunatly " + room + " has already been booked at this time by " + alreadybookedName[1] + "(" + alreadybookedEmail[1] + ")\n\nWould you like me to Contact Him?");
+
+						confirmBox = confirm(combinedErrorMessage);
+
+						if(confirmBox == true)
+							{
+								emailjs.send("default_service","se21bookingerror", {"ToEmail":alreadybookedEmail[1], "FromEmail":emails, "beforeName":alreadybookedName[1], "FromName":names, "room": room})
+							}
+					}
+				else if(tech24AlreadyBooked.includes(chosenTime) == true)
+					{
+						alreadybookedName = tech24AlreadyBooked.match("Name:(.*)Email:");
+						alreadybookedName[1] = alreadybookedName[1].replace("<hr>","");
+						alreadybookedEmail = tech24AlreadyBooked.match("Email:(.*)Time:");
+						alreadybookedEmail[1] = alreadybookedEmail[1].replace("<hr>","");
+
+						combinedErrorMessage = ("Hi There " + names +"! \nUnfortunatly " + room + " has already been booked at this time by " + alreadybookedName[1] + "(" + alreadybookedEmail[1] + ")\n\nWould you like me to Contact Him?");
+
+						confirmBox = confirm(combinedErrorMessage);
+
+						if(confirmBox == true)
+							{
+								emailjs.send("default_service","se21bookingerror", {"ToEmail":alreadybookedEmail[1], "FromEmail":emails, "beforeName":alreadybookedName[1], "FromName":names, "room": room})
+							}
+					}
+				else if(tech25AlreadyBooked.includes(chosenTime) == true)
+					{
+						alreadybookedName = tech25AlreadyBooked.match("Name:(.*)Email:");
+						alreadybookedName[1] = alreadybookedName[1].replace("<hr>","");
+						alreadybookedEmail = tech25AlreadyBooked.match("Email:(.*)Time:");
+						alreadybookedEmail[1] = alreadybookedEmail[1].replace("<hr>","");
+
+						combinedErrorMessage = ("Hi There " + names +"! \nUnfortunatly " + room + " has already been booked at this time by " + alreadybookedName[1] + "(" + alreadybookedEmail[1] + ")\n\nWould you like me to Contact Him?");
+
+						confirmBox = confirm(combinedErrorMessage);
+
+						if(confirmBox == true)
+							{
+								emailjs.send("default_service","se21bookingerror", {"ToEmail":alreadybookedEmail[1], "FromEmail":emails, "beforeName":alreadybookedName[1], "FromName":names, "room": room})
+							}
+					}
 				else
 					{
 						combineString();
@@ -202,6 +329,70 @@ function validateTime()
 							}
 
 					}
+				else if(tech32AlreadyBooked.includes(chosenTime) == true)
+					{
+						alreadybookedName = tech32AlreadyBooked.match("Name:(.*)Email:");
+						alreadybookedName[1] = alreadybookedName[1].replace("<hr>","");
+						alreadybookedEmail = tech32AlreadyBooked.match("Email:(.*)Time:");
+						alreadybookedEmail[1] = alreadybookedEmail[1].replace("<hr>","");
+
+						combinedErrorMessage = ("Hi There " + names +"! \nUnfortunatly " + room + " has already been booked at this time by " + alreadybookedName[1] + "(" + alreadybookedEmail[1] + ")\n\nWould you like me to Contact Him?");
+
+						confirmBox = confirm(combinedErrorMessage);
+
+						if(confirmBox == true)
+							{
+								emailjs.send("default_service","se21bookingerror", {"ToEmail":alreadybookedEmail[1], "FromEmail":emails, "beforeName":alreadybookedName[1], "FromName":names, "room": room})
+							}
+					}
+				else if(tech33AlreadyBooked.includes(chosenTime) == true)
+					{
+						alreadybookedName = tech33AlreadyBooked.match("Name:(.*)Email:");
+						alreadybookedName[1] = alreadybookedName[1].replace("<hr>","");
+						alreadybookedEmail = tech33AlreadyBooked.match("Email:(.*)Time:");
+						alreadybookedEmail[1] = alreadybookedEmail[1].replace("<hr>","");
+
+						combinedErrorMessage = ("Hi There " + names +"! \nUnfortunatly " + room + " has already been booked at this time by " + alreadybookedName[1] + "(" + alreadybookedEmail[1] + ")\n\nWould you like me to Contact Him?");
+
+						confirmBox = confirm(combinedErrorMessage);
+
+						if(confirmBox == true)
+							{
+								emailjs.send("default_service","se21bookingerror", {"ToEmail":alreadybookedEmail[1], "FromEmail":emails, "beforeName":alreadybookedName[1], "FromName":names, "room": room})
+							}
+					}
+				else if(tech34AlreadyBooked.includes(chosenTime) == true)
+					{
+						alreadybookedName = tech34AlreadyBooked.match("Name:(.*)Email:");
+						alreadybookedName[1] = alreadybookedName[1].replace("<hr>","");
+						alreadybookedEmail = tech34AlreadyBooked.match("Email:(.*)Time:");
+						alreadybookedEmail[1] = alreadybookedEmail[1].replace("<hr>","");
+
+						combinedErrorMessage = ("Hi There " + names +"! \nUnfortunatly " + room + " has already been booked at this time by " + alreadybookedName[1] + "(" + alreadybookedEmail[1] + ")\n\nWould you like me to Contact Him?");
+
+						confirmBox = confirm(combinedErrorMessage);
+
+						if(confirmBox == true)
+							{
+								emailjs.send("default_service","se21bookingerror", {"ToEmail":alreadybookedEmail[1], "FromEmail":emails, "beforeName":alreadybookedName[1], "FromName":names, "room": room})
+							}
+					}
+				else if(tech35AlreadyBooked.includes(chosenTime) == true)
+					{
+						alreadybookedName = tech35AlreadyBooked.match("Name:(.*)Email:");
+						alreadybookedName[1] = alreadybookedName[1].replace("<hr>","");
+						alreadybookedEmail = tech35AlreadyBooked.match("Email:(.*)Time:");
+						alreadybookedEmail[1] = alreadybookedEmail[1].replace("<hr>","");
+
+						combinedErrorMessage = ("Hi There " + names +"! \nUnfortunatly " + room + " has already been booked at this time by " + alreadybookedName[1] + "(" + alreadybookedEmail[1] + ")\n\nWould you like me to Contact Him?");
+
+						confirmBox = confirm(combinedErrorMessage);
+
+						if(confirmBox == true)
+							{
+								emailjs.send("default_service","se21bookingerror", {"ToEmail":alreadybookedEmail[1], "FromEmail":emails, "beforeName":alreadybookedName[1], "FromName":names, "room": room})
+							}
+					}
 				else
 					{
 						combineString();
@@ -225,6 +416,70 @@ function validateTime()
 								emailjs.send("default_service","se21bookingerror", {"ToEmail":alreadybookedEmail[1], "FromEmail":emails, "beforeName":alreadybookedName[1], "FromName":names, "room": room})
 							}
 
+					}
+				else if(tech42AlreadyBooked.includes(chosenTime) == true)
+					{
+						alreadybookedName = tech42AlreadyBooked.match("Name:(.*)Email:");
+						alreadybookedName[1] = alreadybookedName[1].replace("<hr>","");
+						alreadybookedEmail = tech42AlreadyBooked.match("Email:(.*)Time:");
+						alreadybookedEmail[1] = alreadybookedEmail[1].replace("<hr>","");
+
+						combinedErrorMessage = ("Hi There " + names +"! \nUnfortunatly " + room + " has already been booked at this time by " + alreadybookedName[1] + "(" + alreadybookedEmail[1] + ")\n\nWould you like me to Contact Him?");
+
+						confirmBox = confirm(combinedErrorMessage);
+
+						if(confirmBox == true)
+							{
+								emailjs.send("default_service","se21bookingerror", {"ToEmail":alreadybookedEmail[1], "FromEmail":emails, "beforeName":alreadybookedName[1], "FromName":names, "room": room})
+							}
+					}
+				else if(tech43AlreadyBooked.includes(chosenTime) == true)
+					{
+						alreadybookedName = tech43AlreadyBooked.match("Name:(.*)Email:");
+						alreadybookedName[1] = alreadybookedName[1].replace("<hr>","");
+						alreadybookedEmail = tech43AlreadyBooked.match("Email:(.*)Time:");
+						alreadybookedEmail[1] = alreadybookedEmail[1].replace("<hr>","");
+
+						combinedErrorMessage = ("Hi There " + names +"! \nUnfortunatly " + room + " has already been booked at this time by " + alreadybookedName[1] + "(" + alreadybookedEmail[1] + ")\n\nWould you like me to Contact Him?");
+
+						confirmBox = confirm(combinedErrorMessage);
+
+						if(confirmBox == true)
+							{
+								emailjs.send("default_service","se21bookingerror", {"ToEmail":alreadybookedEmail[1], "FromEmail":emails, "beforeName":alreadybookedName[1], "FromName":names, "room": room})
+							}
+					}
+				else if(tech44AlreadyBooked.includes(chosenTime) == true)
+					{
+						alreadybookedName = tech44AlreadyBooked.match("Name:(.*)Email:");
+						alreadybookedName[1] = alreadybookedName[1].replace("<hr>","");
+						alreadybookedEmail = tech44AlreadyBooked.match("Email:(.*)Time:");
+						alreadybookedEmail[1] = alreadybookedEmail[1].replace("<hr>","");
+
+						combinedErrorMessage = ("Hi There " + names +"! \nUnfortunatly " + room + " has already been booked at this time by " + alreadybookedName[1] + "(" + alreadybookedEmail[1] + ")\n\nWould you like me to Contact Him?");
+
+						confirmBox = confirm(combinedErrorMessage);
+
+						if(confirmBox == true)
+							{
+								emailjs.send("default_service","se21bookingerror", {"ToEmail":alreadybookedEmail[1], "FromEmail":emails, "beforeName":alreadybookedName[1], "FromName":names, "room": room})
+							}
+					}
+				else if(tech45AlreadyBooked.includes(chosenTime) == true)
+					{
+						alreadybookedName = tech45AlreadyBooked.match("Name:(.*)Email:");
+						alreadybookedName[1] = alreadybookedName[1].replace("<hr>","");
+						alreadybookedEmail = tech45AlreadyBooked.match("Email:(.*)Time:");
+						alreadybookedEmail[1] = alreadybookedEmail[1].replace("<hr>","");
+
+						combinedErrorMessage = ("Hi There " + names +"! \nUnfortunatly " + room + " has already been booked at this time by " + alreadybookedName[1] + "(" + alreadybookedEmail[1] + ")\n\nWould you like me to Contact Him?");
+
+						confirmBox = confirm(combinedErrorMessage);
+
+						if(confirmBox == true)
+							{
+								emailjs.send("default_service","se21bookingerror", {"ToEmail":alreadybookedEmail[1], "FromEmail":emails, "beforeName":alreadybookedName[1], "FromName":names, "room": room})
+							}
 					}
 				else
 					{
@@ -258,23 +513,23 @@ function setValue(obj) {
 var newValue = CombindedBookTimeTech;
 if(room == "Technology 1")
 	{
-		if(tech11AlreadyBooked.length==0)
+		if(tech11AlreadyBooked==null)
 			{
 				sparkSetTech11(newValue);
-			}
-		else if(tech12alreadybooked.length==0)
+			}	
+		else if(tech12AlreadyBooked.length==0)
 			{
 				sparkSetTech12(newValue);
 			}
-		else if(tech13alreadybooked.length==0)
+		else if(tech13AlreadyBooked.length==0)
 			{
 				sparkSetTech13(newValue);
 			}
-		else if(tech14alreadybooked.length==0)
+		else if(tech14AlreadyBooked.length==0)
 			{
 				sparkSetTech14(newValue);
 			}
-		else if(tech15alreadybooked.length==0)
+		else if(tech15AlreadyBooked.length==0)
 			{
 				sparkSetTech15(newValue);
 			}
@@ -289,19 +544,19 @@ else if(room == "Technology 2")
 			{
 				sparkSetTech21(newValue);
 			}
-		else if(tech22alreadybooked.length==0)
+		else if(tech22AlreadyBooked.length==0)
 			{
 				sparkSetTech22(newValue);
 			}
-		else if(tech23alreadybooked.length==0)
+		else if(tech23AlreadyBooked.length==0)
 			{
 				sparkSetTech23(newValue);
 			}
-		else if(tech24alreadybooked.length==0)
+		else if(tech24AlreadyBooked.length==0)
 			{
 				sparkSetTech24(newValue);
 			}
-		else if(tech25alreadybooked.length==0)
+		else if(tech25AlreadyBooked.length==0)
 			{
 				sparkSetTech25(newValue);
 			}
@@ -316,19 +571,19 @@ else if(room == "Technology 3")
 			{
 				sparkSetTech31(newValue);
 			}
-		else if(tech32alreadybooked.length==0)
+		else if(tech32AlreadyBooked.length==0)
 			{
 				sparkSetTech32(newValue);
 			}
-		else if(tech33alreadybooked.length==0)
+		else if(tech33AlreadyBooked.length==0)
 			{
 				sparkSetTech33(newValue);
 			}
-		else if(tech34alreadybooked.length==0)
+		else if(tech34AlreadyBooked.length==0)
 			{
 				sparkSetTech34(newValue);
 			}
-		else if(tech35alreadybooked.length==0)
+		else if(tech35AlreadyBooked.length==0)
 			{
 				sparkSetTech35(newValue);
 			}
@@ -343,19 +598,19 @@ else if(room == "Technology 4")
 			{
 				sparkSetTech41(newValue);
 			}
-		else if(tech42alreadybooked.length==0)
+		else if(tech42AlreadyBooked.length==0)
 			{
 				sparkSetTech42(newValue);
 			}
-		else if(tech43alreadybooked.length==0)
+		else if(tech43AlreadyBooked.length==0)
 			{
 				sparkSetTech43(newValue);
 			}
-		else if(tech44alreadybooked.length==0)
+		else if(tech44AlreadyBooked.length==0)
 			{
 				sparkSetTech44(newValue);
 			}
-		else if(tech45alreadybooked.length==0)
+		else if(tech45AlreadyBooked.length==0)
 			{
 				sparkSetTech45(newValue);
 			}
@@ -621,103 +876,102 @@ window.setInterval(function() {
 			{
 				alreadyBookedTime12 = tech12AlreadyBooked.match("Time:(.*)<hr>");
 				Tech1CheckSmallest(alreadyBookedTime12[1],12)
-				move()
 
 			}
 		if(tech13AlreadyBooked!=null)
 			{
 				alreadyBookedTime13 = tech13AlreadyBooked.match("Time:(.*)<hr>");
 				Tech1CheckSmallest(alreadyBookedTime13[1],13)
-				move()
 			}
 		if(tech14AlreadyBooked!=null)
 			{
 				alreadyBookedTime14 = tech14AlreadyBooked.match("Time:(.*)<hr>");
 				Tech1CheckSmallest(alreadyBookedTime14[1],14)
-				move()
 			}
 		if(tech15AlreadyBooked!=null)
 			{
 				alreadyBookedTime15 = tech15AlreadyBooked.match("Time:(.*)<hr>");
 				Tech1CheckSmallest(alreadyBookedTime15[1],15)
-				move()
 			}	
+      }, 1500);
 		
 	
+	window.setInterval(function(){
 		if(tech21AlreadyBooked!=null)
 			{
 				alreadyBookedTime21 = tech21AlreadyBooked.match("Time:(.*)<hr>");
+				Tech2CheckSmallest(alreadyBookedTime21[1],21)
 			}
 		if(tech22AlreadyBooked!=null)
 			{
 				alreadyBookedTime22 = tech22AlreadyBooked.match("Time:(.*)<hr>");
+				Tech2CheckSmallest(alreadyBookedTime22[1],22)
 			}
 		if(tech23AlreadyBooked!=null)
 			{
 				alreadyBookedTime23 = tech23AlreadyBooked.match("Time:(.*)<hr>");
+				Tech2CheckSmallest(alreadyBookedTime23[1],23)
 			}
 		if(tech24AlreadyBooked!=null)
 			{
 				alreadyBookedTime24 = tech24AlreadyBooked.match("Time:(.*)<hr>");
+				Tech2CheckSmallest(alreadyBookedTime24[1],24)
 			}
 		if(tech25AlreadyBooked!=null)
 			{
 				alreadyBookedTime25 = tech25AlreadyBooked.match("Time:(.*)<hr>");
+				Tech2CheckSmallest(alreadyBookedTime25[1],25)
 			}
-	
-	
+	},1500);
+
+	window.setInterval(function(){
 		if(tech31AlreadyBooked!=null)
 			{
 				alreadyBookedTime31 = tech31AlreadyBooked.match("Time:(.*)<hr>");
+				Tech3CheckSmallest(alreadyBookedTime31[1],31)
 			}
 		if(tech32AlreadyBooked!=null)
 			{
 				alreadyBookedTime32 = tech32AlreadyBooked.match("Time:(.*)<hr>");
+				Tech3CheckSmallest(alreadyBookedTime32[1],32)
 			}
 		if(tech33AlreadyBooked!=null)
 			{
-				alreadyBookedTime33 = tech33AlreadyBooked.match("Time:(.*)<hr>");
+				alreadyBookedTime33 = tech33AlreadyBooked.match("Time:(.*)<hr>");				Tech3CheckSmallest(alreadyBookedTime33[1],33)
 			}
 		if(tech34AlreadyBooked!=null)
 			{
-				alreadyBookedTime34 = tech34AlreadyBooked.match("Time:(.*)<hr>");
+				alreadyBookedTime34 = tech34AlreadyBooked.match("Time:(.*)<hr>");				Tech3CheckSmallest(alreadyBookedTime34[1],34)
 			}
 		if(tech35AlreadyBooked!=null)
 			{
-				alreadyBookedTime35 = tech35AlreadyBooked.match("Time:(.*)<hr>");
+				alreadyBookedTime35 = tech35AlreadyBooked.match("Time:(.*)<hr>");				Tech3CheckSmallest(alreadyBookedTime35[1],35)
 			}
-	
-		
+	},1500);
+
+	window.setInterval(function(){
 		if(tech41AlreadyBooked!=null)
 			{
 				alreadyBookedTime41 = tech41AlreadyBooked.match("Time:(.*)<hr>");
+				Tech4CheckSmallest(alreadyBookedTime41[1],41)
 			}
 		if(tech42AlreadyBooked!=null)
 			{
-				alreadyBookedTime42 = tech42AlreadyBooked.match("Time:(.*)<hr>");
+				alreadyBookedTime42 = tech42AlreadyBooked.match("Time:(.*)<hr>");				Tech4CheckSmallest(alreadyBookedTime42[1],42)
 			}
 		if(tech43AlreadyBooked!=null)
 			{
-				alreadyBookedTime43 = tech43AlreadyBooked.match("Time:(.*)<hr>");
+				alreadyBookedTime43 = tech43AlreadyBooked.match("Time:(.*)<hr>");				Tech4CheckSmallest(alreadyBookedTime43[1],43)
 			}
 		if(tech44AlreadyBooked!=null)
 			{
-				alreadyBookedTime44 = tech44AlreadyBooked.match("Time:(.*)<hr>");
+				alreadyBookedTime44 = tech44AlreadyBooked.match("Time:(.*)<hr>");				Tech4CheckSmallest(alreadyBookedTime44[1],44)
 			}
 		if(tech45AlreadyBooked!=null)
 			{
-				alreadyBookedTime45 = tech45AlreadyBooked.match("Time:(.*)<hr>");
+				alreadyBookedTime45 = tech45AlreadyBooked.match("Time:(.*)<hr>");				Tech4CheckSmallest(alreadyBookedTime45[1],45)
 			}
-	  
-	
-	
-	
-
-	
-		
-      }, 1500);
-		
-	
+	},1500);
 //END STORE IN PARTICLE PHOTON      
 
    
@@ -768,6 +1022,8 @@ window.setInterval(function() {
 		}
 }, 500);
 
+
+
 function Tech1CheckSmallest(TimeTillBook, TimeSlot)
 {
 	move()
@@ -794,7 +1050,7 @@ function Tech1CheckSmallest(TimeTillBook, TimeSlot)
 			if(TimeSlot==12)
 				{
 					move()
-				if((tech11AlreadyBooked).includes("�") == true)
+				if((tech12AlreadyBooked).includes("�") == true)
 					{
 						 move()
 						 tech12AlreadyBooked= tech12AlreadyBooked.substr(tech12AlreadyBooked.indexOf("<hr>"));
@@ -810,7 +1066,7 @@ function Tech1CheckSmallest(TimeTillBook, TimeSlot)
 			if(TimeSlot==13)
 				{
 				move()
-				if((tech11AlreadyBooked).includes("�") == true)
+				if((tech13AlreadyBooked).includes("�") == true)
 					{
 						 move()
 						 tech13AlreadyBooked= tech13AlreadyBooked.substr(tech13AlreadyBooked.indexOf("<hr>"));
@@ -826,7 +1082,7 @@ function Tech1CheckSmallest(TimeTillBook, TimeSlot)
 			if(TimeSlot==14)
 				{
 				move()
-				if((tech11AlreadyBooked).includes("�") == true)
+				if((tech14AlreadyBooked).includes("�") == true)
 					{
 						 move()
 						 tech14AlreadyBooked= tech14AlreadyBooked.substr(tech14AlreadyBooked.indexOf("<hr>"));
@@ -842,7 +1098,7 @@ function Tech1CheckSmallest(TimeTillBook, TimeSlot)
 			if(TimeSlot==15)
 				{
 				move()
-				if((tech11AlreadyBooked).includes("�") == true)
+				if((tech15AlreadyBooked).includes("�") == true)
 					{
 						 move()
 						 tech15AlreadyBooked= tech15AlreadyBooked.substr(tech15AlreadyBooked.indexOf("<hr>"));
@@ -857,6 +1113,222 @@ function Tech1CheckSmallest(TimeTillBook, TimeSlot)
 		}
 		
 		
+}
+
+function Tech2CheckSmallest(TimeTillBook, TimeSlot)
+{
+	if((new Date(TimeTillBook)-new Date(CurrentTime))<Smallest2)
+		{
+			Smallest2= new Date(TimeTillBook)-new Date(CurrentTime)
+			if(TimeSlot==21)
+				{
+				if((tech21AlreadyBooked).includes("�") == true)
+					{
+						 tech21AlreadyBooked= tech21AlreadyBooked.substr(tech21AlreadyBooked.indexOf("<hr>"));
+						 document.getElementById("Tech2CurrentBookings").innerHTML = tech21AlreadyBooked;
+					}
+				 else
+					 {
+						 document.getElementById("Tech2CurrentBookings").innerHTML = tech21AlreadyBooked;
+					 }
+                 }
+			
+			if(TimeSlot==22)
+				{
+				if((tech22AlreadyBooked).includes("�") == true)
+					{
+						 tech22AlreadyBooked= tech22AlreadyBooked.substr(tech22AlreadyBooked.indexOf("<hr>"));
+						 document.getElementById("Tech2CurrentBookings").innerHTML = tech22AlreadyBooked;
+					}
+				 else
+					 {
+						 document.getElementById("Tech2CurrentBookings").innerHTML = tech22AlreadyBooked;
+					 }
+                 }
+			
+			if(TimeSlot==23)
+				{
+				if((tech23AlreadyBooked).includes("�") == true)
+					{
+						 tech23AlreadyBooked= tech23AlreadyBooked.substr(tech23AlreadyBooked.indexOf("<hr>"));
+						 document.getElementById("Tech2CurrentBookings").innerHTML = tech23AlreadyBooked;
+					}
+				 else
+					 {
+						 document.getElementById("Tech2CurrentBookings").innerHTML = tech23AlreadyBooked;
+					 }
+                 }
+			
+			if(TimeSlot==24)
+				{
+				if((tech24AlreadyBooked).includes("�") == true)
+					{
+						 tech24AlreadyBooked= tech24AlreadyBooked.substr(tech24AlreadyBooked.indexOf("<hr>"));
+						 document.getElementById("Tech2CurrentBookings").innerHTML = tech24AlreadyBooked;
+					}
+				 else
+					 {
+						 document.getElementById("Tech2CurrentBookings").innerHTML = tech24AlreadyBooked;
+					 }
+                 }
+			
+			if(TimeSlot==25)
+				{
+				if((tech25AlreadyBooked).includes("�") == true)
+					{
+						 tech25AlreadyBooked= tech25AlreadyBooked.substr(tech25AlreadyBooked.indexOf("<hr>"));
+						 document.getElementById("Tech2CurrentBookings").innerHTML = tech25AlreadyBooked;
+					}
+				 else
+					 {
+						 document.getElementById("Tech2CurrentBookings").innerHTML = tech25AlreadyBooked;
+					 }
+                 }
+		}	
+}
+
+function Tech3CheckSmallest(TimeTillBook, TimeSlot)
+{
+	if((new Date(TimeTillBook)-new Date(CurrentTime))<Smallest3)
+		{
+			Smallest3= new Date(TimeTillBook)-new Date(CurrentTime)
+			if(TimeSlot==31)
+				{
+				if((tech31AlreadyBooked).includes("�") == true)
+					{
+						 tech31AlreadyBooked= tech31AlreadyBooked.substr(tech31AlreadyBooked.indexOf("<hr>"));
+						 document.getElementById("Tech3CurrentBookings").innerHTML = tech31AlreadyBooked;
+					}
+				 else
+					 {
+						 document.getElementById("Tech3CurrentBookings").innerHTML = tech31AlreadyBooked;
+					 }
+                 }
+			
+			if(TimeSlot==32)
+				{
+				if((tech32AlreadyBooked).includes("�") == true)
+					{
+						 tech32AlreadyBooked= tech32AlreadyBooked.substr(tech32AlreadyBooked.indexOf("<hr>"));
+						 document.getElementById("Tech3CurrentBookings").innerHTML = tech32AlreadyBooked;
+					}
+				 else
+					 {
+						 document.getElementById("Tech3CurrentBookings").innerHTML = tech32AlreadyBooked;
+					 }
+                 }
+			
+			if(TimeSlot==33)
+				{
+				if((tech33AlreadyBooked).includes("�") == true)
+					{
+						 tech33AlreadyBooked= tech33AlreadyBooked.substr(tech33AlreadyBooked.indexOf("<hr>"));
+						 document.getElementById("Tech3CurrentBookings").innerHTML = tech33AlreadyBooked;
+					}
+				 else
+					 {
+						 document.getElementById("Tech3CurrentBookings").innerHTML = tech33AlreadyBooked;
+					 }
+                 }
+			
+			if(TimeSlot==34)
+				{
+				if((tech34AlreadyBooked).includes("�") == true)
+					{
+						 tech34AlreadyBooked= tech34AlreadyBooked.substr(tech34AlreadyBooked.indexOf("<hr>"));
+						 document.getElementById("Tech3CurrentBookings").innerHTML = tech34AlreadyBooked;
+					}
+				 else
+					 {
+						 document.getElementById("Tech3CurrentBookings").innerHTML = tech34AlreadyBooked;
+					 }
+                 }
+			
+			if(TimeSlot==35)
+				{
+				if((tech35AlreadyBooked).includes("�") == true)
+					{
+						 tech35AlreadyBooked= tech35AlreadyBooked.substr(tech35AlreadyBooked.indexOf("<hr>"));
+						 document.getElementById("Tech3CurrentBookings").innerHTML = tech35AlreadyBooked;
+					}
+				 else
+					 {
+						 document.getElementById("Tech3CurrentBookings").innerHTML = tech35AlreadyBooked;
+					 }
+                 }
+		}	
+}
+
+function Tech4CheckSmallest(TimeTillBook, TimeSlot)
+{
+	if((new Date(TimeTillBook)-new Date(CurrentTime))<Smallest4)
+		{
+			Smallest4= new Date(TimeTillBook)-new Date(CurrentTime)
+			if(TimeSlot==41)
+				{
+				if((tech41AlreadyBooked).includes("�") == true)
+					{
+						 tech41AlreadyBooked= tech41AlreadyBooked.substr(tech41AlreadyBooked.indexOf("<hr>"));
+						 document.getElementById("Tech4CurrentBookings").innerHTML = tech41AlreadyBooked;
+					}
+				 else
+					 {
+						 document.getElementById("Tech4CurrentBookings").innerHTML = tech41AlreadyBooked;
+					 }
+                 }
+			
+			if(TimeSlot==42)
+				{
+				if((tech42AlreadyBooked).includes("�") == true)
+					{
+						 tech42AlreadyBooked= tech42AlreadyBooked.substr(tech42AlreadyBooked.indexOf("<hr>"));
+						 document.getElementById("Tech4CurrentBookings").innerHTML = tech42AlreadyBooked;
+					}
+				 else
+					 {
+						 document.getElementById("Tech4CurrentBookings").innerHTML = tech32AlreadyBooked;
+					 }
+                 }
+			
+			if(TimeSlot==43)
+				{
+				if((tech43AlreadyBooked).includes("�") == true)
+					{
+						 tech43AlreadyBooked= tech43AlreadyBooked.substr(tech43AlreadyBooked.indexOf("<hr>"));
+						 document.getElementById("Tech4CurrentBookings").innerHTML = tech43AlreadyBooked;
+					}
+				 else
+					 {
+						 document.getElementById("Tech4CurrentBookings").innerHTML = tech43AlreadyBooked;
+					 }
+                 }
+			
+			if(TimeSlot==44)
+				{
+				if((tech44AlreadyBooked).includes("�") == true)
+					{
+						 tech44AlreadyBooked= tech44AlreadyBooked.substr(tech44AlreadyBooked.indexOf("<hr>"));
+						 document.getElementById("Tech4CurrentBookings").innerHTML = tech44AlreadyBooked;
+					}
+				 else
+					 {
+						 document.getElementById("Tech4CurrentBookings").innerHTML = tech44AlreadyBooked;
+					 }
+                 }
+			
+			if(TimeSlot==45)
+				{
+				if((tech45AlreadyBooked).includes("�") == true)
+					{
+						 tech45AlreadyBooked= tech45AlreadyBooked.substr(tech45AlreadyBooked.indexOf("<hr>"));
+						 document.getElementById("Tech4CurrentBookings").innerHTML = tech45AlreadyBooked;
+					}
+				 else
+					 {
+						 document.getElementById("Tech4CurrentBookings").innerHTML = tech45AlreadyBooked;
+					 }
+                 }
+		}	
 }
 
 
