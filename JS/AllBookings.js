@@ -128,6 +128,7 @@ window.setInterval(function() {
         requestURL = "https://api.spark.io/v1/devices/" + deviceID + "/" + GetFuncArr[1][1]+ "/?access_token=" + accessToken;
         $.getJSON(requestURL, function(json) 
 			{
+				 move()
 				 tech11AlreadyBooked = json.result;
             });
 
@@ -255,6 +256,7 @@ window.setInterval(function() {
 	
 		if(tech11AlreadyBooked!=null)
 			{
+				move()
 				alreadyBookedTime11 = tech11AlreadyBooked.match("Time:(.*)<hr>");
 				Tech1CheckSmallest(alreadyBookedTime11[1],11)
 
@@ -365,24 +367,27 @@ window.setInterval(function() {
 
 function Tech1CheckSmallest(TimeTillBook, TimeSlot)
 {
-	 
+	 move()
 	if((new Date(TimeTillBook)-new Date(CurrentTime))<Smallest1)
 		{
-			 
+			 move()
 			Smallest1= new Date(TimeTillBook)-new Date(CurrentTime)
 			if(TimeSlot==11)
 				{
 				 
 				if((tech11AlreadyBooked).includes("�") == true)
 					{
-						  
+						  move()
 						 tech11AlreadyBooked= tech11AlreadyBooked.substr(tech11AlreadyBooked.indexOf("<hr>"));
-						 document.getElementById("Slot11").innerHTML = tech11AlreadyBooked;
+						 tech11AlreadyBooked= tech11AlreadyBooked.substring(0, tech11AlreadyBooked.lastIndexOf("<hr>"));
+
+}
+						 document.getElementById("Upcoming1").innerHTML = tech11AlreadyBooked;
 					}
 				 else
 					 {
-						  
-						 document.getElementById("Slot11").innerHTML = tech11AlreadyBooked;
+						  move()
+						 document.getElementById("Upcoming1").innerHTML = tech11AlreadyBooked;
 					 }
                  }
 			
@@ -391,14 +396,14 @@ function Tech1CheckSmallest(TimeTillBook, TimeSlot)
 					 
 				if((tech12AlreadyBooked).includes("�") == true)
 					{
-						  
+						  move()
 						 tech12AlreadyBooked= tech12AlreadyBooked.substr(tech12AlreadyBooked.indexOf("<hr>"));
-						 document.getElementById("Slot11").innerHTML = tech12AlreadyBooked;
+						 document.getElementById("Upcoming1").innerHTML = tech12AlreadyBooked;
 					}
 				 else
 					 {
-						  
-						 document.getElementById("Slot11").innerHTML = tech12AlreadyBooked;
+						  move()
+						 document.getElementById("Upcoming1").innerHTML = tech12AlreadyBooked;
 					 }
                  }
 			
@@ -407,14 +412,14 @@ function Tech1CheckSmallest(TimeTillBook, TimeSlot)
 				 
 				if((tech13AlreadyBooked).includes("�") == true)
 					{
-						  
+						  move()
 						 tech13AlreadyBooked= tech13AlreadyBooked.substr(tech13AlreadyBooked.indexOf("<hr>"));
-						 document.getElementById("Slot11").innerHTML = tech13AlreadyBooked;
+						 document.getElementById("Upcoming1").innerHTML = tech13AlreadyBooked;
 					}
 				 else
 					 {
-						  
-						 document.getElementById("Slot11").innerHTML = tech13AlreadyBooked;
+						  move()
+						 document.getElementById("Upcoming1").innerHTML = tech13AlreadyBooked;
 					 }
                  }
 			
@@ -423,14 +428,14 @@ function Tech1CheckSmallest(TimeTillBook, TimeSlot)
 				 
 				if((tech14AlreadyBooked).includes("�") == true)
 					{
-						  
+						  move()
 						 tech14AlreadyBooked= tech14AlreadyBooked.substr(tech14AlreadyBooked.indexOf("<hr>"));
-						 document.getElementById("Slot11").innerHTML = tech14AlreadyBooked;
+						 document.getElementById("Upcoming1").innerHTML = tech14AlreadyBooked;
 					}
 				 else
 					 {
-						  
-						 document.getElementById("Slot11").innerHTML = tech14AlreadyBooked;
+						 move() 
+						 document.getElementById("Upcoming1").innerHTML = tech14AlreadyBooked;
 					 }
                  }
 			
@@ -439,14 +444,14 @@ function Tech1CheckSmallest(TimeTillBook, TimeSlot)
 				 
 				if((tech15AlreadyBooked).includes("�") == true)
 					{
-						  
+						  move()
 						 tech15AlreadyBooked= tech15AlreadyBooked.substr(tech15AlreadyBooked.indexOf("<hr>"));
-						 document.getElementById("Slot11").innerHTML = tech15AlreadyBooked;
+						 document.getElementById("Upcoming1").innerHTML = tech15AlreadyBooked;
 					}
 				 else
 					 {
-						  
-						 document.getElementById("Slot11").innerHTML = tech15AlreadyBooked;
+						  move()
+						 document.getElementById("Upcoming1").innerHTML = tech15AlreadyBooked;
 					 }
                  }
 		}
@@ -464,11 +469,11 @@ function Tech2CheckSmallest(TimeTillBook, TimeSlot)
 				if((tech21AlreadyBooked).includes("�") == true)
 					{
 						 tech21AlreadyBooked= tech21AlreadyBooked.substr(tech21AlreadyBooked.indexOf("<hr>"));
-						 document.getElementById("Slot21").innerHTML = tech21AlreadyBooked;
+						 document.getElementById("Upcoming2").innerHTML = tech21AlreadyBooked;
 					}
 				 else
 					 {
-						 document.getElementById("Slot21").innerHTML = tech21AlreadyBooked;
+						 document.getElementById("Upcoming2").innerHTML = tech21AlreadyBooked;
 					 }
                  }
 			
@@ -477,11 +482,11 @@ function Tech2CheckSmallest(TimeTillBook, TimeSlot)
 				if((tech22AlreadyBooked).includes("�") == true)
 					{
 						 tech22AlreadyBooked= tech22AlreadyBooked.substr(tech22AlreadyBooked.indexOf("<hr>"));
-						 document.getElementById("Slot21").innerHTML = tech22AlreadyBooked;
+						 document.getElementById("Upcoming2").innerHTML = tech22AlreadyBooked;
 					}
 				 else
 					 {
-						 document.getElementById("Slot21").innerHTML = tech22AlreadyBooked;
+						 document.getElementById("Upcoming2").innerHTML = tech22AlreadyBooked;
 					 }
                  }
 			
@@ -490,11 +495,11 @@ function Tech2CheckSmallest(TimeTillBook, TimeSlot)
 				if((tech23AlreadyBooked).includes("�") == true)
 					{
 						 tech23AlreadyBooked= tech23AlreadyBooked.substr(tech23AlreadyBooked.indexOf("<hr>"));
-						 document.getElementById("Slot21").innerHTML = tech23AlreadyBooked;
+						 document.getElementById("Upcoming2").innerHTML = tech23AlreadyBooked;
 					}
 				 else
 					 {
-						 document.getElementById("Slot21").innerHTML = tech23AlreadyBooked;
+						 document.getElementById("Upcoming2").innerHTML = tech23AlreadyBooked;
 					 }
                  }
 			
@@ -503,11 +508,11 @@ function Tech2CheckSmallest(TimeTillBook, TimeSlot)
 				if((tech24AlreadyBooked).includes("�") == true)
 					{
 						 tech24AlreadyBooked= tech24AlreadyBooked.substr(tech24AlreadyBooked.indexOf("<hr>"));
-						 document.getElementById("Slot21").innerHTML = tech24AlreadyBooked;
+						 document.getElementById("Upcoming2").innerHTML = tech24AlreadyBooked;
 					}
 				 else
 					 {
-						 document.getElementById("Slot21").innerHTML = tech24AlreadyBooked;
+						 document.getElementById("Upcoming2").innerHTML = tech24AlreadyBooked;
 					 }
                  }
 			
@@ -516,11 +521,11 @@ function Tech2CheckSmallest(TimeTillBook, TimeSlot)
 				if((tech25AlreadyBooked).includes("�") == true)
 					{
 						 tech25AlreadyBooked= tech25AlreadyBooked.substr(tech25AlreadyBooked.indexOf("<hr>"));
-						 document.getElementById("Slot21").innerHTML = tech25AlreadyBooked;
+						 document.getElementById("Upcoming2").innerHTML = tech25AlreadyBooked;
 					}
 				 else
 					 {
-						 document.getElementById("Slot21").innerHTML = tech25AlreadyBooked;
+						 document.getElementById("Upcoming2").innerHTML = tech25AlreadyBooked;
 					 }
                  }
 		}	
@@ -536,11 +541,11 @@ function Tech3CheckSmallest(TimeTillBook, TimeSlot)
 				if((tech31AlreadyBooked).includes("�") == true)
 					{
 						 tech31AlreadyBooked= tech31AlreadyBooked.substr(tech31AlreadyBooked.indexOf("<hr>"));
-						 document.getElementById("Slot31").innerHTML = tech31AlreadyBooked;
+						 document.getElementById("Upcoming3").innerHTML = tech31AlreadyBooked;
 					}
 				 else
 					 {
-						 document.getElementById("Slot31").innerHTML = tech31AlreadyBooked;
+						 document.getElementById("Upcoming3").innerHTML = tech31AlreadyBooked;
 					 }
                  }
 			
@@ -549,11 +554,11 @@ function Tech3CheckSmallest(TimeTillBook, TimeSlot)
 				if((tech32AlreadyBooked).includes("�") == true)
 					{
 						 tech32AlreadyBooked= tech32AlreadyBooked.substr(tech32AlreadyBooked.indexOf("<hr>"));
-						 document.getElementById("Slot31").innerHTML = tech32AlreadyBooked;
+						 document.getElementById("Upcoming3").innerHTML = tech32AlreadyBooked;
 					}
 				 else
 					 {
-						 document.getElementById("Slot31").innerHTML = tech32AlreadyBooked;
+						 document.getElementById("Upcoming3").innerHTML = tech32AlreadyBooked;
 					 }
                  }
 			
@@ -562,11 +567,11 @@ function Tech3CheckSmallest(TimeTillBook, TimeSlot)
 				if((tech33AlreadyBooked).includes("�") == true)
 					{
 						 tech33AlreadyBooked= tech33AlreadyBooked.substr(tech33AlreadyBooked.indexOf("<hr>"));
-						 document.getElementById("Slot31").innerHTML = tech33AlreadyBooked;
+						 document.getElementById("Upcoming3").innerHTML = tech33AlreadyBooked;
 					}
 				 else
 					 {
-						 document.getElementById("Slot31").innerHTML = tech33AlreadyBooked;
+						 document.getElementById("Upcoming3").innerHTML = tech33AlreadyBooked;
 					 }
                  }
 			
@@ -575,11 +580,11 @@ function Tech3CheckSmallest(TimeTillBook, TimeSlot)
 				if((tech34AlreadyBooked).includes("�") == true)
 					{
 						 tech34AlreadyBooked= tech34AlreadyBooked.substr(tech34AlreadyBooked.indexOf("<hr>"));
-						 document.getElementById("Slot31").innerHTML = tech34AlreadyBooked;
+						 document.getElementById("Upcoming3").innerHTML = tech34AlreadyBooked;
 					}
 				 else
 					 {
-						 document.getElementById("Slot31").innerHTML = tech34AlreadyBooked;
+						 document.getElementById("Upcoming3").innerHTML = tech34AlreadyBooked;
 					 }
                  }
 			
@@ -588,11 +593,11 @@ function Tech3CheckSmallest(TimeTillBook, TimeSlot)
 				if((tech35AlreadyBooked).includes("�") == true)
 					{
 						 tech35AlreadyBooked= tech35AlreadyBooked.substr(tech35AlreadyBooked.indexOf("<hr>"));
-						 document.getElementById("Slot31").innerHTML = tech35AlreadyBooked;
+						 document.getElementById("Upcoming3").innerHTML = tech35AlreadyBooked;
 					}
 				 else
 					 {
-						 document.getElementById("Slot31").innerHTML = tech35AlreadyBooked;
+						 document.getElementById("Upcoming3").innerHTML = tech35AlreadyBooked;
 					 }
                  }
 		}	
@@ -608,11 +613,11 @@ function Tech4CheckSmallest(TimeTillBook, TimeSlot)
 				if((tech41AlreadyBooked).includes("�") == true)
 					{
 						 tech41AlreadyBooked= tech41AlreadyBooked.substr(tech41AlreadyBooked.indexOf("<hr>"));
-						 document.getElementById("Slot41").innerHTML = tech41AlreadyBooked;
+						 document.getElementById("Upcoming4").innerHTML = tech41AlreadyBooked;
 					}
 				 else
 					 {
-						 document.getElementById("Slot41").innerHTML = tech41AlreadyBooked;
+						 document.getElementById("Upcoming4").innerHTML = tech41AlreadyBooked;
 					 }
                  }
 			
@@ -621,11 +626,11 @@ function Tech4CheckSmallest(TimeTillBook, TimeSlot)
 				if((tech42AlreadyBooked).includes("�") == true)
 					{
 						 tech42AlreadyBooked= tech42AlreadyBooked.substr(tech42AlreadyBooked.indexOf("<hr>"));
-						 document.getElementById("Slot41").innerHTML = tech42AlreadyBooked;
+						 document.getElementById("Upcoming4").innerHTML = tech42AlreadyBooked;
 					}
 				 else
 					 {
-						 document.getElementById("Slot41").innerHTML = tech32AlreadyBooked;
+						 document.getElementById("Upcoming4").innerHTML = tech32AlreadyBooked;
 					 }
                  }
 			
@@ -634,11 +639,11 @@ function Tech4CheckSmallest(TimeTillBook, TimeSlot)
 				if((tech43AlreadyBooked).includes("�") == true)
 					{
 						 tech43AlreadyBooked= tech43AlreadyBooked.substr(tech43AlreadyBooked.indexOf("<hr>"));
-						 document.getElementById("Slot41").innerHTML = tech43AlreadyBooked;
+						 document.getElementById("Upcoming4").innerHTML = tech43AlreadyBooked;
 					}
 				 else
 					 {
-						 document.getElementById("Slot41").innerHTML = tech43AlreadyBooked;
+						 document.getElementById("Upcoming4").innerHTML = tech43AlreadyBooked;
 					 }
                  }
 			
@@ -647,11 +652,11 @@ function Tech4CheckSmallest(TimeTillBook, TimeSlot)
 				if((tech44AlreadyBooked).includes("�") == true)
 					{
 						 tech44AlreadyBooked= tech44AlreadyBooked.substr(tech44AlreadyBooked.indexOf("<hr>"));
-						 document.getElementById("Slot41").innerHTML = tech44AlreadyBooked;
+						 document.getElementById("Upcoming4").innerHTML = tech44AlreadyBooked;
 					}
 				 else
 					 {
-						 document.getElementById("Slot41").innerHTML = tech44AlreadyBooked;
+						 document.getElementById("Upcoming4").innerHTML = tech44AlreadyBooked;
 					 }
                  }
 			
@@ -660,11 +665,11 @@ function Tech4CheckSmallest(TimeTillBook, TimeSlot)
 				if((tech45AlreadyBooked).includes("�") == true)
 					{
 						 tech45AlreadyBooked= tech45AlreadyBooked.substr(tech45AlreadyBooked.indexOf("<hr>"));
-						 document.getElementById("Slot41").innerHTML = tech45AlreadyBooked;
+						 document.getElementById("Upcoming4").innerHTML = tech45AlreadyBooked;
 					}
 				 else
 					 {
-						 document.getElementById("Slot41").innerHTML = tech45AlreadyBooked;
+						 document.getElementById("Upcoming4").innerHTML = tech45AlreadyBooked;
 					 }
                  }
 		}	

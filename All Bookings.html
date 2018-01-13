@@ -14,6 +14,9 @@
 		<div class="row">
 		  <div class="column" >
 			<h2>Technology 1</h2>
+			<strong><p>Most Upcoming Booking:</p></strong>
+			<p id="Upcoming1">Upcoming....</p>
+			<br><br>
 			<p id="Slot11">Time Slot 1... Unbooked</p>
 			<p id="Slot12">Time Slot 2... Unbooked</p>
 			<p id="Slot13">Time Slot 3... Unbooked</p>
@@ -22,6 +25,9 @@
 		  </div>
 		  <div class="column" >
 			<h2>Technology 2</h2>
+			<strong><p>Most Upcoming Booking:</p></strong>
+			<p id="Upcoming2">Upcoming....</p>
+			<br><br>
 			<p id="Slot21">Time Slot 1... Unbooked</p>
 			<p id="Slot22">Time Slot 2... Unbooked</p>
 			<p id="Slot23">Time Slot 3... Unbooked</p>
@@ -30,6 +36,9 @@
 		  </div>
 		  <div class="column">
 			<h2>Technology 3</h2>
+			<strong><p>Most Upcoming Booking:</p></strong>
+			<p id="Upcoming3">Upcoming....</p>
+			<br><br>
 			<p id="Slot31">Time Slot 1... Unbooked</p>
 			<p id="Slot32">Time Slot 2... Unbooked</p>
 			<p id="Slot33">Time Slot 3... Unbooked</p>
@@ -38,6 +47,9 @@
 		  </div>
 		  <div class="column">
 			<h2>Technology 4</h2>
+			<strong><p>Most Upcoming Booking:</p></strong>
+			<p id="Upcoming4">Upcoming....</p>
+			<br><br>
 			<p id="Slot41">Time Slot 1... Unbooked</p>
 			<p id="Slot42">Time Slot 2... Unbooked</p>
 			<p id="Slot43">Time Slot 3... Unbooked</p>
@@ -46,5 +58,26 @@
 		  </div>
 		</div>
 		</center>
+		
+		<div id="myProgress">
+	  <div id="myBar" class="progress-bar progress-bar-striped active"><strong>Updating......</strong></div>
+	</div>
 	</body>	
+	<script>
+		var width = 0;
+
+		function move() {
+			var elem = document.getElementById("myBar");   
+			if (width >= 100) 
+			{
+			  width = -20
+			} 
+
+			else 
+			{
+			  width+=20; 
+			  elem.style.width = width + '%'; 
+			}
+		  }
+	</script>
 </html>
