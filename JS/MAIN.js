@@ -59,6 +59,7 @@ function createNewUser(username,password,emails) //CreateNewUser
             return;
         }
         cognitoUser = result.user;
+		document.getElementById("signUpErrMsg").style.color="green";
         document.getElementById("signUpErrMsg").innerHTML=("Welcome! "+ cognitoUser.getUsername() + " Please access your email to verify your account");
     });
 }
