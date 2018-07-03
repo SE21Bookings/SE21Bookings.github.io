@@ -30,6 +30,7 @@ function Login(usernames, passwords) //used to log a user into the main page
 			whatUser(localStorage.getItem("JwtToken"))
         },
         onFailure: function(err) {
+			document.getElementById("signInErrMsg").style.color="red"
             document.getElementById("signInErrMsg").innerHTML=(err.message || JSON.stringify(err));
         }
     });
@@ -56,6 +57,7 @@ function createNewUser(username,password,emails) //CreateNewUser
 
     userPool.signUp(username, password, attributeList, null, function(err, result){
         if (err) {
+			document.getElementById("signUpErrMsg").style.color="red";
             document.getElementById("signUpErrMsg").innerHTML=(err.message || JSON.stringify(err));
             return;
         }
