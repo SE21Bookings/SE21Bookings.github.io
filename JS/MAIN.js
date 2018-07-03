@@ -23,7 +23,8 @@ function Login(usernames, passwords) //used to log a user into the main page
     cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: function (result) {
             var accessToken = result.getAccessToken().getJwtToken();
-			alert("Sucess!")
+			document.getElementById("signInErrMsg").style.color="green"
+			document.getElementById("signInErrMsg").innerHTML="Sucessfully Logged In"
 			localStorage.setItem("JwtToken",accessToken)
 			decodeJWT(localStorage.getItem("JwtToken"))
 			whatUser(localStorage.getItem("JwtToken"))
