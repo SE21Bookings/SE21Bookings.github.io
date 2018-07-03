@@ -1,151 +1,99 @@
 ﻿<!DOCTYPE HTML>
 <html>
- <head>
-	 <title>SE21 Bookings</title>
-	 <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
-	 <script type="text/javascript">
-	   (function(){
-		  emailjs.init("user_dNUTnHrGIx2yGv4lkBnqw");
-	   })();
-	 </script> 
- </head>
-  <script src="JS/jquery.js" type="text/javascript" charset="utf-8"></script>
-  <script src="JS/MAIN.js" type="text/javascript" charset="utf-8"></script>
-  <script src="JS/Moment.js" type="text/javascript" charset="utf-8"></script>
- 
-  <link rel="stylesheet" href="CSS/MAIN.css">
-<body>
-    <button id="bookTech1Btn" onclick="ShowModal()">Book Tech 1</button>
-    <br>
-    <button id="bookTech2Btn" onclick="ShowModal()">Book Tech 2</button>
-    <br>
-    <button id="bookTech3Btn" onclick="ShowModal()">Book Tech 3</button>
-    <br>
-    <button id="bookTech4Btn" onclick="ShowModal()">Book Tech 4</button>    
-    
-    <div class="footer">
-		<a href="All Bookings.html">View All Bookings</a>
-	</div>
-   
-    <div id="BookTech1Modal" class="modal">
-
-  <!-- Modal content -->
-      <div class="modal-content">
-          
-        <div class="modal-header">
-            <span class="close">&times;</span>
-            <h2 id="BookedRoom"></h2>
-        </div>
-        <center>
-            <br><label>Enter Your Name:</label><br>
-            <input id="name" type="text">
-            <br><label>Enter Your Email:</label><br>
-            <input id="email" type="email">
-            <br><label>Pick A Date:</label><br>
-			<input name="setTodaysDate" id="SetDate" type="date" style="width:30%;"><input id="day" type="text" style="width:20%" readonly>
-            <br><label>Pick A Time:</label><br>
-            <select id="PickPeriod" size="1">
-                <option selected="true" disabled="disabled">--Please Pick A Period--</option>    
-                <option value="8:35">Period 1</option>
-                <option value="9:35">Period 2</option>
-                <option value="10:30">Break</option>
-                <option value="10:50">Period 3</option>
-                <option value="11:45">Period 4</option>
-                <option value="12:45">Lunch</option>
-                <option value="13:40">Period 5</option>
-                <option value="14:35">Period 6</option>
-                <option value="15:35">AfterSchool Hour 1</option>
-                <option value="16:35">AfterSchool Hour 2</option>
-            </select>
-            <br>
-            <button id="submit" onClick="validateTime()">SUBMIT BOOKING</button>
-        </center>
-        <br><br><br>
-      </div>    
-    </div>
-    
-    
-
-	<ul id="upcomingBookings">
-    <h1>Upcoming Bookings</h1>
-    
-	<strong><p>TECH 1</p></strong>
-	    <div>
-			<p id="Tech1CurrentBookings">No Current Bookings...<br></p>
-	    </div>
-	<strong><p>TECH 2</p></strong>
-	    <div>
-			<p id="Tech2CurrentBookings">No Current Bookings...<br></p>
-	    </div>
-	<strong><p>TECH 3</p></strong>
-	    <div>
-			<p id="Tech3CurrentBookings">No Current Bookings...<br></p>
-	    </div>
-	<strong><p>TECH 4</p></strong>
-	    <div>
-			<p id="Tech4CurrentBookings">No Current Bookings...<br></p>
-	    </div>
-	</ul>
-   
+	<head>
+		<title>SE21 Bookings</title>
+		<link rel="stylesheet" href="CSS/MAIN.css">
+		<script src="JS/aws-cognito.js"></script>
+		<script src="JS/jquery.js" type="text/javascript" charset="utf-8"></script>
+		<script src="JS/MAIN.js" type="text/javascript" charset="utf-8"></script>
+ 	</head>
 	
-   	<div id="myProgress">
-	  <div id="myBar" class="progress-bar progress-bar-striped active"><strong>Updating......</strong></div>
-	</div>
-
-
-
-    <script type="text/javascript">
-		//Limits the Date Choosing to only future dates
-		var today = new Date().toISOString().split('T')[0];
-		document.getElementsByName("setTodaysDate")[0].setAttribute('min', today);
-		//gets the ID of the last button that was clicked
-		$("button").click(function() {
-    		localStorage.setItem("LastBtn",$(this).attr('id'));
-		});
-
+	<style>
+		html 
+		{ 
+		  background: url('Img/BackgroundImg.jpeg') no-repeat center center fixed; 
+		  -webkit-background-size: cover;
+		  -moz-background-size: cover;
+		  -o-background-size: cover;
+		  background-size: cover;
+		}
+	</style>
+	
+	<body>
+		<div class="LoginColor"></div>
 		
+		<div class="loginMaster">
+			<div id="LoginForm">
+				<center>
+				<br>
+					<h1>Welcome To SE21 Bookings</h1>
+					<img src="Img/userIcon.png" width="20%"><br>
+					<h1>Sign In</h1>
+					<p id="signInErrMsg"></p>
+					<input placeholder="Username/Email" id="username"><br>
+					<input placeholder="Password" type="password" id="password"><br>
+					<button onClick="LoginNow();">Login</button><br>
+				</center>
+				<a href="#" id="SignUpNow">Sign Up</a>
+			</div>
 
-		//MODAL JS
-        var modal = document.getElementById('BookTech1Modal');
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-
-        // When the user clicks on the button, open the modal 
-        function ShowModal() {
-            modal.style.display = "block";
-			setTimeout(BookRoom,100);
-        }
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
+			<div id="SignUp" class="SignUpmodal">
+				<div class="SignUp-content">
+					<span class="close">&times;</span>
+					<p id="signUpErrMsg"></p>
+					<center>
+						<h1>Sign Up</h1>
+						<img src="Img/signupIcon.png" width="20%">
+						<input placeholder="Username" id="user"><br>
+						<input placeholder="School Email" type="email" id="email"><br>
+						<input placeholder="Password" type="password" id="pass"><br>
+						<input placeholder="Confirm Password" type="password" id="confirmPass"><br>
+						<button onClick="SignUp();">Sign Up</button>
+					</center>
+				</div>
+			</div>
+		</div>
 		
+	</body>
 
-		var width = 0;
+	<script>//Sign Up Module Script
+		var SignUpModal = document.getElementById('SignUp');
+		var SignUpBtn = document.getElementById("SignUpNow");
+		var span = document.getElementsByClassName("close")[0];
 
-		function move() {
-			var elem = document.getElementById("myBar");   
-			if (width >= 100) 
-			{
-			  width = -20
-			} 
+		// When the user clicks the button, open the modal 
+		SignUpBtn.onclick = function() {
+			SignUpModal.style.display = "block";
+		}
 
-			else 
-			{
-			  width+=20; 
-			  elem.style.width = width + '%'; 
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function() {
+			SignUpModal.style.display = "none";
+		}
+
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+			if (event.target == SignUpModal) {
+				SignUpModal.style.display = "none";
 			}
-		  }
-        
-        
-    </script>
-</body>
+		}
+	</script> 
+	
+	<script> //Login and Sign Up
+		function LoginNow()
+		{
+			Login($("#username").val(),$("#password").val())
+		}
+		function SignUp()
+		{
+			if($("#pass").val() != $("#confirmPass").val())
+			{
+				document.getElementById("signUpErrMsg").innerHTML = "Passwords Don't Match"
+			}
+			else
+			{
+				createNewUser($("#user").val(),$("#pass").val(),$("#email").val())
+			}
+		}
+	</script>
 </html>
