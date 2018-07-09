@@ -14,7 +14,7 @@ body
 	bottom: 0;
 	left:0;
 	right:0;
-	background-color: rgba(222, 42, 42, 0.5);
+	background-color: rgba(211, 0, 19, 0.5);
 	z-index: -1;
 }
 
@@ -140,4 +140,112 @@ body
     color: #000;
     text-decoration: none;
     cursor: pointer;
+}
+
+#imgnHeaderDiv
+{
+	width:800px;
+	height: 500px;
+	position: absolute;
+	top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -57%);
+	margin: 0;
+}
+#imgnHeaderDiv img
+{
+	width:800px;
+	height: 500px;
+}
+
+#mapBtnsDiv
+{
+	width:800px;
+	height: 500px;
+	position: absolute;
+	top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -41%);
+	margin: 0;
+}
+
+#Tech1Btn
+{
+	position: absolute;
+	top:125px;
+	left:44px;
+	height:162px;
+	width:176px;
+	cursor: pointer;
+}
+#Tech1Btn:hover
+{
+	background-color: rgba(211,0,19,0.3)
+}
+#Tech2Btn
+{
+	position: absolute;
+	top:297px;
+	left:44px;
+	height:168px;
+	width:177px;
+	cursor: pointer;
+}
+#Tech2Btn:hover
+{
+	background-color: rgba(211,0,19,0.3)
+}
+#Tech3Btn
+{
+	position: absolute;
+	bottom:33px;
+	right:33px;
+	height:186px;
+	width:193px;
+	cursor: pointer;
+}
+#Tech3Btn:hover
+{
+	background-color: rgba(211,0,19,0.3)
+}
+#Tech4Btn
+{
+	position: absolute;
+	top:130px;
+	left:290px;
+	height:140px;
+	width:172px;
+	cursor: pointer;
+}
+#Tech4Btn:hover
+{
+	background-color: rgba(211,0,19,0.3)
+}
+#Tech5Btn
+{
+	position: absolute;
+	top:315px;
+	left:420px;
+	height:30px;
+	width:35px;
+	cursor: pointer;
+}
+#Tech5Btn:hover
+{
+	background-color: rgba(211,0,19,0.3)
+}
+#VRBtn
+{
+	position: absolute;
+	top:108px;
+	right:140px;
+	height:112px;
+	width:130px;
+	cursor: pointer;
+}
+#VRBtn:hover
+{
+	background-color: rgba(211,0,19,0.3)
 }
