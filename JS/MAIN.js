@@ -76,7 +76,7 @@ function whatUser(jwtToken) // checks what user it is, and whether or not it is 
 	
 	if(user.username == "KMAdmin")
 	{
-		openInNewTab("Pages/AdminCreateMaster.html")
+		self.location=("Pages/AdminCreateMaster.html")
 	}
 }
 
@@ -97,7 +97,9 @@ function checkValid(jwtToken) // Used to see if session has ended
 	}
 }
 
-function openInNewTab(url) {
-  var win = window.open(url, '_blank');
-  win.focus();
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+	if (event.target == modal) {
+		modal.style.display = "none";
+	}
 }
