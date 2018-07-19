@@ -92,8 +92,9 @@ body
 	font-size: 10px;
 	color:red;
 	position: absolute;
-	top:165px;
+	top:160px;
 	left: 33px;
+	max-width: 250px;
 }
 #signUpErrMsg
 {
@@ -101,9 +102,27 @@ body
 	color:red;
 	margin:0;
     padding:0;
+	position: absolute;
+	left:500px;
+	max-width: 250px;
+}
+#ForgotPasswordErrMsg
+{
+	font-size: 10px;
+	color:red;
+	margin:0;
+    padding:0;
+	position: absolute;
+	max-width: 250px;
 }
 
-
+#forgotPasswordDiv
+{	
+	position: absolute;
+	bottom:0px;
+	right:0px;
+	width:150px;
+}
 .SignUpmodal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -126,7 +145,6 @@ body
     border: 3px solid black;
     width: 300px;
 	height: 425px;
-	
 }
 /* The Close Button */
 .close {
@@ -292,4 +310,28 @@ body
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+.ForgotPasswordSlides {display:none;}
+
+#Loader
+{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgb(24,24,31);
+	z-index: 5;
+}
+#Loader img
+{
+	top: 50%;
+	left: 50%;
+	margin-right: -50%;
+	transform: translate(-50%, -50%);
+	position: absolute;
+	z-index: 5;
 }

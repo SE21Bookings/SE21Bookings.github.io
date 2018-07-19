@@ -24,27 +24,28 @@
 		
 		<div class="loginMaster">
 			<div id="LoginForm">
+				<p id="signInErrMsg"></p>
 				<center>
-				<br>
+					<br>
 					<h1>Welcome To SE21 Bookings</h1>
 					<img src="Img/userIcon.png" width="20%"><br>
 					<h1>Sign In</h1>
-					<p id="signInErrMsg"></p>
-					<input placeholder="Username/Email" id="username"><br>
+					<input placeholder="Email" id="username" type="email"><br>
 					<input placeholder="Password" type="password" id="password"><br>
 					<button onClick="LoginNow();">Login</button><br>
 				</center>
 				<a href="#" id="SignUpNow">Sign Up</a>
+				<div id="forgotPasswordDiv"><a href="#" id="ForgotPassLink">Forgot Password</a></div>
 			</div>
 
 			<div id="SignUp" class="SignUpmodal">
 				<div class="SignUp-content">
-					<span class="close">&times;</span>
+					<span class="close" id="SignUpClose">&times;</span>	
 					<p id="signUpErrMsg"></p>
 					<center>
+						<br><br>
 						<h1>Sign Up</h1>
 						<img src="Img/signupIcon.png" width="20%">
-						<input placeholder="Username" id="user"><br>
 						<input placeholder="School Email" type="email" id="email"><br>
 						<input placeholder="Password" type="password" id="pass"><br>
 						<input placeholder="Confirm Password" type="password" id="confirmPass"><br>
@@ -52,14 +53,40 @@
 					</center>
 				</div>
 			</div>
+			
+			<div id="ForgotPassword" class="SignUpmodal">
+				<div class="SignUp-content">
+					<span class="close" id="ForgotPasswordClose">&times;</span>	
+					<p id="ForgotPasswordErrMsg"></p>
+					<center>
+						<br>
+						<h1>Forgot Password</h1>
+						<img src="Img/forgotPassword.png" width="25%">
+						
+						<div class="ForgotPasswordSlides">
+							<input id="forgotPassEmail" placeholder="Enter Your Email" type="email">
+						</div>
+						<div class="ForgotPasswordSlides">
+							<input id="forgotPassCode" placeholder="Enter Verification Code" type="text">
+							<input id="forgotPassNPassword" placeholder="New Password" type="password">
+							<input id="forgotPassConfirmPassword" placeholder="Confirm New Password" type="password">
+						</div>
+						<button onClick="forgotPassContinue();">Next</button>
+					</center>
+				</div>
+			</div>
 		</div>
 		
 	</body>
 
+	<script>//intializers
+		showDivs(1);
+	</script>
+	
 	<script>//Sign Up Module Script
 		var SignUpModal = document.getElementById('SignUp');
 		var SignUpBtn = document.getElementById("SignUpNow");
-		var span = document.getElementsByClassName("close")[0];
+		var span = document.getElementById("SignUpClose");
 
 		// When the user clicks the button, open the modal 
 		SignUpBtn.onclick = function() {
@@ -76,6 +103,25 @@
 			if (event.target == SignUpModal) {
 				SignUpModal.style.display = "none";
 			}
+			else if (event.target == forgotPasswordModal) {
+				forgotPasswordModal.style.display = "none";
+			}
+		}
+	</script> 
+	
+	<script>//Forgot Password Module Script
+		var forgotPasswordModal = document.getElementById('ForgotPassword');
+		var forgotPasswordBtn = document.getElementById("ForgotPassLink");
+		var spans = document.getElementById("ForgotPasswordClose");
+
+		// When the user clicks the button, open the modal 
+		forgotPasswordBtn.onclick = function() {
+			forgotPasswordModal.style.display = "block";
+		}
+
+		// When the user clicks on <span> (x), close the modal
+		spans.onclick = function() {
+			forgotPasswordModal.style.display = "none";
 		}
 	</script> 
 	
@@ -88,12 +134,17 @@
 		{
 			if($("#pass").val() != $("#confirmPass").val())
 			{
-				document.getElementById("signUpErrMsg").innerHTML = "Passwords Don't Match"
+				$("#signUpErrMsg").html("Passwords Don't Match");
+			}
+			else if($("#email").val().indexOf("@dulwich-beijing.cn") == -1)
+			{
+				$("#signUpErrMsg").html("Your email must contain '@dulwich-beijing.cn'");
 			}
 			else
 			{
-				createNewUser($("#user").val(),$("#pass").val(),$("#email").val())
+				createNewUser($("#email").val(),$("#pass").val())
 			}
 		}
 	</script>
+	
 </html>

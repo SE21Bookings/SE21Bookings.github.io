@@ -22,20 +22,27 @@
 			<div onClick="openModal('Tech_5');" id="Tech5Btn"></div>
 			<div onClick="openModal('Tech_VR');" id="VRBtn"></div>
 		</div>
-		
 		<div id="timeTableModal" class="modal">
 		  <div class="timeTableModal-content">
 			<span class="close">&times;</span>
 				<h3 id="timeTableTitle">Timetable:</h3>
-				
 				<div id="timeTable"></div>
 		  </div>
 		</div>
+		
+		<div id="Loader">
+			<img width="50%" src="../Img/Loading_Animation.gif">
+		</div>
 	</body>
 	
-	<script>
+	<script>//Initlizers
 		$("#navBar").load("../DynamicLoad_Modules/NavBar.html")
+		window.setTimeout(function(){
+			$("#Loader").fadeOut(3000, "swing")
+		},2000)
 		
+	</script>
+	<script> //Timetable Modal Code
 		var modal = document.getElementById('timeTableModal');
 		// Get the <span> element that closes the modal
 		var span = document.getElementsByClassName("close")[0];
@@ -50,4 +57,5 @@
 			modal.style.display = "none";
 		}
 	</script>
+	
 </html>
