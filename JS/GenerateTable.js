@@ -230,6 +230,7 @@ function loadinTech1()
 				}
 				else
 				{
+					$("#bookingStatus").html("booked<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+clickedBookedEmail)
 					$("#contactBtn").show();
 				}
 			}
