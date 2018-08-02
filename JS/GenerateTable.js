@@ -1,3 +1,6 @@
+var Day;
+var Period;
+
 
 function loadinTech1()
 {
@@ -55,43 +58,96 @@ function loadinTech1()
 						//--->create table body rows > start
 						$.each(data.Items, function(index, val) 
 						{
+							var newString;
+							var hiddenTxt; 
 							//you can replace with your database row id
 							row_id = random_id();
 							//loop through ajax row data
-							tbl +='<tr row_id="'+row_id+'">';
-								tbl +='<td ><div col_name="Day">'+(val['Day']).substr(1)+'</div></td>';
+							tbl +='<tr row_id="'+row_id+'" id="'+row_id+'">';
+								tbl +='<td ><div class="bold" col_name="Day">'+(val['Day']).substr(1)+'</div></td>';
+								//will hide their email so that it wont show on the table but can be retrieved later to decide who booked the room. 
+								
+								newString = val['Period1'];
+								if(val['Period1']!="unbooked")
+								{
+									hiddenTxt = val['Period1'].substr(val['Period1'].indexOf(' ')+1)	
+									newString = val['Period1'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+								}
+								tbl +='<td ><div class="row_data pointerCursor" edit_type="click" col_name="Period1">'+newString+'</div></td>'; 
+								
+								newString = val['Period2'];
+								if(val['Period2']!="unbooked")
+								{
+									hiddenTxt = val['Period2'].substr(val['Period2'].indexOf(' ')+1)	
+									newString = val['Period2'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+								}
+								tbl +='<td ><div class="row_data pointerCursor" edit_type="click" col_name="Period2">'+newString+'</div></td>';
 							
-								tbl +='<td ><div class="row_data" edit_type="click" col_name="Period1">'+val['Period1']+'</div></td>';
+								newString = val['Break'];
+								if(val['Break']!="unbooked")
+								{
+									hiddenTxt = val['Break'].substr(val['Break'].indexOf(' ')+1)	
+									newString = val['Break'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+								}
+								tbl +='<td ><div class="row_data pointerCursor" edit_type="click" col_name="Break">'+newString+'</div></td>';
 							
-								tbl +='<td ><div class="row_data" edit_type="click" col_name="Period2">'+val['Period2']+'</div></td>';
+								
+								newString = val['Period3'];
+								if(val['Period3']!="unbooked")
+								{
+									hiddenTxt = val['Period3'].substr(val['Period3'].indexOf(' ')+1)	
+									newString = val['Period3'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+								}
+								tbl +='<td ><div class="row_data pointerCursor" edit_type="click" col_name="Period3">'+newString+'</div></td>';
 							
-								tbl +='<td ><div class="row_data" edit_type="click" col_name="Break">'+val['Break']+'</div></td>';
+								newString = val['Period4'];
+								if(val['Period4']!="unbooked")
+								{
+									hiddenTxt = val['Period4'].substr(val['Period4'].indexOf(' ')+1)	
+									newString = val['Period4'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+								}
+								tbl +='<td ><div class="row_data pointerCursor" edit_type="click" col_name="Period4">'+newString+'</div></td>';
 							
-								tbl +='<td ><div class="row_data" edit_type="click" col_name="Period3">'+val['Period3']+'</div></td>';
-							
-								tbl +='<td ><div class="row_data" edit_type="click" col_name="Period4">'+val['Period4']+'</div></td>';
-							
-								tbl +='<td ><div class="row_data" edit_type="click" col_name="Lunch">'+val['Lunch']+'</div></td>';
+								newString = val['Lunch'];
+								if(val['Lunch']!="unbooked")
+								{
+									hiddenTxt = val['Lunch'].substr(val['Lunch'].indexOf(' ')+1)	
+									newString = val['Lunch'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+								}
+								tbl +='<td ><div class="row_data pointerCursor" edit_type="click" col_name="Lunch">'+newString+'</div></td>';
 
-								tbl +='<td ><div class="row_data" edit_type="click" col_name="Period5">'+val['Period5']+'</div></td>';
+								newString = val['Period5'];
+								if(val['Period5']!="unbooked")
+								{
+									hiddenTxt = val['Period5'].substr(val['Period5'].indexOf(' ')+1)	
+									newString = val['Period5'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+								}
+								tbl +='<td ><div class="row_data pointerCursor" edit_type="click" col_name="Period5">'+newString+'</div></td>';
 							
-								tbl +='<td ><div class="row_data" edit_type="click" col_name="Period6">'+val['Period6']+'</div></td>';
+								newString = val['Period6'];
+								if(val['Period6']!="unbooked")
+								{
+									hiddenTxt = val['Period6'].substr(val['Period6'].indexOf(' ')+1)	
+									newString = val['Period6'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+								}
+								tbl +='<td ><div class="row_data pointerCursor" edit_type="click" col_name="Period6">'+newString+'</div></td>';
 							
-								tbl +='<td ><div class="row_data" edit_type="click" col_name="AfterschoolH1">'+val['AfterschoolH1']+'</div></td>';
+								newString = val['AfterschoolH1'];
+								if(val['AfterschoolH1']!="unbooked")
+								{
+									hiddenTxt = val['AfterschoolH1'].substr(val['AfterschoolH1'].indexOf(' ')+1)	
+									newString = val['AfterschoolH1'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+								}
+								tbl +='<td ><div class="row_data pointerCursor" edit_type="click" col_name="AfterschoolH1">'+newString+'</div></td>';
 							
-								tbl +='<td ><div class="row_data" edit_type="click" col_name="AfterschoolH2">'+val['AfterschoolH2']+'</div></td>';
+								newString = val['AfterschoolH2'];
+								if(val['AfterschoolH2']!="unbooked")
+								{
+									hiddenTxt = val['AfterschoolH2'].substr(val['AfterschoolH2'].indexOf(' ')+1)	
+									newString = val['AfterschoolH2'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+								}
+								tbl +='<td ><div class="row_data pointerCursor" edit_type="click" col_name="AfterschoolH2">'+newString+'</div></td>';
 							
-								//--->edit options > start
-								tbl +='<td>';
-
-									tbl +='<span class="btn_edit" > <a href="#" class="btn btn-link " row_id="'+row_id+'" > Edit</a> </span>';
-
-									//only show this button if edit button is clicked
-									tbl +='<span class="btn_save"> <a href="#" class="btn btn-link"  row_id="'+row_id+'"> Save</a> | </span>';
-									tbl +='<span class="btn_cancel"> <a href="#" class="btn btn-link" row_id="'+row_id+'"> Cancel</a> | </span>';
-
-								tbl +='</td>';
-								//--->edit options > end
 
 							tbl +='</tr>';
 						});
@@ -106,9 +162,7 @@ function loadinTech1()
 
 				//out put table data
 				$(document).find('#timeTable').html(tbl);
-
-				$(document).find('.btn_save').hide();
-				$(document).find('.btn_cancel').hide(); 
+				$("#viewPort").hide();
 			}
 		});
 
@@ -119,7 +173,8 @@ function loadinTech1()
 
 			return id_num + id_str;
 		}
-		//--->make div editable > start
+		
+		//--->Editing Viewport > start
 		$(document).on('click', '.row_data', function(event) 
 		{
 			event.preventDefault(); 
@@ -129,17 +184,73 @@ function loadinTech1()
 				return false; 
 			}
 
-			//make div editable
-			$(this).closest('div').attr('contenteditable', 'true');
-			//add bg css
-			$(this).addClass('bg-warning').css('padding','5px');
-
-			$(this).focus();
+			$("#viewPort").show();
+			
+			$("#editBtn").hide();
+			$("#deleteBtn").hide();
+			$("#contactBtn").hide();
+			$("#bookBtn").hide();
+			
+			var row_div = $(this)
+			
+			//Populating Details Start
+			$("#bookingDetails").html("Week Beginning: " + getMonday(new Date()));
+			var row_id = $(this).closest('tr').attr('row_id');	
+			var Row = document.getElementById(row_id);
+			var Cells = Row.getElementsByTagName("td");
+			var rowDay = Cells[0].textContent;
+			$("#bookingDetails").append("<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+rowDay);
+			var col_name = row_div.attr('col_name');
+			$("#bookingDetails").append(" "+col_name);
+			//Populating Details End
+			
+			//storing data incase they want to book the room
+			Day = rowDay;
+			Period = col_name;
+			
+			//Seeing if the room is already Booked
+			var clickedBookedEmail;
+			var currentStatus = row_div.html();
+			console.log(currentStatus)
+			if(currentStatus == "unbooked")
+			{
+				$("#bookBtn").show();
+				$("#bookingStatus").html("unbooked")
+			}	
+			else if(currentStatus.split(' ')[0] == "booked")
+			{
+				clickedBookedEmail = extractContent(currentStatus.substr(currentStatus.indexOf(' ')+1))
+				var welcomeMsgEmail = $("#welcomeMsg").html().substr($("#welcomeMsg").html().indexOf(' ')+1)
+				
+				if(clickedBookedEmail == welcomeMsgEmail)
+				{
+					$("#bookingStatus").html("booked<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+clickedBookedEmail)
+					$("#editBtn").show();
+					$("#deleteBtn").show();
+				}
+				else
+				{
+					$("#contactBtn").show();
+				}
+			}
 		})	
-		//--->make div editable > end
+		//--->Editing Viewport > end
+		
+		//--->MakingviewPort Dissapear > start
+		$(document).mouseup(function(e) 
+		{
+			var container = $("#viewPort");
+			var table = $("#timeTable");
 
-		//--->save single field data > start
-		$(document).on('focusout', '.row_data', function(event) 
+			// if the target of the click isn't the container nor a descendant of the container
+			if (!container.is(e.target) && container.has(e.target).length === 0 && !table.is(e.target) && table.has(e.target).length === 0) 
+			{
+				container.hide();
+			}
+		});
+		//--->MakingviewPort Dissapear > end
+		
+		function editField()
 		{
 			event.preventDefault();
 
@@ -165,40 +276,52 @@ function loadinTech1()
 
 			//out put to show
 			$('.post_msg').html( '<pre class="bg-success">'+JSON.stringify(arr, null, 2) +'</pre>');
-
-		})	
-		//--->save single field data > end
-		//--->button > edit > start	
-		$(document).on('click', '.btn_edit', function(event) 
+		}
+		
+		//--->button > book > start	
+		$(document).on('click', '#bookBtn', function(event) 
 		{
 			event.preventDefault();
 			var tbl_row = $(this).closest('tr');
-
 			var row_id = tbl_row.attr('row_id');
+			getEmail()
+			checkVariable()
+			function checkVariable() 
+			{
+				if (email != null) 
+				{
+				   $.ajax
+				   ({
+						type:'POST',
+						url:API_URL,
+						data: JSON.stringify(
+								{
+									"Day":manipulateDay(Day),
+									"Room":"Tech1",
+									"updateAttr":Period,
+									"updateValue":"booked " + email
+								}
+							  ),
 
-			tbl_row.find('.btn_save').show();
-			tbl_row.find('.btn_cancel').show();
+						contentType:"application/json",
 
-			//hide edit button
-			tbl_row.find('.btn_edit').hide(); 
+						success: function(data){
+							loadinTech1()
+						},
 
-			//make the whole row editable
-			tbl_row.find('.row_data')
-			.attr('contenteditable', 'true')
-			.attr('edit_type', 'button')
-			.addClass('bg-warning')
-			.css('padding','3px')
-
-			//--->add the original entry > start
-			tbl_row.find('.row_data').each(function(index, val) 
-			{  
-				//this will help in case user decided to click on cancel button
-				$(this).attr('original_entry', $(this).html());
-			}); 		
-			//--->add the original entry > end
-
+						error: function(data)
+						{
+							//$("#errorModule").show();
+						}
+				   });
+				}
+				else
+				{
+					setTimeout(checkVariable, 1000);
+				}
+		    }
 		});
-		//--->button > edit > end
+		//--->button > book > end
 
 		//--->button > cancel > start	
 		$(document).on('click', '.btn_cancel', function(event) 

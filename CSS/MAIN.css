@@ -4,7 +4,12 @@ body
 {
 	font-family: 'Roboto', sans-serif;
 }
-
+#welcomeMsg
+{
+	position: absolute;
+	top:50px;
+	left:5px;
+}
 .LoginColor
 {
 	height: auto;
@@ -268,6 +273,25 @@ body
 	background-color: rgba(211,0,19,0.3)
 }
 
+#viewPort
+{
+	height: 150px;
+	width: auto;
+	display: none;
+}
+#viewPort button
+{
+	border: none;
+	height: 30px;
+	width: 70px;
+	background-color: #9C9C9C;
+	color: white;
+}
+#viewPort button:hover
+{
+	background-color: #CACACA;
+	color: black;
+}
 .modal 
 {
     display: none; /* Hidden by default */
@@ -295,7 +319,13 @@ body
 
 .timeTableModal-content h3
 {
-	font-weight: 300;
+	font-weight: 500;
+	font-size: 23px;
+	margin: 0;
+}
+.timeTableModal-content label
+{
+	margin: 0;
 }
 /* The Close Button */
 .close {
@@ -335,4 +365,33 @@ body
 	transform: translate(-50%, -50%);
 	position: absolute;
 	z-index: 5;
+}
+
+.defaultCursor
+{
+	cursor: default;
+}
+.pointerCursor
+{
+	cursor: pointer;
+	font-weight: 300;
+}
+.bold
+{
+	font-weight: 500;
+}
+.noHeightBreak
+{
+	display: block; /* makes it have a width */
+    content: ""; /* clears default height */
+    margin-top: 0; /* change this to whatever height you want it */
+}
+.indent
+{
+	display: block;
+	margin-left: 40px;
+}
+.hidden
+{
+	display: none;
 }

@@ -2,6 +2,7 @@ var AdmimUserpoolID = "eu-central-1_WYExJawO8";
 var AdminAppClientID = "4tuportgn3gi4qjniq8on33e5g";
 
 var slideIndex = 1;
+var email;
 
 function Login(usernames, passwords) //used to log a user into the main page
 {
@@ -27,9 +28,7 @@ function Login(usernames, passwords) //used to log a user into the main page
             var accessToken = result.getAccessToken().getJwtToken();
 			document.getElementById("signInErrMsg").style.color="green"
 			document.getElementById("signInErrMsg").innerHTML="Sucessfully Logged In"
-			localStorage.setItem("JwtToken",accessToken)
-			decodeJWT(localStorage.getItem("JwtToken"))
-			whatUser(localStorage.getItem("JwtToken"))
+			checkWhichUser()
         },
         onFailure: function(err) {
 			document.getElementById("signInErrMsg").style.color="red"
@@ -125,16 +124,36 @@ function confirmForgottenPassword(username,code,newPassword)
 	})
 }
 
-function whatUser(jwtToken) // checks what user it is, and whether or not it is a master user
+function getCognitoUser() 
 {
-	const tokenParts = jwtToken.split('.');
-	const encodedPayload = tokenParts[1];
-	const rawPayload = atob(encodedPayload);
-	const user = JSON.parse(rawPayload);
-	
-	if(user.username == "SE21Admin")
+	var data =
+	{ 
+		UserPoolId : AdmimUserpoolID,
+        ClientId : AdminAppClientID
+    };
+    var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
+    var cognitoUser = userPool.getCurrentUser();
+
+    if (cognitoUser != null) 
 	{
-		//Do Stuff For Admin
+        cognitoUser.getSession(function(err, session) 
+		{
+            if (err) 
+			{
+                console.log(err);
+                return;
+            }
+            console.log('session validity: ' + session.isValid());
+        });
+		return cognitoUser;
+    }
+}
+
+function checkWhichUser()// checks what user it is, and whether or not it is a master user
+{
+	if(getEmail()=="SE21Admin")
+	{
+		//do something
 	}
 	else
 	{
@@ -187,7 +206,40 @@ function forgotPassContinue()
 		
 	}
 }
-			
+
+function getMonday( date ) 
+{
+    var day = date.getDay() || 7;  
+    if( day !== 2 ) 
+        date.setHours(-24 * (day - 2)); 
+	
+	date = date.toUTCString();
+	date = date.split(' ').slice(0, 4).join(' ');
+    return date;
+}
+
+function manipulateDay(day)
+{
+	switch(day) 
+	{
+		case "Monday":
+			return "1Monday";
+			break;
+		case "Tuesday":
+			return "2Tuesday";
+			break;
+		case "Wednesday":
+			return "3Wednesday";
+			break;
+		case "Thursday":
+			return "4Thursday";
+			break;
+		case "Friday":
+			return "5Friday";
+			break;
+	}
+}
+
 function plusDivs(n) 
 {
 	showDivs(slideIndex += n);
@@ -203,3 +255,22 @@ function showDivs(n)
 	}
 	x[slideIndex-1].style.display = "block";  
 }
+
+function getEmail()
+{
+	cognitoUser = getCognitoUser()
+	cognitoUser.getUserAttributes(function(err, result) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+		email = result[2]["Value"];
+	});
+}
+
+function extractContent(s)
+{
+  var span = document.createElement('span');
+  span.innerHTML = s;
+  return span.textContent || span.innerText;
+};
