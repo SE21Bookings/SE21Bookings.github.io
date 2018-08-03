@@ -304,7 +304,7 @@ function loadinTech1()
 		//--->Editing Viewport > end
 		
 		//--->MakingviewPort Dissapear > start
-		/*$(document).mouseup(function(e) 
+		$(document).mouseup(function(e) 
 		{
 			var container = $("#viewPort");
 			var table = $("#timeTable");
@@ -312,9 +312,10 @@ function loadinTech1()
 			// if the target of the click isn't the container nor a descendant of the container
 			if (!container.is(e.target) && container.has(e.target).length === 0 && !table.is(e.target) && table.has(e.target).length === 0) 
 			{
-				container.hide();
+				$("#viewPort_Content").hide()
+				$("#preLimLoader").show();
 			}
-		});*/
+		});
 		//--->MakingviewPort Dissapear > end
 		
 		//--->button > book > start	
