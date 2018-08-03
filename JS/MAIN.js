@@ -4,6 +4,8 @@ var AdminAppClientID = "4tuportgn3gi4qjniq8on33e5g";
 var slideIndex = 1;
 var email;
 
+
+
 function Login(usernames, passwords) //used to log a user into the main page
 {
 	var poolData = {

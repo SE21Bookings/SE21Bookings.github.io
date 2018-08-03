@@ -22,7 +22,9 @@ function loadinTech1()
 			data:JSON.stringify(
 					{
 						"Key":"Room",
-						"searchAttr":"Tech1"
+						"Key2":"Week",
+						"searchAttr":"Tech1",
+						"searchAttr2":"1"
 					}
 				),
 			contentType:"application/json",
@@ -314,6 +316,10 @@ function loadinTech1()
 			{
 				$("#viewPort_Content").hide()
 				$("#preLimLoader").show();
+				if(PrevSelect!=null)
+				{
+					PrevSelect.removeClass("selected")
+				}
 			}
 		});
 		//--->MakingviewPort Dissapear > end
