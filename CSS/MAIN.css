@@ -369,7 +369,7 @@ viewPort_Content
 	border-radius: 25px;
     width: 640px; /* Could be more or less, depending on screen size */
 }
-.emailModal-content input[type=text],input[type=email]
+.emailModal-content input[type=text],[type=email]
 {
     width: 600px;
     padding: 7px 20px;
