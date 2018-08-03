@@ -37,6 +37,17 @@ function Login(usernames, passwords) //used to log a user into the main page
     });
 }
 
+function Logout()
+{
+	cognitoUser=getCognitoUser();
+	
+	if (cognitoUser != null) 
+	{
+    	cognitoUser.signOut();
+		self.location="../index.html";
+    }
+}
+
 function createNewUser(emails,password) //CreateNewUser
 {
 	var poolData = {
@@ -141,12 +152,17 @@ function getCognitoUser()
             if (err) 
 			{
                 console.log(err);
+				self.location="../index.html"
                 return;
             }
             console.log('session validity: ' + session.isValid());
         });
 		return cognitoUser;
     }
+	else
+	{
+		self.location="../index.html"
+	}
 }
 
 function checkWhichUser()// checks what user it is, and whether or not it is a master user
@@ -185,6 +201,9 @@ window.onclick = function(event)
 	{
 		modal.style.display = "none";
 	}
+	else if (event.target == emailmodal) {
+        emailmodal.style.display = "none";
+    }
 }
 
 function forgotPassContinue()
@@ -274,3 +293,19 @@ function extractContent(s)
   span.innerHTML = s;
   return span.textContent || span.innerText;
 };
+
+function preLimLoader(loadingText)
+{
+	$("#viewPort_Content").hide()
+	$("#preLimLoader").show()
+	$("#preLimLoader").html(loadingText)
+}
+function exitpreLimLoader()
+{
+	$("#viewPort_Content").hide()
+	$("#preLimLoader").show()
+	$("#preLimLoader").html("Event Successful...")
+	window.setTimeout(function(){
+		$("#preLimLoader").html("[Click on a Timeslot to View Bookings]")
+	},3000)
+}

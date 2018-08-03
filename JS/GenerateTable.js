@@ -1,9 +1,15 @@
 var Day;
 var Period;
-
+var PrevSelect;
+var clickedBookedEmail;
+var welcomeMsgEmail;
 
 function loadinTech1()
 {
+	$("#Loader").show()
+	$("#timeTable").html("");
+	$("#viewPort").hide();
+	$("#viewPort_Content").hide();
 	var API_URL = "https://2rm3cl9k1j.execute-api.eu-central-1.amazonaws.com/ReadWriteFromTableSE21/tech1"
 	var row_id = ""
 	var tbl = '';
@@ -22,6 +28,11 @@ function loadinTech1()
 			contentType:"application/json",
 			success: function(data)
 			{
+				$("#Loader").hide();
+				$("#viewPort").show();
+				$("#viewPort_Content").hide();
+				$("#preLimLoader").show();
+				
 				//sorting array
 				var temp;
 				temp = data.Items[1]
@@ -72,24 +83,39 @@ function loadinTech1()
 								{
 									hiddenTxt = val['Period1'].substr(val['Period1'].indexOf(' ')+1)	
 									newString = val['Period1'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Period1">'+newString+'</div></td>';
 								}
-								tbl +='<td ><div class="row_data pointerCursor" edit_type="click" col_name="Period1">'+newString+'</div></td>'; 
+								else
+								{
+									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Period1">'+newString+'</div></td>';
+								}
+								 
 								
 								newString = val['Period2'];
 								if(val['Period2']!="unbooked")
 								{
 									hiddenTxt = val['Period2'].substr(val['Period2'].indexOf(' ')+1)	
 									newString = val['Period2'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Period2">'+newString+'</div></td>';
 								}
-								tbl +='<td ><div class="row_data pointerCursor" edit_type="click" col_name="Period2">'+newString+'</div></td>';
+								else
+								{
+									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Period2">'+newString+'</div></td>';
+								}
+								
 							
 								newString = val['Break'];
 								if(val['Break']!="unbooked")
 								{
 									hiddenTxt = val['Break'].substr(val['Break'].indexOf(' ')+1)	
 									newString = val['Break'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Break">'+newString+'</div></td>';
 								}
-								tbl +='<td ><div class="row_data pointerCursor" edit_type="click" col_name="Break">'+newString+'</div></td>';
+								else
+								{
+									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Break">'+newString+'</div></td>';
+								}
+								
 							
 								
 								newString = val['Period3'];
@@ -97,56 +123,91 @@ function loadinTech1()
 								{
 									hiddenTxt = val['Period3'].substr(val['Period3'].indexOf(' ')+1)	
 									newString = val['Period3'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Period3">'+newString+'</div></td>';
 								}
-								tbl +='<td ><div class="row_data pointerCursor" edit_type="click" col_name="Period3">'+newString+'</div></td>';
+								else
+								{
+									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Period3">'+newString+'</div></td>';
+								}
+								
 							
 								newString = val['Period4'];
 								if(val['Period4']!="unbooked")
 								{
 									hiddenTxt = val['Period4'].substr(val['Period4'].indexOf(' ')+1)	
 									newString = val['Period4'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Period4">'+newString+'</div></td>';
 								}
-								tbl +='<td ><div class="row_data pointerCursor" edit_type="click" col_name="Period4">'+newString+'</div></td>';
+								else
+								{
+									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Period4">'+newString+'</div></td>';
+								}
+								
 							
 								newString = val['Lunch'];
 								if(val['Lunch']!="unbooked")
 								{
 									hiddenTxt = val['Lunch'].substr(val['Lunch'].indexOf(' ')+1)	
 									newString = val['Lunch'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Lunch">'+newString+'</div></td>';
 								}
-								tbl +='<td ><div class="row_data pointerCursor" edit_type="click" col_name="Lunch">'+newString+'</div></td>';
+								else
+								{
+									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Lunch">'+newString+'</div></td>';
+								}
+								
 
 								newString = val['Period5'];
 								if(val['Period5']!="unbooked")
 								{
 									hiddenTxt = val['Period5'].substr(val['Period5'].indexOf(' ')+1)	
 									newString = val['Period5'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Period5">'+newString+'</div></td>';
 								}
-								tbl +='<td ><div class="row_data pointerCursor" edit_type="click" col_name="Period5">'+newString+'</div></td>';
+								else
+								{
+									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Period5">'+newString+'</div></td>';
+								}
+								
 							
 								newString = val['Period6'];
 								if(val['Period6']!="unbooked")
 								{
 									hiddenTxt = val['Period6'].substr(val['Period6'].indexOf(' ')+1)	
 									newString = val['Period6'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Period6">'+newString+'</div></td>';
 								}
-								tbl +='<td ><div class="row_data pointerCursor" edit_type="click" col_name="Period6">'+newString+'</div></td>';
+								else
+								{
+									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Period6">'+newString+'</div></td>';
+								}
+								
 							
 								newString = val['AfterschoolH1'];
 								if(val['AfterschoolH1']!="unbooked")
 								{
 									hiddenTxt = val['AfterschoolH1'].substr(val['AfterschoolH1'].indexOf(' ')+1)	
 									newString = val['AfterschoolH1'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="AfterschoolH1">'+newString+'</div></td>';
 								}
-								tbl +='<td ><div class="row_data pointerCursor" edit_type="click" col_name="AfterschoolH1">'+newString+'</div></td>';
+								else
+								{
+									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="AfterschoolH1">'+newString+'</div></td>';
+								}
+								
 							
 								newString = val['AfterschoolH2'];
 								if(val['AfterschoolH2']!="unbooked")
 								{
 									hiddenTxt = val['AfterschoolH2'].substr(val['AfterschoolH2'].indexOf(' ')+1)	
 									newString = val['AfterschoolH2'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="AfterschoolH2">'+newString+'</div></td>';
 								}
-								tbl +='<td ><div class="row_data pointerCursor" edit_type="click" col_name="AfterschoolH2">'+newString+'</div></td>';
+								else
+								{
+									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="AfterschoolH2">'+newString+'</div></td>';
+								}
+								
 							
 
 							tbl +='</tr>';
@@ -162,7 +223,7 @@ function loadinTech1()
 
 				//out put table data
 				$(document).find('#timeTable').html(tbl);
-				$("#viewPort").hide();
+
 			}
 		});
 
@@ -178,7 +239,9 @@ function loadinTech1()
 		$(document).on('click', '.row_data', function(event) 
 		{
 			event.preventDefault(); 
-
+			$("#preLimLoader").hide();
+			$("#viewPort_Content").show();
+			
 			if($(this).attr('edit_type') == 'button')
 			{
 				return false; 
@@ -186,13 +249,18 @@ function loadinTech1()
 
 			$("#viewPort").show();
 			
-			$("#editBtn").hide();
 			$("#deleteBtn").hide();
 			$("#contactBtn").hide();
 			$("#bookBtn").hide();
 			
-			var row_div = $(this)
+			if(PrevSelect!=null)
+			{
+				PrevSelect.removeClass("selected");
+			}
 			
+			var row_div = $(this)
+			row_div.addClass("selected");
+			PrevSelect = row_div;
 			//Populating Details Start
 			$("#bookingDetails").html("Week Beginning: " + getMonday(new Date()));
 			var row_id = $(this).closest('tr').attr('row_id');	
@@ -209,23 +277,21 @@ function loadinTech1()
 			Period = col_name;
 			
 			//Seeing if the room is already Booked
-			var clickedBookedEmail;
 			var currentStatus = row_div.html();
 			console.log(currentStatus)
 			if(currentStatus == "unbooked")
 			{
 				$("#bookBtn").show();
-				$("#bookingStatus").html("unbooked")
+				$("#bookingStatus").html("unbooked<br><br>")
 			}	
 			else if(currentStatus.split(' ')[0] == "booked")
 			{
 				clickedBookedEmail = extractContent(currentStatus.substr(currentStatus.indexOf(' ')+1))
-				var welcomeMsgEmail = $("#welcomeMsg").html().substr($("#welcomeMsg").html().indexOf(' ')+1)
+				welcomeMsgEmail = $("#welcomeMsg").html().substr($("#welcomeMsg").html().indexOf(' ')+1)
 				
 				if(clickedBookedEmail == welcomeMsgEmail)
 				{
 					$("#bookingStatus").html("booked<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+clickedBookedEmail)
-					$("#editBtn").show();
 					$("#deleteBtn").show();
 				}
 				else
@@ -238,7 +304,7 @@ function loadinTech1()
 		//--->Editing Viewport > end
 		
 		//--->MakingviewPort Dissapear > start
-		$(document).mouseup(function(e) 
+		/*$(document).mouseup(function(e) 
 		{
 			var container = $("#viewPort");
 			var table = $("#timeTable");
@@ -248,40 +314,13 @@ function loadinTech1()
 			{
 				container.hide();
 			}
-		});
+		});*/
 		//--->MakingviewPort Dissapear > end
-		
-		function editField()
-		{
-			event.preventDefault();
-
-			if($(this).attr('edit_type') == 'button')
-			{
-				return false; 
-			}
-
-			var row_id = $(this).closest('tr').attr('row_id'); 
-
-			var row_div = $(this)				
-			.removeClass('bg-warning') //add bg css
-			.css('padding','')
-
-			var col_name = row_div.attr('col_name'); 
-			var col_val = row_div.html(); 
-
-			var arr = {};
-			arr[col_name] = col_val;
-
-			//use the "arr"	object for your ajax call
-			$.extend(arr, {row_id:row_id});
-
-			//out put to show
-			$('.post_msg').html( '<pre class="bg-success">'+JSON.stringify(arr, null, 2) +'</pre>');
-		}
 		
 		//--->button > book > start	
 		$(document).on('click', '#bookBtn', function(event) 
 		{
+			preLimLoader("Booking...")
 			event.preventDefault();
 			var tbl_row = $(this).closest('tr');
 			var row_id = tbl_row.attr('row_id');
@@ -308,6 +347,7 @@ function loadinTech1()
 
 						success: function(data){
 							loadinTech1()
+							exitpreLimLoader()
 						},
 
 						error: function(data)
@@ -324,35 +364,74 @@ function loadinTech1()
 		});
 		//--->button > book > end
 
-		//--->button > cancel > start	
-		$(document).on('click', '.btn_cancel', function(event) 
+		//--->button > Delete > start	
+		$(document).on('click', '#deleteBtn', function(event) 
 		{
+			preLimLoader("Deleting Booking...")
 			event.preventDefault();
+			$.ajax
+			({
+				type:'POST',
+				url:API_URL,
+				data: JSON.stringify(
+					{
+						"Day":manipulateDay(Day),
+						"Room":"Tech1",
+						"updateAttr":Period,
+						"updateValue":"unbooked"
+					}
+				),
 
-			var tbl_row = $(this).closest('tr');
-
-			var row_id = tbl_row.attr('row_id');
-
-			//hide save and cacel buttons
-			tbl_row.find('.btn_save').hide();
-			tbl_row.find('.btn_cancel').hide();
-
-			//show edit button
-			tbl_row.find('.btn_edit').show();
-
-			//make the whole row editable
-			tbl_row.find('.row_data')
-			.attr('edit_type', 'click')
-			.removeClass('bg-warning')
-			.css('padding','') 
-
-			tbl_row.find('.row_data').each(function(index, val) 
-			{   
-				$(this).html( $(this).attr('original_entry') ); 
-			});  
+				contentType:"application/json",
+				
+				success: function(data){
+					loadinTech1()
+					exitpreLimLoader()
+				},
+				error: function(data)
+				{
+					//$("#errorModule").show();
+				}
+			});
+		
 		});
-		//--->button > cancel > end
+		//--->button > Delete > end
+		
+		//ContactBtn > Start
+		$(document).on('click', '#contactBtn', function(event) 
+		{
+			$("#toEmail").val("To: "+clickedBookedEmail);
+		});
+		//ContactBtn > End
+		
+		//Send > Start
+		$(document).on('click', '#sendBtn', function(event) 
+		{
+			 $("#emailErrMsg").html("Sending......");
+			var nicE = new nicEditors.findEditor('emailText');
+			emailVal = nicE.getContent();
+			
+			var template_params = 
+			{
+			   "ToEmail": clickedBookedEmail,
+			   "FromEmail": welcomeMsgEmail,
+			   "subject": $("#subject").val(),
+			   "text": emailVal
+			}
 
+			var service_id = "default_service";
+			var template_id = "se21bookingerror";
+			emailjs.send(service_id,template_id,template_params)
+			.then(function(response) {
+			   $("#emailErrMsg").css("color","green")
+			   $("#emailErrMsg").html('SUCCESS!', response.status, response.text);
+			}, function(error) {
+			   $("#emailErrMsg").css("color","red")
+			   $("#emailErrMsg").html('FAILED...', error);
+			});
+		});
+		//Send > End
+		
 		//--->save whole row entery > start	
 		$(document).on('click', '.btn_save', function(event) 
 		{
@@ -395,7 +474,33 @@ function loadinTech1()
 
 		});
 		//--->save whole row entery > end
+		function editField()
+		{
+			event.preventDefault();
 
+			if($(this).attr('edit_type') == 'button')
+			{
+				return false; 
+			}
+
+			var row_id = $(this).closest('tr').attr('row_id'); 
+
+			var row_div = $(this)				
+			.removeClass('bg-warning') //add bg css
+			.css('padding','')
+
+			var col_name = row_div.attr('col_name'); 
+			var col_val = row_div.html(); 
+
+			var arr = {};
+			arr[col_name] = col_val;
+
+			//use the "arr"	object for your ajax call
+			$.extend(arr, {row_id:row_id});
+
+			//out put to show
+			$('.post_msg').html( '<pre class="bg-success">'+JSON.stringify(arr, null, 2) +'</pre>');
+		}
 
 	}); 
 }

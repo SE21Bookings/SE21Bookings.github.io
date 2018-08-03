@@ -277,6 +277,9 @@ body
 {
 	height: 150px;
 	width: auto;
+}
+viewPort_Content
+{
 	display: none;
 }
 #viewPort button
@@ -305,16 +308,30 @@ body
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
+.HigherModal 
+{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 4; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
 
 /* Modal Content/Box */
 .timeTableModal-content 
 {
-    background-color: rgba(245,245,245,1.00);
+    background-color: white;/*rgba(245,245,245,1.00);*/
     margin: 10% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
 	border-radius: 25px;
     width: 95%; /* Could be more or less, depending on screen size */
+	min-width: 944px;
 }
 
 .timeTableModal-content h3
@@ -328,15 +345,79 @@ body
 	margin: 0;
 }
 /* The Close Button */
-.close {
+.close 
+{
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
-
 .close:hover,
-.close:focus {
+.close:focus 
+{
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.emailModal-content 
+{
+    background-color: white;/*rgba(245,245,245,1.00);*/
+    margin: 10% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+	border-radius: 25px;
+    width: 640px; /* Could be more or less, depending on screen size */
+}
+.emailModal-content input[type=text],input[type=email]
+{
+    width: 600px;
+    padding: 7px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+.emailModal-content input[type=text]:focus, input[type=email]:focus
+{
+    border: 3px solid #555;
+}
+.emailModal-content textarea
+{
+	width:600px;
+	height: 200px;
+}
+.emailModal-content label
+{
+	top:178px;
+	position: absolute;
+}
+#sendBtn
+{
+	margin-top: 5px;
+	width: 600px;
+	height: 30px;
+	color: white;
+	background-color: #8E8E8E;
+}
+#sendBtn:hover
+{
+	background-color: #CFCFCF;
+	color: black;
+}
+
+.close1 
+{
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close1:hover,
+.close1:focus 
+{
     color: black;
     text-decoration: none;
     cursor: pointer;
@@ -346,25 +427,27 @@ body
 
 #Loader
 {
-	position: absolute;
 	height: 100%;
 	width: 100%;
 	top:0;
-	bottom: 0;
-	left: 0;
-	right: 0;
 	background-color: white;
 	/*background-color: rgb(24,24,31);*/
 	z-index: 5;
 }
 #Loader img
 {
-	top: 50%;
-	left: 50%;
-	margin-right: -50%;
-	transform: translate(-50%, -50%);
-	position: absolute;
-	z-index: 5;
+	display: block;
+	margin: auto;
+}
+#preLimLoader
+{
+	text-align: center;
+	display: none;
+	margin: 0;
+}
+#preLimLoaderText
+{
+	margin: 0;
 }
 
 .defaultCursor
@@ -394,4 +477,17 @@ body
 .hidden
 {
 	display: none;
+}
+
+.booked
+{
+	color:red;
+}
+.unbooked
+{
+	color:green;
+}
+.selected
+{
+	background-color: #C8C8C8;
 }

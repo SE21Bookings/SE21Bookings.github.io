@@ -8,6 +8,14 @@
 		<script src="../JS/MAIN.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../JS/GenerateTable.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../JS/aws-cognito.js"></script>
+		<script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
+		<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
+		<script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+		<script type="text/javascript">
+		   (function(){
+			  emailjs.init("user_dNUTnHrGIx2yGv4lkBnqw");
+		   })();
+		</script>
 	</head>
 	
 	<body id="bookingsBody">
@@ -32,31 +40,48 @@
 				<h3 id="timeTableTitle">Timetable:</h3>
 				
 				<div id="viewPort">
-					<strong><label>Details:</label></strong>
-					<div class="indent">
-						<label id="bookingDetails">.......</label>
-						<br class="noHeightBreak">
-						<label style="margin-left: 6px;">Current Status:</label>&nbsp;
-						<label id="bookingStatus">.......</label>
+					<div id="viewPort_Content">
+						<strong><label>Details:</label></strong>
+						<div class="indent">
+							<label id="bookingDetails">.......</label>
+							<br class="noHeightBreak">
+							<label style="margin-left: 6px;">Current Status:</label>&nbsp;
+							<label id="bookingStatus">.......</label>
+						</div>
+						<br>					
+						<button id="bookBtn">Book</button>
+						<button id="deleteBtn">Delete</button>
+						<button id="contactBtn">Contact</button>
+					</div>	
+					<div id="preLimLoader">
+						<em><p id="preLimLoaderText">[Click on a Timeslot to View Bookings]</p></em>
 					</div>
-					<br>					
-					<button id="bookBtn">Book</button>
-					<button id="editBtn">Edit</button>
-					<button id="deleteBtn">Delete</button>
-					<button id="contactBtn">Contact</button>
 				</div>
+				
 				<div id="timeTable"></div>
+				
+				<div id="Loader">
+					<img width="30%" src="../Img/copper-loader.gif">
+				</div>
 		  </div>
 		</div>
 		
-		<div id="Loader">
-			<img width="30%" src="../Img/copper-loader.gif">
+		
+		<div id="emailModal" class="HigherModal">
+			<div class="emailModal-content">
+				<span class="close1">&times;</span>
+				<input disabled type="email" id="toEmail"><br>
+				<input placeHolder="Subject" type="text" id="subject">
+				<textarea id="emailText"></textarea>
+				<button id="sendBtn">Send</button>
+				<p id="emailErrMsg"></p>
+			</div>
 		</div>
+		
 	</body>
 	
 	<script>//Initlizers
 		$("#navBar").load("../DynamicLoad_Modules/NavBar.html")
-		$("#Loader").hide()
 		/*window.setTimeout(function(){
 			$("#Loader").fadeOut(1000, "swing")
 		},2000)*/
@@ -91,6 +116,22 @@
 		span.onclick = function() {
 			modal.style.display = "none";
 		}
+	</script>
+	<script>//email Modal Code
+		var emailmodal = document.getElementById('emailModal');
+		var openEmailbtn = document.getElementById("contactBtn");
+		var span1 = document.getElementsByClassName("close1")[0];
+		
+		openEmailbtn.onclick = function() {
+			//modal.style.display = "none";
+			emailmodal.style.display = "block";
+			
+		}
+		
+		// When the user clicks on <span> (x), close the modal
+		span1.onclick = function() {
+			emailmodal.style.display = "none";
+		}	
 	</script>
 	
 </html>
