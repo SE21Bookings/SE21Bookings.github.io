@@ -25,8 +25,9 @@
 			<center><em><h1 style="font-weight:300;">[Click on a room to book it]</h1></em></center>
 			<img src="../Img/se21 layout.png" id="frontPageMap" border="3px">
 		</div>
+		
 		<div id="mapBtnsDiv">
-			<div onClick="openModal('Tech 1'); loadinTech1();" id="Tech1Btn"></div>
+			<div onClick="openModal('Tech 1'); loadinTech1Week1();" id="Tech1Btn"></div>
 			<div onClick="openModal('Tech 2');" id="Tech2Btn"></div>
 			<div onClick="openModal('Tech 3');" id="Tech3Btn"></div>
 			<div onClick="openModal('Tech 4');" id="Tech4Btn"></div>
@@ -38,7 +39,7 @@
 		  <div class="timeTableModal-content">
 			<span class="close">&times;</span>	
 				<h3 id="timeTableTitle">Timetable:</h3>
-				
+				<button id="whichWeekBtn"></button>
 				<div id="viewPort">
 					<div id="viewPort_Content">
 						<strong><label>Details:</label></strong>
@@ -65,7 +66,6 @@
 				</div>
 		  </div>
 		</div>
-		
 		
 		<div id="emailModal" class="HigherModal">
 			<div class="emailModal-content">
