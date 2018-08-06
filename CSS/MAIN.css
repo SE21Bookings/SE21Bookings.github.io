@@ -286,7 +286,7 @@ viewPort_Content
 {
 	border: none;
 	height: 30px;
-	width: 70px;
+	width: 120px;
 	background-color: #9C9C9C;
 	color: white;
 }
@@ -339,6 +339,7 @@ viewPort_Content
 	font-weight: 500;
 	font-size: 23px;
 	margin: 0;
+	display: inline-block;
 }
 .timeTableModal-content label
 {
@@ -407,7 +408,6 @@ viewPort_Content
 	background-color: #CFCFCF;
 	color: black;
 }
-
 .close1 
 {
     color: #aaa;
@@ -421,6 +421,70 @@ viewPort_Content
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+
+.BookRecuring-content 
+{
+    background-color: white;/*rgba(245,245,245,1.00);*/
+    margin: 10% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+	border-radius: 25px;
+    width: 640px; /* Could be more or less, depending on screen size */
+}
+.BookRecuring-content input
+{
+    width: 600px;
+    padding: 7px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+.BookRecuring-content input:focus
+{
+    border: 3px solid #555;
+}
+.BookRecuring-content select
+{
+    width: 600px;
+    padding: 7px 20px;
+    margin: 8px 0;
+	height: 40px;
+    box-sizing: border-box;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+.close2
+{
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close2:hover,
+.close2:focus 
+{
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.BookRecuring-content button
+{
+	margin-top: 5px;
+	width: 600px;
+	height: 30px;
+	color: white;
+	background-color: #8E8E8E;
+}
+.BookRecuring-content button:hover
+{
+	background-color: #CFCFCF;
+	color: black;
 }
 
 .ForgotPasswordSlides {display:none;}
@@ -490,4 +554,26 @@ viewPort_Content
 .selected
 {
 	background-color: #C8C8C8;
+}
+#DivDescription
+{
+	position: absolute;
+	margin-left: 380px;
+}
+
+#whichWeekBtn
+{
+	border: none;
+	height: 30px;
+	width: 120px;
+	background-color: #9C9C9C;
+	color: white;
+	display: inline-block;
+	float: right;
+	margin-top: 40px;
+}
+#whichWeekBtn:hover
+{
+	background-color: #CACACA;
+	color: black;
 }

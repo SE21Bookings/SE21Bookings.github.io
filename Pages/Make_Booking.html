@@ -42,15 +42,15 @@
 				<button id="whichWeekBtn"></button>
 				<div id="viewPort">
 					<div id="viewPort_Content">
-						<strong><label>Details:</label></strong>
-						<div class="indent">
-							<label id="bookingDetails">.......</label>
-							<br class="noHeightBreak">
-							<label style="margin-left: 6px;">Current Status:</label>&nbsp;
-							<label id="bookingStatus">.......</label>
+						<div id="DivDescription">
+							<label id="Description"></label>
 						</div>
+						<label id="bookingDetails">.......</label>
+						<br class="noHeightBreak">
+						<label id="bookingStatus">.......</label><br>
 						<br>					
-						<button id="bookBtn">Book</button>
+						<button id="bookBtn">Quick Book</button>
+						<button id="rbookBtn">Book Recurring</button>
 						<button id="deleteBtn">Delete</button>
 						<button id="contactBtn">Contact</button>
 					</div>	
@@ -75,6 +75,27 @@
 				<textarea id="emailText"></textarea>
 				<button id="sendBtn">Send</button>
 				<p id="emailErrMsg"></p>
+			</div>
+		</div>
+		
+		<div id="BookRecuring" class="HigherModal">
+			<div class="BookRecuring-content">
+				<span class="close2">&times;</span>
+				<input placeholder="ECA:" type="text" id="eca"><br>
+				<input placeholder="Description" type="text" id="ecaDes"><br>
+				<select id="AlternatingWeeks">
+					<option value="lock1">Week 1s Only</option>
+					<option value="lock2">Week 2s Only</option>
+					<option value="lock1lock2">Week 1 & Week 2</option>
+				</select>
+				<br>
+				<select id="Recurrence" onChange="checkRecurrence()">
+					<option value="PR">Perpetual Recurrence</option>
+					<option value="NPR">Non-Perpetual Recurrence</option>
+				</select>
+				<br>
+				<input type="number" placeholder="How many Weeks" id="howManyWeeks"><br>
+				<button id="BookRecrBtn">Book</button>
 			</div>
 		</div>
 		
@@ -132,6 +153,23 @@
 		span1.onclick = function() {
 			emailmodal.style.display = "none";
 		}	
+	</script>	
+	<script>//Recurring Booking Modal
+		var Rbook = document.getElementById('BookRecuring');
+		var openrBookbtn = document.getElementById("rbookBtn");
+		var span2 = document.getElementsByClassName("close2")[0];
+		
+		openrBookbtn.onclick = function() {
+			//modal.style.display = "none";
+			Rbook.style.display = "block";
+			$("#howManyWeeks").hide();
+			
+		}
+		
+		// When the user clicks on <span> (x), close the modal
+		span2.onclick = function() {
+			Rbook.style.display = "none";
+		}
 	</script>
 	
 </html>

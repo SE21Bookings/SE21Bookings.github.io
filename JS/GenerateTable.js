@@ -243,6 +243,7 @@ function loadinTech1Week1()
 		//--->Editing Viewport > start
 		$(document).on('click', '.row_data', function(event) 
 		{
+			$("#Description").html('')
 			event.preventDefault(); 
 			$("#preLimLoader").hide();
 			$("#viewPort_Content").show();
@@ -257,6 +258,7 @@ function loadinTech1Week1()
 			$("#deleteBtn").hide();
 			$("#contactBtn").hide();
 			$("#bookBtn").hide();
+			$("#rbookBtn").hide();
 			
 			if(PrevSelect!=null)
 			{
@@ -267,12 +269,12 @@ function loadinTech1Week1()
 			row_div.addClass("selected");
 			PrevSelect = row_div;
 			//Populating Details Start
-			$("#bookingDetails").html("Week Beginning: " + getMonday(new Date()));
+			$("#bookingDetails").html("<strong>Week Beginning: </strong>" + getMonday(new Date()));
 			var row_id = $(this).closest('tr').attr('row_id');	
 			var Row = document.getElementById(row_id);
 			var Cells = Row.getElementsByTagName("td");
 			var rowDay = Cells[0].textContent;
-			$("#bookingDetails").append("<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+rowDay);
+			$("#bookingDetails").append("<br><strong>Time: </strong>"+rowDay);
 			var col_name = row_div.attr('col_name');
 			$("#bookingDetails").append(" "+col_name);
 			//Populating Details End
@@ -282,26 +284,72 @@ function loadinTech1Week1()
 			Period = col_name;
 			
 			//Seeing if the room is already Booked
+			var Description;
 			var currentStatus = row_div.html();
-			console.log(currentStatus)
 			if(currentStatus == "unbooked")
 			{
 				$("#bookBtn").show();
-				$("#bookingStatus").html("unbooked<br><br>")
+				$("#rbookBtn").show();
+				$("#bookingStatus").html("<strong>Status: </strong>unbooked<br>")
 			}	
 			else if(currentStatus.split(' ')[0] == "booked")
 			{
+				 
 				clickedBookedEmail = extractContent(currentStatus.substr(currentStatus.indexOf(' ')+1))
+				
+				if(clickedBookedEmail.indexOf(' ')!=-1) // If Reccuring Booking
+				{
+					Description = clickedBookedEmail.substr(clickedBookedEmail.indexOf(' ')+1)
+					
+					var newString = Description.substr(Description.indexOf(' ')+1)
+					var lastIndex = newString.lastIndexOf(" ");
+					newString = newString.substring(0, lastIndex);
+					
+					var ECA = newString.split(' ')[0]
+					var ECADes = newString.substr(newString.indexOf(' ')+1)
+					
+					$("#Description").append("<strong>ECA: </strong>"+ECA + "<br>")
+					$("#Description").append("<strong>Description: </strong>"+ECADes+"<br>")
+					if(Description.split(' ')[0] == "lock1lock2")
+					{
+						$("#Description").append("<strong>On Weeks: </strong>Week 1 and Week 2<br>")
+					}
+					else if(Description.split(' ')[0] == "lock1")
+					{
+						$("#Description").append("<strong>On Week: </strong>Week 1<br>")
+					}
+					else if(Description.split(' ')[0] == "lock2")
+					{
+						$("#Description").append("<strong>On Week: </strong>Week 2<br>")
+					}
+					
+					var n = Description.split(" ");
+					n = n[n.length - 1];
+					if(n == "-1")
+					{
+						$("#Description").append("<strong>Booked Weeks Left: </strong>Perpetual<br>")
+					}
+					else
+					{
+						$("#Description").append("<strong>Booked Weeks Left: </strong>"+n+"<br>")
+					}
+					
+				}
+				else
+				{
+					$("#Description").append("<em>[ECA Information N.A for Quickbooks]</em>")
+				}
+				clickedBookedEmail = clickedBookedEmail.split(' ')[0]
 				welcomeMsgEmail = $("#welcomeMsg").html().substr($("#welcomeMsg").html().indexOf(' ')+1)
 				
-				if(clickedBookedEmail == welcomeMsgEmail)
+				if(welcomeMsgEmail == clickedBookedEmail)
 				{
-					$("#bookingStatus").html("booked<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+clickedBookedEmail)
+					$("#bookingStatus").html("<strong>Status: </strong> booked<br><strong>Email: </strong>"+clickedBookedEmail)
 					$("#deleteBtn").show();
 				}
 				else
 				{
-					$("#bookingStatus").html("booked<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+clickedBookedEmail)
+					$("#bookingStatus").html("<strong>Status: </strong> booked<br><strong>Email: </strong>"+clickedBookedEmail)
 					$("#contactBtn").show();
 				}
 			}
@@ -413,6 +461,62 @@ function loadinTech1Week1()
 			$("#toEmail").val("To: "+clickedBookedEmail);
 		});
 		//ContactBtn > End
+		
+		//BookRBtn > Start
+		$(document).on('click', '#BookRecrBtn', function(event) 
+		{
+			var ECA = $("#eca").val();
+			var ECADes = $("#ecaDes").val();
+			var week12Lock = $("#AlternatingWeeks").val(); 
+			var howmanyWeeks = $("#howManyWeeks").val();
+			
+			if (howmanyWeeks.toString().length == 0 )
+			{
+				howmanyWeeks = -1; 
+			}
+			
+			
+			var newValue;
+			getEmail()
+			checkVariable()
+			function checkVariable() 
+			{
+				if (email != null) 
+				{
+					newValue = "booked " + email +" "+week12Lock+" "+ ECA +" "+ECADes +" "+ howmanyWeeks
+				   $.ajax
+				   ({
+						type:'POST',
+						url:API_URL_Tech1,
+						data: JSON.stringify(
+								{
+									"Day":manipulateDayWeek1(Day),
+									"Room":"Tech1",
+									"updateAttr":Period,
+									"updateValue": newValue
+								}
+							  ),
+
+						contentType:"application/json",
+
+						success: function(data){
+							loadinTech1Week1()
+							exitpreLimLoader()
+						},
+
+						error: function(data)
+						{
+							//$("#errorModule").show();
+						}
+				   });
+				}
+				else
+				{
+					setTimeout(checkVariable, 1000);
+				}
+		    }
+		});
+		//BookRBtn > End
 		
 		//Send > Start
 		$(document).on('click', '#sendBtn', function(event) 

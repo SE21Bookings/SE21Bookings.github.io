@@ -206,6 +206,9 @@ window.onclick = function(event)
 	else if (event.target == emailmodal) {
         emailmodal.style.display = "none";
     }
+	else if (event.target == Rbook) {
+        Rbook.style.display = "none";
+    }
 }
 
 function forgotPassContinue()
@@ -332,4 +335,17 @@ function exitpreLimLoader()
 	window.setTimeout(function(){
 		$("#preLimLoader").html("[Click on a Timeslot to View Bookings]")
 	},3000)
+}
+
+function checkRecurrence()
+{
+	var selectR = $("#Recurrence").val()
+	if(selectR == "NPR")
+	{
+		$("#howManyWeeks").show()
+	}
+	else
+	{
+		$("#howManyWeeks").hide()
+	}
 }
