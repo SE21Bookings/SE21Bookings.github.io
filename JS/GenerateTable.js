@@ -13,7 +13,7 @@ function loadinTech1Week1()
 	$("#whichWeekBtn").html("See Week 2");
 	$("#whichWeekBtn").attr("onClick","loadinTech1Week2()")
 	
-	var API_URL = "https://2rm3cl9k1j.execute-api.eu-central-1.amazonaws.com/ReadWriteFromTableSE21/tech1"
+	var API_URL = "https://7l7do5pc6f.execute-api.ap-southeast-1.amazonaws.com/ReadWriteFromTableSE21/tech1"
 	var row_id = ""
 	var tbl = '';
 	$(document).ready(function($)
@@ -346,7 +346,7 @@ function loadinTech1Week1()
 						url:API_URL,
 						data: JSON.stringify(
 								{
-									"Day":manipulateDay(Day),
+									"Day":manipulateDayWeek1(Day),
 									"Room":"Tech1",
 									"updateAttr":Period,
 									"updateValue":"booked " + email
@@ -385,7 +385,7 @@ function loadinTech1Week1()
 				url:API_URL,
 				data: JSON.stringify(
 					{
-						"Day":manipulateDay(Day),
+						"Day":manipulateDayWeek1(Day),
 						"Room":"Tech1",
 						"updateAttr":Period,
 						"updateValue":"unbooked"
@@ -395,7 +395,7 @@ function loadinTech1Week1()
 				contentType:"application/json",
 				
 				success: function(data){
-					loadinTech1()
+					loadinTech1Week1()
 					exitpreLimLoader()
 				},
 				error: function(data)
@@ -523,7 +523,7 @@ function loadinTech1Week2()
 	$("#viewPort_Content").hide();
 	$("#whichWeekBtn").html("See Week 1");
 	$("#whichWeekBtn").attr("onClick","loadinTech1Week1()")
-	var API_URL = "https://2rm3cl9k1j.execute-api.eu-central-1.amazonaws.com/ReadWriteFromTableSE21/tech1"
+	var API_URL = "https://7l7do5pc6f.execute-api.ap-southeast-1.amazonaws.com/ReadWriteFromTableSE21/tech1"
 	var row_id = ""
 	var tbl = '';
 	$(document).ready(function($)
@@ -856,7 +856,7 @@ function loadinTech1Week2()
 						url:API_URL,
 						data: JSON.stringify(
 								{
-									"Day":manipulateDay(Day),
+									"Day":manipulateDayWeek2(Day),
 									"Room":"Tech1",
 									"updateAttr":Period,
 									"updateValue":"booked " + email
@@ -866,7 +866,7 @@ function loadinTech1Week2()
 						contentType:"application/json",
 
 						success: function(data){
-							loadinTech1()
+							loadinTech1Week2()
 							exitpreLimLoader()
 						},
 
@@ -895,7 +895,7 @@ function loadinTech1Week2()
 				url:API_URL,
 				data: JSON.stringify(
 					{
-						"Day":manipulateDay(Day),
+						"Day":manipulateDayWeek2(Day),
 						"Room":"Tech1",
 						"updateAttr":Period,
 						"updateValue":"unbooked"
@@ -905,7 +905,7 @@ function loadinTech1Week2()
 				contentType:"application/json",
 				
 				success: function(data){
-					loadinTech1()
+					loadinTech1Week2()
 					exitpreLimLoader()
 				},
 				error: function(data)

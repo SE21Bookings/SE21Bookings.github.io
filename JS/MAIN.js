@@ -1,5 +1,5 @@
-var AdmimUserpoolID = "eu-central-1_WYExJawO8";
-var AdminAppClientID = "4tuportgn3gi4qjniq8on33e5g";
+var AdmimUserpoolID = "ap-southeast-1_5uiXeZzFB";
+var AdminAppClientID = "2qis1u4uur3e17ua9a28r7b6ol";
 
 var slideIndex = 1;
 var email;
@@ -239,7 +239,7 @@ function getMonday( date )
     return date;
 }
 
-function manipulateDay(day)
+function manipulateDayWeek1(day)
 {
 	switch(day) 
 	{
@@ -257,6 +257,28 @@ function manipulateDay(day)
 			break;
 		case "Friday":
 			return "5Friday";
+			break;
+	}
+}
+
+function manipulateDayWeek2(day)
+{
+	switch(day) 
+	{
+		case "Monday":
+			return "11Monday";
+			break;
+		case "Tuesday":
+			return "22Tuesday";
+			break;
+		case "Wednesday":
+			return "33Wednesday";
+			break;
+		case "Thursday":
+			return "44Thursday";
+			break;
+		case "Friday":
+			return "55Friday";
 			break;
 	}
 }
