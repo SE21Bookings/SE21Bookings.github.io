@@ -356,7 +356,7 @@ function loadinTech1Week1()
 						contentType:"application/json",
 
 						success: function(data){
-							loadinTech1()
+							loadinTech1Week1()
 							exitpreLimLoader()
 						},
 
