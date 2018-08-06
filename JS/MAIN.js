@@ -337,7 +337,12 @@ function exitpreLimLoader()
 		$("#preLimLoader").html("[Click on a Timeslot to View Bookings]")
 	},3000)
 }
-
+function exitpreLimLoaderErr()
+{
+	window.setTimeout(function(){
+		$("#preLimLoader").html("[Click on a Timeslot to View Bookings]")
+	},3000)
+}
 function checkRecurrence()
 {
 	var selectR = $("#Recurrence").val()

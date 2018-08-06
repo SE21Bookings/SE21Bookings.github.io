@@ -4,6 +4,123 @@ var PrevSelect;
 var clickedBookedEmail;
 var welcomeMsgEmail;
 var API_URL_Tech1 = "https://7l7do5pc6f.execute-api.ap-southeast-1.amazonaws.com/ReadWriteFromTableSE21/tech1";
+var newValue;
+
+function PostData(whichRoom,WhichWeek)
+{
+	if(WhichWeek == 11)
+	{
+		$.ajax
+		({
+			type:'POST',
+			url:API_URL_Tech1,
+			data: JSON.stringify(
+					{
+						"Day":manipulateDayWeek1(Day),
+						"Room":whichRoom,
+						"updateAttr":Period,
+						"updateValue": newValue
+					}
+				),
+
+				contentType:"application/json",
+
+				success: function(data){
+					loadinTech1Week1()
+					exitpreLimLoader()
+				},
+
+				error: function(data)
+				{
+					$("#errorModule").show();
+				}
+		});
+	}
+	else if(WhichWeek == 21)
+	{
+		$.ajax
+		({
+			type:'POST',
+			url:API_URL_Tech1,
+			data: JSON.stringify(
+					{
+						"Day":manipulateDayWeek2(Day),
+						"Room":whichRoom,
+						"updateAttr":Period,
+						"updateValue": newValue
+					}
+				),
+
+				contentType:"application/json",
+
+				success: function(data){
+					loadinTech1Week1()
+					exitpreLimLoader()
+				},
+
+				error: function(data)
+				{
+					$("#errorModule").show();
+				}
+		});
+	}
+	else if(WhichWeek == 12)
+	{
+		$.ajax
+		({
+			type:'POST',
+			url:API_URL_Tech1,
+			data: JSON.stringify(
+					{
+						"Day":manipulateDayWeek1(Day),
+						"Room":whichRoom,
+						"updateAttr":Period,
+						"updateValue": newValue
+					}
+				),
+
+				contentType:"application/json",
+
+				success: function(data){
+					loadinTech1Week2()
+					exitpreLimLoader()
+				},
+
+				error: function(data)
+				{
+					$("#errorModule").show();
+				}
+		});
+	}
+	else if(WhichWeek == 22)
+	{
+		$.ajax
+		({
+			type:'POST',
+			url:API_URL_Tech1,
+			data: JSON.stringify(
+					{
+						"Day":manipulateDayWeek2(Day),
+						"Room":whichRoom,
+						"updateAttr":Period,
+						"updateValue": newValue
+					}
+				),
+
+				contentType:"application/json",
+
+				success: function(data){
+					loadinTech1Week2()
+					exitpreLimLoader()
+				},
+
+				error: function(data)
+				{
+					$("#errorModule").show();
+				}
+		});
+	}
+}
 
 function loadinTech1Week1()
 {
@@ -387,7 +504,7 @@ function loadinTech1Week1()
 		//--->button > book > start	
 		$(document).on('click', '#bookBtn', function(event) 
 		{
-			$("#timeTable").html("");
+			
 			preLimLoader("Booking...")
 			event.preventDefault();
 			var tbl_row = $(this).closest('tr');
@@ -435,7 +552,7 @@ function loadinTech1Week1()
 		//--->button > Delete > start	
 		$(document).on('click', '#deleteBtn', function(event) 
 		{
-			$("#timeTable").html("");
+			
 			preLimLoader("Deleting Booking...")
 			event.preventDefault();
 			$.ajax
@@ -476,7 +593,7 @@ function loadinTech1Week1()
 		//BookRBtn > Start
 		$(document).on('click', '#BookRecrBtn', function(event) 
 		{
-			$("#timeTable").html("");
+			
 			preLimLoader("Booking Room...")
 			Rbook.style.display = "none";
 			var ECA = $("#eca").val();
@@ -490,7 +607,6 @@ function loadinTech1Week1()
 			}
 			
 			
-			var newValue;
 			getEmail()
 			checkVariable()
 			function checkVariable() 
@@ -498,36 +614,135 @@ function loadinTech1Week1()
 				if (email != null) 
 				{
 					newValue = "booked " + email +" "+week12Lock+" "+ ECA +" "+ECADes +" "+ howmanyWeeks
-				   $.ajax
-				   ({
-						type:'POST',
-						url:API_URL_Tech1,
-						data: JSON.stringify(
+					if(week12Lock =="lock1")
+					{
+						$.ajax({
+							type:'PATCH',
+							url: API_URL_Tech1,
+							data:JSON.stringify(
+									{
+										"Key":"Room",
+										"Key2":"Day",
+										"searchAttr":"Tech1",
+										"searchAttr2":manipulateDayWeek1(Day)
+									}
+								),
+							contentType:"application/json",
+							success: function(data)
+							{
+								if(data.Items[0][Period] == "unbooked")
 								{
-									"Day":manipulateDayWeek1(Day),
-									"Room":"Tech1",
-									"updateAttr":Period,
-									"updateValue": newValue
+									PostData("Tech1",11)
 								}
-							  ),
-
-						contentType:"application/json",
-
-						success: function(data){
-							loadinTech1Week1()
-							exitpreLimLoader()
-						},
-
-						error: function(data)
-						{
-							$("#errorModule").show();
-						}
-				   });
+								else
+								{
+									preLimLoader("Error: Slot in Week 1 is already booked")
+									exitpreLimLoaderErr()
+								}
+							},
+							error: function(data)
+							{
+								$("#errorModule").show();
+							}
+						});
+					}
+					else if(week12Lock =="lock2")
+					{
+						$.ajax({
+							type:'PATCH',
+							url: API_URL_Tech1,
+							data:JSON.stringify(
+									{
+										"Key":"Room",
+										"Key2":"Day",
+										"searchAttr":"Tech1",
+										"searchAttr2":manipulateDayWeek2(Day)
+									}
+								),
+							contentType:"application/json",
+							success: function(data)
+							{
+								if(data.Items[0][Period] == "unbooked")
+								{
+									PostData("Tech1",21)
+								}
+								else
+								{
+									preLimLoader("Error: Slot in Week 2 is already booked")
+									exitpreLimLoaderErr()
+								}
+							},
+							error: function(data)
+							{
+								$("#errorModule").show();
+							}
+						});
+						
+					}
+					else if(week12Lock =="lock1lock2")
+					{		
+						$.ajax({
+							type:'PATCH',
+							url: API_URL_Tech1,
+							data:JSON.stringify(
+									{
+										"Key":"Room",
+										"Key2":"Day",
+										"searchAttr":"Tech1",
+										"searchAttr2":manipulateDayWeek1(Day)
+									}
+								),
+							contentType:"application/json",
+							success: function(data)
+							{
+								if(data.Items[0][Period] == "unbooked")
+								{
+									$.ajax({
+										type:'PATCH',
+										url: API_URL_Tech1,
+										data:JSON.stringify(
+												{
+													"Key":"Room",
+													"Key2":"Day",
+													"searchAttr":"Tech1",
+													"searchAttr2":manipulateDayWeek2(Day)
+												}
+											),
+										contentType:"application/json",
+										success: function(data)
+										{
+											if(data.Items[0][Period] == "unbooked")
+											{
+												PostData("Tech1",11)
+												PostData("Tech1",21)
+											}
+											else
+											{
+												preLimLoader("Error: Slot in Week 2 is already booked")
+												exitpreLimLoaderErr()
+											}
+										},
+										error: function(data)
+										{
+											$("#errorModule").show();
+										}
+									});
+									
+								}
+								else
+								{
+									preLimLoader("Error: Slot in Week 1 is already booked")
+									exitpreLimLoaderErr()
+								}
+							},
+							error: function(data)
+							{
+								$("#errorModule").show();
+							}
+						});				
+					}
 				}
-				else
-				{
-					setTimeout(checkVariable, 1000);
-				}
+
 		    }
 		});
 		//BookRBtn > End
@@ -562,7 +777,6 @@ function loadinTech1Week1()
 
 	}); 
 }
-
 
 function loadinTech1Week2()
 {
@@ -945,7 +1159,7 @@ function loadinTech1Week2()
 		//--->button > book > start	
 		$(document).on('click', '#bookBtn', function(event) 
 		{
-			$("#timeTable").html("");
+			
 			preLimLoader("Booking...")
 			event.preventDefault();
 			var tbl_row = $(this).closest('tr');
@@ -993,7 +1207,6 @@ function loadinTech1Week2()
 		//--->button > Delete > start	
 		$(document).on('click', '#deleteBtn', function(event) 
 		{
-			$("#timeTable").html("");
 			preLimLoader("Deleting Booking...")
 			event.preventDefault();
 			$.ajax
@@ -1034,7 +1247,7 @@ function loadinTech1Week2()
 		//BookRBtn > Start
 		$(document).on('click', '#BookRecrBtn', function(event) 
 		{
-			$("#timeTable").html("");
+			
 			preLimLoader("Booking Room...")
 			Rbook.style.display = "none";
 			var ECA = $("#eca").val();
@@ -1046,41 +1259,140 @@ function loadinTech1Week2()
 			{
 				howmanyWeeks = -1; 
 			}
-			
-			
-			var newValue;
 			getEmail()
 			checkVariable()
 			function checkVariable() 
 			{
 				if (email != null) 
 				{
-					newValue = "booked " + email +" "+week12Lock+" "+ ECA +" "+ECADes +" "+ howmanyWeeks
-				   $.ajax
-				   ({
-						type:'POST',
-						url:API_URL_Tech1,
-						data: JSON.stringify(
+				    newValue = "booked " + email +" "+week12Lock+" "+ ECA +" "+ECADes +" "+ howmanyWeeks
+					if(week12Lock =="lock1")
+					{
+						$.ajax({
+							type:'PATCH',
+							url: API_URL_Tech1,
+							data:JSON.stringify(
+									{
+										"Key":"Room",
+										"Key2":"Day",
+										"searchAttr":"Tech1",
+										"searchAttr2":manipulateDayWeek1(Day)
+									}
+								),
+							contentType:"application/json",
+							success: function(data)
+							{
+								if(data.Items[0][Period] == "unbooked")
 								{
-									"Day":manipulateDayWeek2(Day),
-									"Room":"Tech1",
-									"updateAttr":Period,
-									"updateValue": newValue
+									PostData("Tech1",12)
 								}
-							  ),
-
-						contentType:"application/json",
-
-						success: function(data){
-							loadinTech1Week2()
-							exitpreLimLoader()
-						},
-
-						error: function(data)
-						{
-							$("#errorModule").show();
-						}
-				   });
+								else
+								{
+									preLimLoader("Error: Slot in Week 1 is already booked")
+									exitpreLimLoaderErr()
+								}
+							},
+							error: function(data)
+							{
+								$("#errorModule").show();
+							}
+						});
+					}
+					else if(week12Lock =="lock2")
+					{
+						$.ajax({
+							type:'PATCH',
+							url: API_URL_Tech1,
+							data:JSON.stringify(
+									{
+										"Key":"Room",
+										"Key2":"Day",
+										"searchAttr":"Tech1",
+										"searchAttr2":manipulateDayWeek2(Day)
+									}
+								),
+							contentType:"application/json",
+							success: function(data)
+							{
+								if(data.Items[0][Period] == "unbooked")
+								{
+									PostData("Tech1",22)
+								}
+								else
+								{
+									preLimLoader("Error: Slot in Week 2 is already booked")
+									exitpreLimLoaderErr()
+								}
+							},
+							error: function(data)
+							{
+								$("#errorModule").show();
+							}
+						});
+						
+					}
+					else if(week12Lock =="lock1lock2")
+					{		
+						$.ajax({
+							type:'PATCH',
+							url: API_URL_Tech1,
+							data:JSON.stringify(
+									{
+										"Key":"Room",
+										"Key2":"Day",
+										"searchAttr":"Tech1",
+										"searchAttr2":manipulateDayWeek1(Day)
+									}
+								),
+							contentType:"application/json",
+							success: function(data)
+							{
+								if(data.Items[0][Period] == "unbooked")
+								{
+									$.ajax({
+										type:'PATCH',
+										url: API_URL_Tech1,
+										data:JSON.stringify(
+												{
+													"Key":"Room",
+													"Key2":"Day",
+													"searchAttr":"Tech1",
+													"searchAttr2":manipulateDayWeek2(Day)
+												}
+											),
+										contentType:"application/json",
+										success: function(data)
+										{
+											if(data.Items[0][Period] == "unbooked")
+											{
+												PostData("Tech1",12)
+												PostData("Tech1",22)
+											}
+											else
+											{
+												preLimLoader("Error: Slot in Week 2 is already booked")
+												exitpreLimLoaderErr()
+											}
+										},
+										error: function(data)
+										{
+											$("#errorModule").show();
+										}
+									});
+									
+								}
+								else
+								{
+									preLimLoader("Error: Slot in Week 1 is already booked")
+									exitpreLimLoaderErr()
+								}
+							},
+							error: function(data)
+							{
+								$("#errorModule").show();
+							}
+						});				
+					}
 				}
 				else
 				{
@@ -1120,3 +1432,4 @@ function loadinTech1Week2()
 
 	}); 
 }
+
