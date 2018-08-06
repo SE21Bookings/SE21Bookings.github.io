@@ -27,12 +27,19 @@
 		</div>
 		
 		<div id="mapBtnsDiv">
-			<div onClick="openModal('Tech 1'); loadinTech1Week1();" id="Tech1Btn"></div>
-			<div onClick="openModal('Tech 2');" id="Tech2Btn"></div>
-			<div onClick="openModal('Tech 3');" id="Tech3Btn"></div>
-			<div onClick="openModal('Tech 4');" id="Tech4Btn"></div>
-			<div onClick="openModal('Tech 5');" id="Tech5Btn"></div>
-			<div onClick="openModal('Reception & VR');" id="VRBtn"></div>
+			<div onClick="openModal(); loadinTech1Week1(); " id="Tech1Btn"></div>
+			<div onClick="openModal();" id="Tech2Btn"></div>
+			<div onClick="openModal();" id="Tech3Btn"></div>
+			<div onClick="openModal();" id="Tech4Btn"></div>
+			<div onClick="openModal();" id="Tech5Btn"></div>
+			<div onClick="openModal();" id="VRBtn"></div>
+		</div>
+		
+		<div id="errorModule">
+			<div id="ErrorBox" class="ErrorColor">
+				<p>Error: timetable connection broken</p>
+				<button onClick="location.reload();">Reload</button>
+			</div>
 		</div>
 		
 		<div id="timeTableModal" class="modal">
@@ -103,9 +110,6 @@
 	
 	<script>//Initlizers
 		$("#navBar").load("../DynamicLoad_Modules/NavBar.html")
-		/*window.setTimeout(function(){
-			$("#Loader").fadeOut(1000, "swing")
-		},2000)*/
 		getEmail()
 		checkVariable()
 		function checkVariable()  // welcomeMsg Loader
@@ -129,9 +133,8 @@
 		var span = document.getElementsByClassName("close")[0];
 
 		// When the user clicks on the button, open the modal 
-		function openModal(whichTech) {
+		function openModal() {
 			modal.style.display = "block";
-			$("#timeTableTitle").html(whichTech+" Timetable:")
 		}
 		// When the user clicks on <span> (x), close the modal
 		span.onclick = function() {

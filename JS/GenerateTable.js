@@ -3,16 +3,18 @@ var Period;
 var PrevSelect;
 var clickedBookedEmail;
 var welcomeMsgEmail;
-var API_URL_Tech1 = "https://7l7do5pc6f.execute-api.ap-southeast-1.amazonaws.com/ReadWriteFromTableSE21/tech1"
+var API_URL_Tech1 = "https://7l7do5pc6f.execute-api.ap-southeast-1.amazonaws.com/ReadWriteFromTableSE21/tech1";
 
 function loadinTech1Week1()
 {
+	removeEventListeners()
+	$("#timeTableTitle").html("Tech 1 Timetable [Week 1]:")
 	$("#Loader").show()
 	$("#timeTable").html("");
 	$("#viewPort").hide();
 	$("#viewPort_Content").hide();
 	$("#whichWeekBtn").html("See Week 2");
-	$("#whichWeekBtn").attr("onClick","alert('Coming Soon...')")
+	$("#whichWeekBtn").attr("onClick","loadinTech1Week2(); $('#timeTableTitle').html('Tech 1 Timetable [Week 2]:');")
 	
 	var row_id = ""
 	var tbl = '';
@@ -229,6 +231,11 @@ function loadinTech1Week1()
 				//out put table data
 				$(document).find('#timeTable').html(tbl);
 
+			},
+
+			error: function(data)
+			{
+				$("#errorModule").show();
 			}
 		});
 
@@ -361,9 +368,11 @@ function loadinTech1Week1()
 		{
 			var container = $("#viewPort");
 			var table = $("#timeTable");
+			var bookRModal = $("#BookRecuring")
+			var EModal = $("#emailModal")
 
 			// if the target of the click isn't the container nor a descendant of the container
-			if (!container.is(e.target) && container.has(e.target).length === 0 && !table.is(e.target) && table.has(e.target).length === 0) 
+			if (!container.is(e.target) && container.has(e.target).length === 0 && !table.is(e.target) && table.has(e.target).length === 0 && !bookRModal.is(e.target) && bookRModal.has(e.target).length === 0 && !EModal.is(e.target) && EModal.has(e.target).length === 0 ) 
 			{
 				$("#viewPort_Content").hide()
 				$("#preLimLoader").show();
@@ -378,6 +387,7 @@ function loadinTech1Week1()
 		//--->button > book > start	
 		$(document).on('click', '#bookBtn', function(event) 
 		{
+			$("#timeTable").html("");
 			preLimLoader("Booking...")
 			event.preventDefault();
 			var tbl_row = $(this).closest('tr');
@@ -410,7 +420,7 @@ function loadinTech1Week1()
 
 						error: function(data)
 						{
-							//$("#errorModule").show();
+							$("#errorModule").show();
 						}
 				   });
 				}
@@ -425,6 +435,7 @@ function loadinTech1Week1()
 		//--->button > Delete > start	
 		$(document).on('click', '#deleteBtn', function(event) 
 		{
+			$("#timeTable").html("");
 			preLimLoader("Deleting Booking...")
 			event.preventDefault();
 			$.ajax
@@ -448,7 +459,7 @@ function loadinTech1Week1()
 				},
 				error: function(data)
 				{
-					//$("#errorModule").show();
+					$("#errorModule").show();
 				}
 			});
 		
@@ -465,6 +476,9 @@ function loadinTech1Week1()
 		//BookRBtn > Start
 		$(document).on('click', '#BookRecrBtn', function(event) 
 		{
+			$("#timeTable").html("");
+			preLimLoader("Booking Room...")
+			Rbook.style.display = "none";
 			var ECA = $("#eca").val();
 			var ECADes = $("#ecaDes").val();
 			var week12Lock = $("#AlternatingWeeks").val(); 
@@ -506,7 +520,7 @@ function loadinTech1Week1()
 
 						error: function(data)
 						{
-							//$("#errorModule").show();
+							$("#errorModule").show();
 						}
 				   });
 				}
@@ -549,3 +563,560 @@ function loadinTech1Week1()
 	}); 
 }
 
+
+function loadinTech1Week2()
+{
+	removeEventListeners()
+	$("#timeTableTitle").html("Tech 1 Timetable [Week 2]:")
+	$("#Loader").show()
+	$("#timeTable").html("");
+	$("#viewPort").hide();
+	$("#viewPort_Content").hide();
+	$("#whichWeekBtn").html("See Week 1");
+	$("#whichWeekBtn").attr("onClick","loadinTech1Week1(); $('#timeTableTitle').html('Tech 1 Timetable [Week 1]:');")
+	
+	var row_id = ""
+	var tbl = '';
+	$(document).ready(function($)
+	{
+
+		$.ajax({
+			type:'PATCH',
+			url: API_URL_Tech1,
+			data:JSON.stringify(
+					{
+						"Key":"Room",
+						"Key2":"Week",
+						"searchAttr":"Tech1",
+						"searchAttr2":"2"
+					}
+				),
+			contentType:"application/json",
+			success: function(data)
+			{
+				$("#Loader").hide();
+				$("#viewPort").show();
+				$("#viewPort_Content").hide();
+				$("#preLimLoader").show();
+				
+				//sorting array
+				var temp;
+				
+				
+				console.log(data.Items)
+				
+				//--->create data table > start
+
+				tbl +='<table class="table table-hover">'
+
+					//--->create table header > start
+					tbl +='<thead>';
+						tbl +='<tr>';
+						tbl +='<th>Day</th>';
+						tbl +='<th>Period 1</th>';
+						tbl +='<th>Period 2</th>';
+						tbl +='<th>Break</th>';
+						tbl +='<th>Period 3</th>';
+						tbl +="<th>Period 4</th>";
+						tbl +='<th>Lunch</th>';
+						tbl +='<th>Period 5</th>';
+						tbl +='<th>Period 6</th>';
+						tbl +='<th>ECA 1</th>';
+						tbl +='<th>ECA 2</th>';
+						tbl +='</tr>';
+					tbl +='</thead>';
+					//--->create table header > end
+
+
+					//--->create table body > start
+					tbl +='<tbody>';
+
+						//--->create table body rows > start
+						$.each(data.Items, function(index, val) 
+						{
+							var newString;
+							var hiddenTxt; 
+							//you can replace with your database row id
+							row_id = random_id();
+							//loop through ajax row data
+							tbl +='<tr row_id="'+row_id+'" id="'+row_id+'">';
+								tbl +='<td ><div class="bold" col_name="Day">'+(val['Day']).substr(2)+'</div></td>';
+								//will hide their email so that it wont show on the table but can be retrieved later to decide who booked the room. 
+								
+								newString = val['Period1'];
+								if(val['Period1']!="unbooked")
+								{
+									hiddenTxt = val['Period1'].substr(val['Period1'].indexOf(' ')+1)	
+									newString = val['Period1'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Period1">'+newString+'</div></td>';
+								}
+								else
+								{
+									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Period1">'+newString+'</div></td>';
+								}
+								 
+								
+								newString = val['Period2'];
+								if(val['Period2']!="unbooked")
+								{
+									hiddenTxt = val['Period2'].substr(val['Period2'].indexOf(' ')+1)	
+									newString = val['Period2'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Period2">'+newString+'</div></td>';
+								}
+								else
+								{
+									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Period2">'+newString+'</div></td>';
+								}
+								
+							
+								newString = val['Break'];
+								if(val['Break']!="unbooked")
+								{
+									hiddenTxt = val['Break'].substr(val['Break'].indexOf(' ')+1)	
+									newString = val['Break'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Break">'+newString+'</div></td>';
+								}
+								else
+								{
+									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Break">'+newString+'</div></td>';
+								}
+								
+							
+								
+								newString = val['Period3'];
+								if(val['Period3']!="unbooked")
+								{
+									hiddenTxt = val['Period3'].substr(val['Period3'].indexOf(' ')+1)	
+									newString = val['Period3'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Period3">'+newString+'</div></td>';
+								}
+								else
+								{
+									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Period3">'+newString+'</div></td>';
+								}
+								
+							
+								newString = val['Period4'];
+								if(val['Period4']!="unbooked")
+								{
+									hiddenTxt = val['Period4'].substr(val['Period4'].indexOf(' ')+1)	
+									newString = val['Period4'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Period4">'+newString+'</div></td>';
+								}
+								else
+								{
+									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Period4">'+newString+'</div></td>';
+								}
+								
+							
+								newString = val['Lunch'];
+								if(val['Lunch']!="unbooked")
+								{
+									hiddenTxt = val['Lunch'].substr(val['Lunch'].indexOf(' ')+1)	
+									newString = val['Lunch'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Lunch">'+newString+'</div></td>';
+								}
+								else
+								{
+									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Lunch">'+newString+'</div></td>';
+								}
+								
+
+								newString = val['Period5'];
+								if(val['Period5']!="unbooked")
+								{
+									hiddenTxt = val['Period5'].substr(val['Period5'].indexOf(' ')+1)	
+									newString = val['Period5'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Period5">'+newString+'</div></td>';
+								}
+								else
+								{
+									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Period5">'+newString+'</div></td>';
+								}
+								
+							
+								newString = val['Period6'];
+								if(val['Period6']!="unbooked")
+								{
+									hiddenTxt = val['Period6'].substr(val['Period6'].indexOf(' ')+1)	
+									newString = val['Period6'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Period6">'+newString+'</div></td>';
+								}
+								else
+								{
+									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Period6">'+newString+'</div></td>';
+								}
+								
+							
+								newString = val['AfterschoolH1'];
+								if(val['AfterschoolH1']!="unbooked")
+								{
+									hiddenTxt = val['AfterschoolH1'].substr(val['AfterschoolH1'].indexOf(' ')+1)	
+									newString = val['AfterschoolH1'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="AfterschoolH1">'+newString+'</div></td>';
+								}
+								else
+								{
+									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="AfterschoolH1">'+newString+'</div></td>';
+								}
+								
+							
+								newString = val['AfterschoolH2'];
+								if(val['AfterschoolH2']!="unbooked")
+								{
+									hiddenTxt = val['AfterschoolH2'].substr(val['AfterschoolH2'].indexOf(' ')+1)	
+									newString = val['AfterschoolH2'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="AfterschoolH2">'+newString+'</div></td>';
+								}
+								else
+								{
+									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="AfterschoolH2">'+newString+'</div></td>';
+								}
+								
+							
+
+							tbl +='</tr>';
+						});
+
+						//--->create table body rows > end
+
+					tbl +='</tbody>';
+					//--->create table body > end
+
+				tbl +='</table>'
+				//--->create data table > end
+
+				//out put table data
+				$(document).find('#timeTable').html(tbl);
+
+			},
+
+			error: function(data)
+			{
+				$("#errorModule").show();
+			}
+		});
+
+		var random_id = function  () 
+		{
+			var id_num = Math.random().toString(9).substr(2,3);
+			var id_str = Math.random().toString(36).substr(2);
+
+			return id_num + id_str;
+		}
+		
+		//--->Editing Viewport > start
+		$(document).on('click', '.row_data', function(event) 
+		{
+			$("#Description").html('')
+			event.preventDefault(); 
+			$("#preLimLoader").hide();
+			$("#viewPort_Content").show();
+			
+			if($(this).attr('edit_type') == 'button')
+			{
+				return false; 
+			}
+
+			$("#viewPort").show();
+			
+			$("#deleteBtn").hide();
+			$("#contactBtn").hide();
+			$("#bookBtn").hide();
+			$("#rbookBtn").hide();
+			
+			if(PrevSelect!=null)
+			{
+				PrevSelect.removeClass("selected");
+			}
+			
+			var row_div = $(this)
+			row_div.addClass("selected");
+			PrevSelect = row_div;
+			//Populating Details Start
+			$("#bookingDetails").html("<strong>Week Beginning: </strong>" + getMonday(new Date()));
+			var row_id = $(this).closest('tr').attr('row_id');	
+			var Row = document.getElementById(row_id);
+			var Cells = Row.getElementsByTagName("td");
+			var rowDay = Cells[0].textContent;
+			$("#bookingDetails").append("<br><strong>Time: </strong>"+rowDay);
+			var col_name = row_div.attr('col_name');
+			$("#bookingDetails").append(" "+col_name);
+			//Populating Details End
+			
+			//storing data incase they want to book the room
+			Day = rowDay;
+			Period = col_name;
+			
+			//Seeing if the room is already Booked
+			var Description;
+			var currentStatus = row_div.html();
+			if(currentStatus == "unbooked")
+			{
+				$("#bookBtn").show();
+				$("#rbookBtn").show();
+				$("#bookingStatus").html("<strong>Status: </strong>unbooked<br>")
+			}	
+			else if(currentStatus.split(' ')[0] == "booked")
+			{
+				 
+				clickedBookedEmail = extractContent(currentStatus.substr(currentStatus.indexOf(' ')+1))
+				
+				if(clickedBookedEmail.indexOf(' ')!=-1) // If Reccuring Booking
+				{
+					Description = clickedBookedEmail.substr(clickedBookedEmail.indexOf(' ')+1)
+					
+					var newString = Description.substr(Description.indexOf(' ')+1)
+					var lastIndex = newString.lastIndexOf(" ");
+					newString = newString.substring(0, lastIndex);
+					
+					var ECA = newString.split(' ')[0]
+					var ECADes = newString.substr(newString.indexOf(' ')+1)
+					
+					$("#Description").append("<strong>ECA: </strong>"+ECA + "<br>")
+					$("#Description").append("<strong>Description: </strong>"+ECADes+"<br>")
+					if(Description.split(' ')[0] == "lock1lock2")
+					{
+						$("#Description").append("<strong>On Weeks: </strong>Week 1 and Week 2<br>")
+					}
+					else if(Description.split(' ')[0] == "lock1")
+					{
+						$("#Description").append("<strong>On Week: </strong>Week 1<br>")
+					}
+					else if(Description.split(' ')[0] == "lock2")
+					{
+						$("#Description").append("<strong>On Week: </strong>Week 2<br>")
+					}
+					
+					var n = Description.split(" ");
+					n = n[n.length - 1];
+					if(n == "-1")
+					{
+						$("#Description").append("<strong>Booked Weeks Left: </strong>Perpetual<br>")
+					}
+					else
+					{
+						$("#Description").append("<strong>Booked Weeks Left: </strong>"+n+"<br>")
+					}
+					
+				}
+				else
+				{
+					$("#Description").append("<em>[ECA Information N.A for Quickbooks]</em>")
+				}
+				clickedBookedEmail = clickedBookedEmail.split(' ')[0]
+				welcomeMsgEmail = $("#welcomeMsg").html().substr($("#welcomeMsg").html().indexOf(' ')+1)
+				
+				if(welcomeMsgEmail == clickedBookedEmail)
+				{
+					$("#bookingStatus").html("<strong>Status: </strong> booked<br><strong>Email: </strong>"+clickedBookedEmail)
+					$("#deleteBtn").show();
+				}
+				else
+				{
+					$("#bookingStatus").html("<strong>Status: </strong> booked<br><strong>Email: </strong>"+clickedBookedEmail)
+					$("#contactBtn").show();
+				}
+			}
+		})	
+		//--->Editing Viewport > end
+		
+		//--->MakingviewPort Dissapear > start
+		$(document).mouseup(function(e) 
+		{
+			var container = $("#viewPort");
+			var table = $("#timeTable");
+			var bookRModal = $("#BookRecuring")
+			var EModal = $("#emailModal")
+
+			// if the target of the click isn't the container nor a descendant of the container
+			if (!container.is(e.target) && container.has(e.target).length === 0 && !table.is(e.target) && table.has(e.target).length === 0 && !bookRModal.is(e.target) && bookRModal.has(e.target).length === 0 && !EModal.is(e.target) && EModal.has(e.target).length === 0 ) 
+			{
+				$("#viewPort_Content").hide()
+				$("#preLimLoader").show();
+				if(PrevSelect!=null)
+				{
+					PrevSelect.removeClass("selected")
+				}
+			}
+		});
+		//--->MakingviewPort Dissapear > end
+		
+		//--->button > book > start	
+		$(document).on('click', '#bookBtn', function(event) 
+		{
+			$("#timeTable").html("");
+			preLimLoader("Booking...")
+			event.preventDefault();
+			var tbl_row = $(this).closest('tr');
+			var row_id = tbl_row.attr('row_id');
+			getEmail()
+			checkVariable()
+			function checkVariable() 
+			{
+				if (email != null) 
+				{
+				   $.ajax
+				   ({
+						type:'POST',
+						url:API_URL_Tech1,
+						data: JSON.stringify(
+								{
+									"Day":manipulateDayWeek2(Day),
+									"Room":"Tech1",
+									"updateAttr":Period,
+									"updateValue":"booked " + email
+								}
+							  ),
+
+						contentType:"application/json",
+
+						success: function(data){
+							loadinTech1Week2()
+							exitpreLimLoader()
+						},
+
+						error: function(data)
+						{
+							$("#errorModule").show();
+						}
+				   });
+				}
+				else
+				{
+					setTimeout(checkVariable, 1000);
+				}
+		    }
+		});
+		//--->button > book > end
+
+		//--->button > Delete > start	
+		$(document).on('click', '#deleteBtn', function(event) 
+		{
+			$("#timeTable").html("");
+			preLimLoader("Deleting Booking...")
+			event.preventDefault();
+			$.ajax
+			({
+				type:'POST',
+				url:API_URL_Tech1,
+				data: JSON.stringify(
+					{
+						"Day":manipulateDayWeek2(Day),
+						"Room":"Tech1",
+						"updateAttr":Period,
+						"updateValue":"unbooked"
+					}
+				),
+
+				contentType:"application/json",
+				
+				success: function(data){
+					loadinTech1Week2()
+					exitpreLimLoader()
+				},
+				error: function(data)
+				{
+					$("#errorModule").show();
+				}
+			});
+		
+		});
+		//--->button > Delete > end
+		
+		//ContactBtn > Start
+		$(document).on('click', '#contactBtn', function(event) 
+		{
+			$("#toEmail").val("To: "+clickedBookedEmail);
+		});
+		//ContactBtn > End
+		
+		//BookRBtn > Start
+		$(document).on('click', '#BookRecrBtn', function(event) 
+		{
+			$("#timeTable").html("");
+			preLimLoader("Booking Room...")
+			Rbook.style.display = "none";
+			var ECA = $("#eca").val();
+			var ECADes = $("#ecaDes").val();
+			var week12Lock = $("#AlternatingWeeks").val(); 
+			var howmanyWeeks = $("#howManyWeeks").val();
+			
+			if (howmanyWeeks.toString().length == 0 )
+			{
+				howmanyWeeks = -1; 
+			}
+			
+			
+			var newValue;
+			getEmail()
+			checkVariable()
+			function checkVariable() 
+			{
+				if (email != null) 
+				{
+					newValue = "booked " + email +" "+week12Lock+" "+ ECA +" "+ECADes +" "+ howmanyWeeks
+				   $.ajax
+				   ({
+						type:'POST',
+						url:API_URL_Tech1,
+						data: JSON.stringify(
+								{
+									"Day":manipulateDayWeek2(Day),
+									"Room":"Tech1",
+									"updateAttr":Period,
+									"updateValue": newValue
+								}
+							  ),
+
+						contentType:"application/json",
+
+						success: function(data){
+							loadinTech1Week2()
+							exitpreLimLoader()
+						},
+
+						error: function(data)
+						{
+							$("#errorModule").show();
+						}
+				   });
+				}
+				else
+				{
+					setTimeout(checkVariable, 1000);
+				}
+		    }
+		});
+		//BookRBtn > End
+		
+		//Send > Start
+		$(document).on('click', '#sendBtn', function(event) 
+		{
+			 $("#emailErrMsg").html("Sending......");
+			var nicE = new nicEditors.findEditor('emailText');
+			emailVal = nicE.getContent();
+			
+			var template_params = 
+			{
+			   "ToEmail": clickedBookedEmail,
+			   "FromEmail": welcomeMsgEmail,
+			   "subject": $("#subject").val(),
+			   "text": emailVal
+			}
+
+			var service_id = "default_service";
+			var template_id = "se21bookingerror";
+			emailjs.send(service_id,template_id,template_params)
+			.then(function(response) {
+			   $("#emailErrMsg").css("color","green")
+			   $("#emailErrMsg").html('SUCCESS!', response.status, response.text);
+			}, function(error) {
+			   $("#emailErrMsg").css("color","red")
+			   $("#emailErrMsg").html('FAILED...', error);
+			});
+		});
+		//Send > End
+
+	}); 
+}

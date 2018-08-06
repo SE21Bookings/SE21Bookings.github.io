@@ -308,6 +308,7 @@ function getEmail()
 	cognitoUser.getUserAttributes(function(err, result) {
         if (err) {
             console.log(err);
+			$("#errorModule").show();
             return;
         }
 		email = result[2]["Value"];
@@ -348,4 +349,14 @@ function checkRecurrence()
 	{
 		$("#howManyWeeks").hide()
 	}
+}
+
+function removeEventListeners()
+{
+	$(document).off('click', '#bookBtn')
+	$(document).off('click', '#deleteBtn')
+	$(document).off('click', '.row_data')
+	$(document).off('click', '#contactBtn')
+	$(document).off('click', '#BookRecrBtn')
+	$(document).off('click', '#sendBtn')
 }
