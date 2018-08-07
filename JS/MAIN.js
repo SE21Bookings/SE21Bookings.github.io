@@ -1,5 +1,6 @@
 var AdmimUserpoolID = "ap-southeast-1_5uiXeZzFB";
 var AdminAppClientID = "2qis1u4uur3e17ua9a28r7b6ol";
+var API_URL_Admin = "https://7l7do5pc6f.execute-api.ap-southeast-1.amazonaws.com/ReadWriteFromTableSE21/adminusers";
 
 var slideIndex = 1;
 var email;
@@ -169,28 +170,50 @@ function getCognitoUser()
 
 function checkWhichUser()// checks what user it is, and whether or not it is a master user
 {
-	getEmail()
-	checkVariable()
-	function checkVariable() 
-	{
-		if (email != null) 
+	var emailExist = false;
+	$.ajax({
+		type: 'GET',
+		url: API_URL_Admin,
+		success: function (data) 
 		{
-			if(email=="Shenyi.Cui@dulwich-beijing.cn")
+			getEmail()
+			checkVariable()
+			function checkVariable() 
 			{
-				localStorage.setItem("adminPriv","true")
-				self.location="Pages/Make_Booking.html"
+				if (email != null) 
+				{
+					$.each(data.Items, function (index, val)
+					{
+						if(val["Email"].toLowerCase()==email.toLowerCase())
+						{
+							emailExist = true;
+						}
+					});
+					
+					if(emailExist==true)
+					{
+						localStorage.setItem("adminPriv","true")
+						self.location="Pages/Make_Booking.html"
+					}
+					else
+					{
+						localStorage.setItem("adminPriv","false")
+						self.location="Pages/Make_Booking.html"
+					}
+
+				}
+				else
+				{
+					window.setTimeout(checkVariable,1000)
+				}	
 			}
-			else
-			{
-				localStorage.setItem("adminPriv","false")
-				self.location="Pages/Make_Booking.html"
-			}
-		}
-		else
+		},
+		error: function (data)
 		{
-			window.setTimeout(checkVariable,1000)
+			$("#signInErrMsg").html("Error: UserDatabase load has failed")
 		}
-	}
+	});
+	
 }
 
 function decodeJWT(jwtToken) // decodes JWT accessToken
@@ -222,6 +245,9 @@ window.onclick = function(event)
     }
 	else if (event.target == Rbook) {
         Rbook.style.display = "none";
+    }
+	else if (event.target == openMAdminU) {
+        openMAdminU.style.display = "none";
     }
 }
 
@@ -380,4 +406,48 @@ function removeEventListeners()
 	$(document).off('click', '#sendBtn')
 	$(document).off('click', '#lessonLockBtn')
 	$(document).off('click', '#quickLockBtn')
+	$(document).off('click', '#addUserBtn')
+	$(document).off('focusout', '.row_data')
+}
+
+function whichTrueWeek(day)
+{
+	switch(day) 
+	{
+		case "1Monday":
+			return 1;
+			break;
+		case "2Tuesday":
+			return 1;
+			break;
+		case "3Wednesday":
+			return 1;
+			break;
+		case "4Thursday":
+			return 1;
+			break;
+		case "5Friday":
+			return 1;
+			break;
+		case "11Monday":
+			return 2;
+			break;
+		case "22Tuesday":
+			return 2;
+			break;
+		case "33Wednesday":
+			return 2;
+			break;
+		case "44Thursday":
+			return 2;
+			break;
+		case "55Friday":
+			return 2;
+			break;
+	}
+}
+
+function newWeekClear()
+{
+	
 }

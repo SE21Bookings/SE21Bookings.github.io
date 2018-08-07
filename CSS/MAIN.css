@@ -295,6 +295,32 @@ viewPort_Content
 	background-color: #CACACA;
 	color: black;
 }
+
+#viewPort button:disabled {
+    background: #dddddd;
+	color:white
+}
+#viewPort button:disabled:hover {
+    background: #dddddd;
+	color:white
+}
+#MAdminUser
+{
+	border: none;
+	height: 30px;
+	width: 120px;
+	background-color: #9C9C9C;
+	color: white;
+	position: absolute;
+	bottom:0;
+	left: 0;
+	display: none;
+}
+#MAdminUser:hover
+{
+	background-color: #CACACA;
+	color: black;
+}
 #lessonLockBtn
 {
 	display:none;
@@ -498,6 +524,79 @@ viewPort_Content
 	background-color: #CFCFCF;
 	color: black;
 }
+.BookRecuring-content input[type=text],[type=email]
+{
+    width: 600px;
+    padding: 7px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+.BookRecuring-content input[type=text]:focus, input[type=email]:focus
+{
+    border: 3px solid #555;
+}
+/* Modal Content/Box */
+.ManageUsers-content 
+{
+    background-color: white;/*rgba(245,245,245,1.00);*/
+    margin: 10% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+	border-radius: 25px;
+    width: 640px; /* Could be more or less, depending on screen size */
+}
+.ManageUsers-content input
+{
+    width: 600px;
+    padding: 7px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+.ManageUsers-content input:focus
+{
+    border: 3px solid #555;
+}
+.ManageUsers-content h1
+{
+    font-weight: 500;
+	margin: 0;
+}
+/* The Close Button */
+.close3 
+{
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close3:hover,
+.close3:focus 
+{
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.ManageUsers-content button
+{
+	margin-top: 5px;
+	width: 600px;
+	height: 30px;
+	color: white;
+	background-color: #8E8E8E;
+}
+.ManageUsers-content button:hover
+{
+	background-color: #CFCFCF;
+	color: black;
+}
 
 .ForgotPasswordSlides {display:none;}
 
@@ -511,6 +610,21 @@ viewPort_Content
 	z-index: 5;
 }
 #Loader img
+{
+	display: block;
+	margin: auto;
+}
+
+#LoaderUser
+{
+	height: 100%;
+	width: 100%;
+	top:0;
+	background-color: white;
+	/*background-color: rgb(24,24,31);*/
+	z-index: 5;
+}
+#LoaderUser img
 {
 	display: block;
 	margin: auto;
@@ -535,9 +649,17 @@ viewPort_Content
 	cursor: pointer;
 	font-weight: 300;
 }
+.light
+{
+	font-weight: 300;
+}
 .bold
 {
 	font-weight: 500;
+}
+.editColor
+{
+	background-color: #BDCAF2;
 }
 .noHeightBreak
 {
@@ -570,6 +692,10 @@ viewPort_Content
 .locked
 {
 	color: gray;
+}
+.Disabled
+{
+	background-color: #f5f5f5;
 }
 .selected
 {
