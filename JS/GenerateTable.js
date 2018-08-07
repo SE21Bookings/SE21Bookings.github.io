@@ -223,6 +223,12 @@ function loadinTech1Week1()
 									newString = val['Period1'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="Period1">'+newString+'</div></td>';
 								}
+								else if(bookState=="locked")
+								{
+									hiddenTxt = val['Period1'].substr(val['Period1'].indexOf(' ')+1)	
+									newString = val['Period1'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor locked" edit_type="click" col_name="Period1">'+newString+'</div></td>';
+								}
 								 
 								
 								newString = val['Period2'];
@@ -243,7 +249,12 @@ function loadinTech1Week1()
 									newString = val['Period2'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="Period2">'+newString+'</div></td>';
 								}
-								
+								else if(bookState=="locked")
+								{
+									hiddenTxt = val['Period2'].substr(val['Period2'].indexOf(' ')+1)	
+									newString = val['Period2'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor locked" edit_type="click" col_name="Period2">'+newString+'</div></td>';
+								}
 							
 								newString = val['Break'];
 								bookState = val['Break'].split(' ')[0]
@@ -263,7 +274,12 @@ function loadinTech1Week1()
 									newString = val['Break'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="Break">'+newString+'</div></td>';
 								}
-								
+								else if(bookState=="locked")
+								{
+									hiddenTxt = val['Break'].substr(val['Break'].indexOf(' ')+1)	
+									newString = val['Break'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor locked" edit_type="click" col_name="Break">'+newString+'</div></td>';
+								}
 							
 								
 								newString = val['Period3'];
@@ -284,7 +300,12 @@ function loadinTech1Week1()
 									newString = val['Period3'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="Period3">'+newString+'</div></td>';
 								}
-								
+								else if(bookState=="locked")
+								{
+									hiddenTxt = val['Period3'].substr(val['Period3'].indexOf(' ')+1)	
+									newString = val['Period3'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor locked" edit_type="click" col_name="Period3">'+newString+'</div></td>';
+								}
 							
 								newString = val['Period4'];
 								bookState = val['Period4'].split(' ')[0]
@@ -304,7 +325,12 @@ function loadinTech1Week1()
 									newString = val['Period4'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="Period4">'+newString+'</div></td>';
 								}
-								
+								else if(bookState=="locked")
+								{
+									hiddenTxt = val['Period4'].substr(val['Period4'].indexOf(' ')+1)	
+									newString = val['Period4'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor locked" edit_type="click" col_name="Period4">'+newString+'</div></td>';
+								}
 							
 								newString = val['Lunch'];
 								bookState = val['Lunch'].split(' ')[0]
@@ -324,7 +350,12 @@ function loadinTech1Week1()
 									newString = val['Lunch'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="Lunch">'+newString+'</div></td>';
 								}
-								
+								else if(bookState=="locked")
+								{
+									hiddenTxt = val['Lunch'].substr(val['Lunch'].indexOf(' ')+1)	
+									newString = val['Lunch'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor locked" edit_type="click" col_name="Lunch">'+newString+'</div></td>';
+								}
 
 								newString = val['Period5'];
 								bookState = val['Period5'].split(' ')[0]
@@ -344,7 +375,12 @@ function loadinTech1Week1()
 									newString = val['Period5'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="Period5">'+newString+'</div></td>';
 								}
-								
+								else if(bookState=="locked")
+								{
+									hiddenTxt = val['Period5'].substr(val['Period5'].indexOf(' ')+1)	
+									newString = val['Period5'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor locked" edit_type="click" col_name="Period5">'+newString+'</div></td>';
+								}
 							
 								newString = val['Period6'];
 								bookState = val['Period6'].split(' ')[0]
@@ -364,7 +400,12 @@ function loadinTech1Week1()
 									newString = val['Period6'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="Period6">'+newString+'</div></td>';
 								}
-								
+								else if(bookState=="locked")
+								{
+									hiddenTxt = val['Period6'].substr(val['Period6'].indexOf(' ')+1)	
+									newString = val['Period6'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor locked" edit_type="click" col_name="Period6">'+newString+'</div></td>';
+								}
 							
 								newString = val['AfterschoolH1'];
 								bookState = val['AfterschoolH1'].split(' ')[0]
@@ -384,7 +425,12 @@ function loadinTech1Week1()
 									newString = val['AfterschoolH1'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="AfterschoolH1">'+newString+'</div></td>';
 								}
-								
+								else if(bookState=="locked")
+								{
+									hiddenTxt = val['AfterschoolH1'].substr(val['AfterschoolH1'].indexOf(' ')+1)	
+									newString = val['AfterschoolH1'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor locked" edit_type="click" col_name="AfterschoolH1">'+newString+'</div></td>';
+								}
 							
 								newString = val['AfterschoolH2'];
 								bookState = val['AfterschoolH2'].split(' ')[0]
@@ -404,7 +450,12 @@ function loadinTech1Week1()
 									newString = val['AfterschoolH2'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="AfterschoolH2">'+newString+'</div></td>';
 								}
-								
+								else if(bookState=="locked")
+								{
+									hiddenTxt = val['AfterschoolH2'].substr(val['AfterschoolH2'].indexOf(' ')+1)	
+									newString = val['AfterschoolH2'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor locked" edit_type="click" col_name="AfterschoolH2">'+newString+'</div></td>';
+								}
 							
 
 							tbl +='</tr>';
@@ -456,7 +507,9 @@ function loadinTech1Week1()
 			$("#contactBtn").hide();
 			$("#bookBtn").hide();
 			$("#rbookBtn").hide();
+			
 			$("#lessonLockBtn").hide();
+			$("#quickLockBtn").hide();
 			
 			if(PrevSelect!=null)
 			{
@@ -492,6 +545,7 @@ function loadinTech1Week1()
 				if(localStorage.getItem("adminPriv")=="true")
 				{
 					$("#lessonLockBtn").show();
+					$("#quickLockBtn").show();
 				}
 			}	
 			else if(currentStatus.split(' ')[0] == "booked")
@@ -571,6 +625,22 @@ function loadinTech1Week1()
 				{
 					$("#bookingStatus").html("<strong>Status: </strong> lesson<br><strong>Email: </strong>"+clickedBookedEmail)
 					$("#contactBtn").show();
+				}
+			}
+			
+			else if(currentStatus.split(' ')[0] == "locked")
+			{
+				clickedBookedEmail = extractContent(currentStatus.substr(currentStatus.indexOf(' ')+1))
+				clickedBookedEmail = clickedBookedEmail.split(' ')[0]
+				welcomeMsgEmail = $("#welcomeMsg").html().substr($("#welcomeMsg").html().indexOf(' ')+1)
+				if(welcomeMsgEmail == clickedBookedEmail)
+				{
+					$("#bookingStatus").html("<strong>Status: </strong> locked")
+					$("#deleteBtn").show();
+				}
+				else
+				{
+					$("#bookingStatus").html("<strong>Status: </strong> locked")
 				}
 			}
 		})	
@@ -921,6 +991,53 @@ function loadinTech1Week1()
 		});
 		//lesson Lock >End
 		
+		//Lock >Start
+		$(document).on('click', '#quickLockBtn', function(event) 
+		{
+			preLimLoader("Locking...")
+			event.preventDefault();
+			var tbl_row = $(this).closest('tr');
+			var row_id = tbl_row.attr('row_id');
+			getEmail()
+			checkVariable()
+			function checkVariable() 
+			{
+				if (email != null) 
+				{
+				   $.ajax
+					({
+						type:'POST',
+						url:API_URL_Tech1,
+						data: JSON.stringify(
+								{
+									"Day":manipulateDayWeek1(Day),
+									"Room":"Tech1",
+									"updateAttr":Period,
+									"updateValue":"locked "+email+" lock1"
+								}
+							),
+
+						contentType:"application/json",
+
+						success: function(data){
+							loadinTech1Week1()
+							exitpreLimLoader()
+						},
+
+						error: function(data)
+						{
+							$("#errorModule").show();
+						}
+					});
+				}
+				else
+				{
+					window.setTimeout(checkVariable,1000)
+				}
+			}
+		});
+		//Lock >End
+		
 		//Send > Start
 		$(document).on('click', '#sendBtn', function(event) 
 		{
@@ -988,9 +1105,18 @@ function loadinTech1Week2()
 				
 				//sorting array
 				var temp;
-				temp = data.Items[1]
-				data.Items[1] = data.Items[3];
-				data.Items[3] = temp;
+				temp = data.Items[3]
+				data.Items[3]=data.Items[0]
+				data.Items[0] = temp
+				
+				temp = data.Items[4]
+				data.Items[4]=data.Items[3]
+				data.Items[3] = temp
+				
+				temp = data.Items[2]
+				data.Items[2]=data.Items[1]
+				data.Items[1] = temp
+				
 				console.log(data.Items)
 				
 				//--->create data table > start
