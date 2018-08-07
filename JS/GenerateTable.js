@@ -1660,43 +1660,78 @@ function loadinTech1Week2()
 			event.preventDefault();
 			var tbl_row = $(this).closest('tr');
 			var row_id = tbl_row.attr('row_id');
-			getEmail()
-			checkVariable()
-			function checkVariable() 
-			{
-				if (email != null) 
-				{
-				   $.ajax
-				   ({
-						type:'POST',
-						url:API_URL_Tech1,
-						data: JSON.stringify(
-								{
-									"Day":manipulateDayWeek2(Day),
-									"Room":"Tech1",
-									"updateAttr":Period,
-									"updateValue":"booked " + email
-								}
-							  ),
-
-						contentType:"application/json",
-
-						success: function(data){
-							loadinTech1Week2()
-							exitpreLimLoader()
-						},
-
-						error: function(data)
+			
+			$.ajax({
+				type:'PATCH',
+				url: API_URL_Tech1,
+				data:JSON.stringify(
+					{
+						"Key":"Room",
+						"Key2":"Day",
+						"searchAttr":"Tech1",
+						"searchAttr2":manipulateDayWeek2(Day)
+					}
+					),
+				contentType:"application/json",
+				success: function(data)
+					{
+						if(data.Items[0][Period] == "unbooked")
 						{
-							$("#errorModule").show();
+							validatedBook()
 						}
-				   });
-				}
-				else
+						else
+						{
+							preLimLoader("Error: Slot in Week 2 is already booked")
+							exitpreLimLoaderErr()
+							loadinTech1Week2()
+						}
+					},
+					error: function(data)
+					{
+						$("#errorModule").show();
+					}
+				});
+			
+			function validatedBook()
+			{
+				getEmail()
+				checkVariable()
+				function checkVariable() 
 				{
-					setTimeout(checkVariable, 1000);
+					if (email != null) 
+					{
+					   $.ajax
+					   ({
+							type:'POST',
+							url:API_URL_Tech1,
+							data: JSON.stringify(
+									{
+										"Day":manipulateDayWeek2(Day),
+										"Room":"Tech1",
+										"updateAttr":Period,
+										"updateValue":"booked " + email
+									}
+								  ),
+
+							contentType:"application/json",
+
+							success: function(data){
+								loadinTech1Week2()
+								exitpreLimLoader()
+							},
+
+							error: function(data)
+							{
+								$("#errorModule").show();
+							}
+					   });
+					}
+					else
+					{
+						setTimeout(checkVariable, 1000);
+					}
 				}
-		    }
+			}
 		});
 		//--->button > book > end
 
