@@ -379,5 +379,5 @@ function removeEventListeners()
 	$(document).off('click', '#BookRecrBtn')
 	$(document).off('click', '#sendBtn')
 	$(document).off('click', '#lessonLockBtn')
-	$(document).off('click', '#lessonLockBtn')
+	$(document).off('click', '#quickLockBtn')
 }
