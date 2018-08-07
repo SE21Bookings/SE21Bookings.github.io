@@ -1167,6 +1167,12 @@ function loadinTech1Week1()
 					$("#bookBtn").attr("disabled", "disabled");
 					$("#rbookBtn").attr("disabled", "disabled");
 				}
+				else
+				{
+					$("#bookBtn").removeAttr("disabled");
+					$("#rbookBtn").removeAttr("disabled");
+				}
+				
 				$("#bookingStatus").html("<strong>Status: </strong>unbooked<br>")
 				if(localStorage.getItem("adminPriv")=="true")
 				{
@@ -1233,6 +1239,10 @@ function loadinTech1Week1()
 					{
 						$("#deleteBtn").attr("disabled", "disabled");
 					}
+					else
+					{
+						$("#deleteBtn").removeAttr("disabled");
+					}
 				}
 				else
 				{
@@ -1241,6 +1251,10 @@ function loadinTech1Week1()
 					if($(this).hasClass("disable"))
 					{
 						$("#contactBtn").attr("disabled", "disabled");
+					}
+					else
+					{
+						$("#contactBtn").removeAttr("disabled");
 					}
 				}
 			}
@@ -2179,6 +2193,11 @@ function loadinTech1Week2()
 					$("#rbookBtn").attr("disabled", "disabled");
 					$("#bookBtn").attr("disabled", "disabled");
 				}
+				else
+				{
+					$("#rbookBtn").removeAttr("disabled");
+					$("#bookBtn").removeAttr("disabled");
+				}
 				$("#bookingStatus").html("<strong>Status: </strong>unbooked<br>")
 				if(localStorage.getItem("adminPriv")=="true")
 				{
@@ -2245,6 +2264,10 @@ function loadinTech1Week2()
 					{
 						$("#deleteBtn").attr("disabled", "disabled");
 					}
+					else
+					{
+						$("#deleteBtn").removeAttr("disabled");
+					}
 				}
 				else
 				{
@@ -2253,6 +2276,10 @@ function loadinTech1Week2()
 					if($(this).hasClass("disable"))
 					{
 						$("#contactBtn").attr("disabled", "disabled");
+					}
+					else
+					{
+						$("#contactBtn").removeAttr("disabled");
 					}
 				}
 			}
