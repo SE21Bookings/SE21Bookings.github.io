@@ -295,6 +295,18 @@ viewPort_Content
 	background-color: #CACACA;
 	color: black;
 }
+#lessonLockBtn
+{
+	display:none;
+}
+#quickLockBtn
+{
+	display:none;
+}
+#rlockBtn
+{
+	display:none;
+}
 .modal 
 {
     display: none; /* Hidden by default */
@@ -550,6 +562,10 @@ viewPort_Content
 .unbooked
 {
 	color:green;
+}
+.lesson
+{
+	color:orange;
 }
 .selected
 {

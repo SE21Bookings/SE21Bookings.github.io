@@ -4,7 +4,7 @@ var AdminAppClientID = "2qis1u4uur3e17ua9a28r7b6ol";
 var slideIndex = 1;
 var email;
 
-
+var adminPriv;
 
 function Login(usernames, passwords) //used to log a user into the main page
 {
@@ -169,13 +169,27 @@ function getCognitoUser()
 
 function checkWhichUser()// checks what user it is, and whether or not it is a master user
 {
-	if(getEmail()=="SE21Admin")
+	getEmail()
+	checkVariable()
+	function checkVariable() 
 	{
-		//do something
-	}
-	else
-	{
-		self.location="Pages/Make_Booking.html"
+		if (email != null) 
+		{
+			if(email=="Shenyi.Cui@dulwich-beijing.cn")
+			{
+				localStorage.setItem("adminPriv","true")
+				self.location="Pages/Make_Booking.html"
+			}
+			else
+			{
+				localStorage.setItem("adminPriv","false")
+				self.location="Pages/Make_Booking.html"
+			}
+		}
+		else
+		{
+			window.setTimeout(checkVariable,1000)
+		}
 	}
 }
 
@@ -234,7 +248,7 @@ function forgotPassContinue()
 function getMonday( date ) 
 {
     var day = date.getDay() || 7;  
-    if( day !== 2 ) 
+    if( day !== 1 ) 
         date.setHours(-24 * (day - 2)); 
 	
 	date = date.toUTCString();
@@ -364,4 +378,5 @@ function removeEventListeners()
 	$(document).off('click', '#contactBtn')
 	$(document).off('click', '#BookRecrBtn')
 	$(document).off('click', '#sendBtn')
+	$(document).off('click', '#lessonLockBtn')
 }

@@ -2,9 +2,11 @@ var Day;
 var Period;
 var PrevSelect;
 var clickedBookedEmail;
+var currentStatus;
 var welcomeMsgEmail;
 var API_URL_Tech1 = "https://7l7do5pc6f.execute-api.ap-southeast-1.amazonaws.com/ReadWriteFromTableSE21/tech1";
 var newValue;
+var Description;
 
 function PostData(whichRoom,WhichWeek)
 {
@@ -195,6 +197,7 @@ function loadinTech1Week1()
 						{
 							var newString;
 							var hiddenTxt; 
+							var bookState;
 							//you can replace with your database row id
 							row_id = random_id();
 							//loop through ajax row data
@@ -203,133 +206,203 @@ function loadinTech1Week1()
 								//will hide their email so that it wont show on the table but can be retrieved later to decide who booked the room. 
 								
 								newString = val['Period1'];
-								if(val['Period1']!="unbooked")
+								bookState = val['Period1'].split(' ')[0]
+								if(bookState=="booked")
 								{
 									hiddenTxt = val['Period1'].substr(val['Period1'].indexOf(' ')+1)	
 									newString = val['Period1'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Period1">'+newString+'</div></td>';
 								}
-								else
+								else if(bookState=="unbooked")
 								{
 									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Period1">'+newString+'</div></td>';
+								}
+								else if(bookState=="lesson")
+								{
+									hiddenTxt = val['Period1'].substr(val['Period1'].indexOf(' ')+1)	
+									newString = val['Period1'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="Period1">'+newString+'</div></td>';
 								}
 								 
 								
 								newString = val['Period2'];
-								if(val['Period2']!="unbooked")
+								bookState = val['Period2'].split(' ')[0]
+								if(bookState=="booked")
 								{
 									hiddenTxt = val['Period2'].substr(val['Period2'].indexOf(' ')+1)	
 									newString = val['Period2'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Period2">'+newString+'</div></td>';
 								}
-								else
+								else if(bookState=="unbooked")
 								{
 									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Period2">'+newString+'</div></td>';
+								}
+								else if(bookState=="lesson")
+								{
+									hiddenTxt = val['Period2'].substr(val['Period2'].indexOf(' ')+1)	
+									newString = val['Period2'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="Period2">'+newString+'</div></td>';
 								}
 								
 							
 								newString = val['Break'];
-								if(val['Break']!="unbooked")
+								bookState = val['Break'].split(' ')[0]
+								if(bookState=="booked")
 								{
 									hiddenTxt = val['Break'].substr(val['Break'].indexOf(' ')+1)	
 									newString = val['Break'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Break">'+newString+'</div></td>';
 								}
-								else
+								else if(bookState=="unbooked")
 								{
 									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Break">'+newString+'</div></td>';
+								}
+								else if(bookState=="lesson")
+								{
+									hiddenTxt = val['Break'].substr(val['Break'].indexOf(' ')+1)	
+									newString = val['Break'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="Break">'+newString+'</div></td>';
 								}
 								
 							
 								
 								newString = val['Period3'];
-								if(val['Period3']!="unbooked")
+								bookState = val['Period3'].split(' ')[0]
+								if(bookState=="booked")
 								{
 									hiddenTxt = val['Period3'].substr(val['Period3'].indexOf(' ')+1)	
 									newString = val['Period3'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Period3">'+newString+'</div></td>';
 								}
-								else
+								else if(bookState=="unbooked")
 								{
 									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Period3">'+newString+'</div></td>';
+								}
+								else if(bookState=="lesson")
+								{
+									hiddenTxt = val['Period3'].substr(val['Period3'].indexOf(' ')+1)	
+									newString = val['Period3'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="Period3">'+newString+'</div></td>';
 								}
 								
 							
 								newString = val['Period4'];
-								if(val['Period4']!="unbooked")
+								bookState = val['Period4'].split(' ')[0]
+								if(bookState=="booked")
 								{
 									hiddenTxt = val['Period4'].substr(val['Period4'].indexOf(' ')+1)	
 									newString = val['Period4'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Period4">'+newString+'</div></td>';
 								}
-								else
+								else if(bookState=="unbooked")
 								{
 									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Period4">'+newString+'</div></td>';
+								}
+								else if(bookState=="lesson")
+								{
+									hiddenTxt = val['Period4'].substr(val['Period4'].indexOf(' ')+1)	
+									newString = val['Period4'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="Period4">'+newString+'</div></td>';
 								}
 								
 							
 								newString = val['Lunch'];
-								if(val['Lunch']!="unbooked")
+								bookState = val['Lunch'].split(' ')[0]
+								if(bookState=="booked")
 								{
 									hiddenTxt = val['Lunch'].substr(val['Lunch'].indexOf(' ')+1)	
 									newString = val['Lunch'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Lunch">'+newString+'</div></td>';
 								}
-								else
+								else if(bookState=="unbooked")
 								{
 									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Lunch">'+newString+'</div></td>';
+								}
+								else if(bookState=="lesson")
+								{
+									hiddenTxt = val['Lunch'].substr(val['Lunch'].indexOf(' ')+1)	
+									newString = val['Lunch'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="Lunch">'+newString+'</div></td>';
 								}
 								
 
 								newString = val['Period5'];
-								if(val['Period5']!="unbooked")
+								bookState = val['Period5'].split(' ')[0]
+								if(bookState=="booked")
 								{
 									hiddenTxt = val['Period5'].substr(val['Period5'].indexOf(' ')+1)	
 									newString = val['Period5'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Period5">'+newString+'</div></td>';
 								}
-								else
+								else if(bookState=="unbooked")
 								{
 									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Period5">'+newString+'</div></td>';
+								}
+								else if(bookState=="lesson")
+								{
+									hiddenTxt = val['Period5'].substr(val['Period5'].indexOf(' ')+1)	
+									newString = val['Period5'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="Period5">'+newString+'</div></td>';
 								}
 								
 							
 								newString = val['Period6'];
-								if(val['Period6']!="unbooked")
+								bookState = val['Period6'].split(' ')[0]
+								if(bookState=="booked")
 								{
 									hiddenTxt = val['Period6'].substr(val['Period6'].indexOf(' ')+1)	
 									newString = val['Period6'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Period6">'+newString+'</div></td>';
 								}
-								else
+								else if(bookState=="unbooked")
 								{
 									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Period6">'+newString+'</div></td>';
+								}
+								else if(bookState=="lesson")
+								{
+									hiddenTxt = val['Period6'].substr(val['Period6'].indexOf(' ')+1)	
+									newString = val['Period6'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="Period6">'+newString+'</div></td>';
 								}
 								
 							
 								newString = val['AfterschoolH1'];
-								if(val['AfterschoolH1']!="unbooked")
+								bookState = val['AfterschoolH1'].split(' ')[0]
+								if(bookState=="booked")
 								{
 									hiddenTxt = val['AfterschoolH1'].substr(val['AfterschoolH1'].indexOf(' ')+1)	
 									newString = val['AfterschoolH1'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="AfterschoolH1">'+newString+'</div></td>';
 								}
-								else
+								else if(bookState=="unbooked")
 								{
 									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="AfterschoolH1">'+newString+'</div></td>';
+								}
+								else if(bookState=="lesson")
+								{
+									hiddenTxt = val['AfterschoolH1'].substr(val['AfterschoolH1'].indexOf(' ')+1)	
+									newString = val['AfterschoolH1'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="AfterschoolH1">'+newString+'</div></td>';
 								}
 								
 							
 								newString = val['AfterschoolH2'];
-								if(val['AfterschoolH2']!="unbooked")
+								bookState = val['AfterschoolH2'].split(' ')[0]
+								if(bookState=="booked")
 								{
 									hiddenTxt = val['AfterschoolH2'].substr(val['AfterschoolH2'].indexOf(' ')+1)	
 									newString = val['AfterschoolH2'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="AfterschoolH2">'+newString+'</div></td>';
 								}
-								else
+								else if(bookState=="unbooked")
 								{
 									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="AfterschoolH2">'+newString+'</div></td>';
+								}
+								else if(bookState=="lesson")
+								{
+									hiddenTxt = val['AfterschoolH2'].substr(val['AfterschoolH2'].indexOf(' ')+1)	
+									newString = val['AfterschoolH2'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="AfterschoolH2">'+newString+'</div></td>';
 								}
 								
 							
@@ -383,6 +456,7 @@ function loadinTech1Week1()
 			$("#contactBtn").hide();
 			$("#bookBtn").hide();
 			$("#rbookBtn").hide();
+			$("#lessonLockBtn").hide();
 			
 			if(PrevSelect!=null)
 			{
@@ -408,13 +482,17 @@ function loadinTech1Week1()
 			Period = col_name;
 			
 			//Seeing if the room is already Booked
-			var Description;
-			var currentStatus = row_div.html();
+			
+			currentStatus = row_div.html();
 			if(currentStatus == "unbooked")
 			{
 				$("#bookBtn").show();
 				$("#rbookBtn").show();
 				$("#bookingStatus").html("<strong>Status: </strong>unbooked<br>")
+				if(localStorage.getItem("adminPriv")=="true")
+				{
+					$("#lessonLockBtn").show();
+				}
 			}	
 			else if(currentStatus.split(' ')[0] == "booked")
 			{
@@ -463,6 +541,7 @@ function loadinTech1Week1()
 				{
 					$("#Description").append("<em>[ECA Information N.A for Quickbooks]</em>")
 				}
+
 				clickedBookedEmail = clickedBookedEmail.split(' ')[0]
 				welcomeMsgEmail = $("#welcomeMsg").html().substr($("#welcomeMsg").html().indexOf(' ')+1)
 				
@@ -474,6 +553,23 @@ function loadinTech1Week1()
 				else
 				{
 					$("#bookingStatus").html("<strong>Status: </strong> booked<br><strong>Email: </strong>"+clickedBookedEmail)
+					$("#contactBtn").show();
+				}
+			}
+			
+			else if(currentStatus.split(' ')[0] == "lesson")
+			{
+				clickedBookedEmail = extractContent(currentStatus.substr(currentStatus.indexOf(' ')+1))
+				clickedBookedEmail = clickedBookedEmail.split(' ')[0]
+				welcomeMsgEmail = $("#welcomeMsg").html().substr($("#welcomeMsg").html().indexOf(' ')+1)
+				if(welcomeMsgEmail == clickedBookedEmail)
+				{
+					$("#bookingStatus").html("<strong>Status: </strong> lesson<br><strong>Email: </strong>"+clickedBookedEmail)
+					$("#deleteBtn").show();
+				}
+				else
+				{
+					$("#bookingStatus").html("<strong>Status: </strong> lesson<br><strong>Email: </strong>"+clickedBookedEmail)
 					$("#contactBtn").show();
 				}
 			}
@@ -555,6 +651,36 @@ function loadinTech1Week1()
 			
 			preLimLoader("Deleting Booking...")
 			event.preventDefault();
+			if(Description!=null)
+			{
+				if(Description.split(' ')[0] =="lock1lock2")
+				{
+					$.ajax
+					({
+						type:'POST',
+						url:API_URL_Tech1,
+						data: JSON.stringify(
+							{
+								"Day":manipulateDayWeek2(Day),
+								"Room":"Tech1",
+								"updateAttr":Period,
+								"updateValue":"unbooked"
+							}
+						),
+
+						contentType:"application/json",
+
+						success: function(data){
+							loadinTech1Week1()
+							exitpreLimLoader()
+						},
+						error: function(data)
+						{
+							$("#errorModule").show();
+						}
+					});
+				}
+			}
 			$.ajax
 			({
 				type:'POST',
@@ -569,7 +695,7 @@ function loadinTech1Week1()
 				),
 
 				contentType:"application/json",
-				
+
 				success: function(data){
 					loadinTech1Week1()
 					exitpreLimLoader()
@@ -579,6 +705,7 @@ function loadinTech1Week1()
 					$("#errorModule").show();
 				}
 			});
+			
 		
 		});
 		//--->button > Delete > end
@@ -747,6 +874,53 @@ function loadinTech1Week1()
 		});
 		//BookRBtn > End
 		
+		//lesson Lock >Start
+		$(document).on('click', '#lessonLockBtn', function(event) 
+		{
+			preLimLoader("Booking Lesson...")
+			event.preventDefault();
+			var tbl_row = $(this).closest('tr');
+			var row_id = tbl_row.attr('row_id');
+			getEmail()
+			checkVariable()
+			function checkVariable() 
+			{
+				if (email != null) 
+				{
+				   $.ajax
+				   ({
+						type:'POST',
+						url:API_URL_Tech1,
+						data: JSON.stringify(
+								{
+									"Day":manipulateDayWeek1(Day),
+									"Room":"Tech1",
+									"updateAttr":Period,
+									"updateValue":"lesson " + email + " lock1"
+								}
+							  ),
+
+						contentType:"application/json",
+
+						success: function(data){
+							loadinTech1Week1()
+							exitpreLimLoader()
+						},
+
+						error: function(data)
+						{
+							$("#errorModule").show();
+						}
+				   });
+				}
+				else
+				{
+					window.setTimeout(checkVariable,1000)
+				}
+			}
+		});
+		//lesson Lock >End
+		
 		//Send > Start
 		$(document).on('click', '#sendBtn', function(event) 
 		{
@@ -774,8 +948,7 @@ function loadinTech1Week1()
 			});
 		});
 		//Send > End
-
-	}); 
+		}); 
 }
 
 function loadinTech1Week2()
@@ -815,8 +988,9 @@ function loadinTech1Week2()
 				
 				//sorting array
 				var temp;
-				
-				
+				temp = data.Items[1]
+				data.Items[1] = data.Items[3];
+				data.Items[3] = temp;
 				console.log(data.Items)
 				
 				//--->create data table > start
@@ -850,6 +1024,7 @@ function loadinTech1Week2()
 						{
 							var newString;
 							var hiddenTxt; 
+							var bookState;
 							//you can replace with your database row id
 							row_id = random_id();
 							//loop through ajax row data
@@ -858,133 +1033,203 @@ function loadinTech1Week2()
 								//will hide their email so that it wont show on the table but can be retrieved later to decide who booked the room. 
 								
 								newString = val['Period1'];
-								if(val['Period1']!="unbooked")
+								bookState = val['Period1'].split(' ')[0]
+								if(bookState=="booked")
 								{
 									hiddenTxt = val['Period1'].substr(val['Period1'].indexOf(' ')+1)	
 									newString = val['Period1'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Period1">'+newString+'</div></td>';
 								}
-								else
+								else if(bookState=="unbooked")
 								{
 									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Period1">'+newString+'</div></td>';
+								}
+								else if(bookState=="lesson")
+								{
+									hiddenTxt = val['Period1'].substr(val['Period1'].indexOf(' ')+1)	
+									newString = val['Period1'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="Period1">'+newString+'</div></td>';
 								}
 								 
 								
 								newString = val['Period2'];
-								if(val['Period2']!="unbooked")
+								bookState = val['Period2'].split(' ')[0]
+								if(bookState=="booked")
 								{
 									hiddenTxt = val['Period2'].substr(val['Period2'].indexOf(' ')+1)	
 									newString = val['Period2'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Period2">'+newString+'</div></td>';
 								}
-								else
+								else if(bookState=="unbooked")
 								{
 									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Period2">'+newString+'</div></td>';
+								}
+								else if(bookState=="lesson")
+								{
+									hiddenTxt = val['Period2'].substr(val['Period2'].indexOf(' ')+1)	
+									newString = val['Period2'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="Period2">'+newString+'</div></td>';
 								}
 								
 							
 								newString = val['Break'];
-								if(val['Break']!="unbooked")
+								bookState = val['Break'].split(' ')[0]
+								if(bookState=="booked")
 								{
 									hiddenTxt = val['Break'].substr(val['Break'].indexOf(' ')+1)	
 									newString = val['Break'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Break">'+newString+'</div></td>';
 								}
-								else
+								else if(bookState=="unbooked")
 								{
 									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Break">'+newString+'</div></td>';
+								}
+								else if(bookState=="lesson")
+								{
+									hiddenTxt = val['Break'].substr(val['Break'].indexOf(' ')+1)	
+									newString = val['Break'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="Break">'+newString+'</div></td>';
 								}
 								
 							
 								
 								newString = val['Period3'];
-								if(val['Period3']!="unbooked")
+								bookState = val['Period3'].split(' ')[0]
+								if(bookState=="booked")
 								{
 									hiddenTxt = val['Period3'].substr(val['Period3'].indexOf(' ')+1)	
 									newString = val['Period3'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Period3">'+newString+'</div></td>';
 								}
-								else
+								else if(bookState=="unbooked")
 								{
 									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Period3">'+newString+'</div></td>';
+								}
+								else if(bookState=="lesson")
+								{
+									hiddenTxt = val['Period3'].substr(val['Period3'].indexOf(' ')+1)	
+									newString = val['Period3'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="Period3">'+newString+'</div></td>';
 								}
 								
 							
 								newString = val['Period4'];
-								if(val['Period4']!="unbooked")
+								bookState = val['Period4'].split(' ')[0]
+								if(bookState=="booked")
 								{
 									hiddenTxt = val['Period4'].substr(val['Period4'].indexOf(' ')+1)	
 									newString = val['Period4'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Period4">'+newString+'</div></td>';
 								}
-								else
+								else if(bookState=="unbooked")
 								{
 									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Period4">'+newString+'</div></td>';
+								}
+								else if(bookState=="lesson")
+								{
+									hiddenTxt = val['Period4'].substr(val['Period4'].indexOf(' ')+1)	
+									newString = val['Period4'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="Period4">'+newString+'</div></td>';
 								}
 								
 							
 								newString = val['Lunch'];
-								if(val['Lunch']!="unbooked")
+								bookState = val['Lunch'].split(' ')[0]
+								if(bookState=="booked")
 								{
 									hiddenTxt = val['Lunch'].substr(val['Lunch'].indexOf(' ')+1)	
 									newString = val['Lunch'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Lunch">'+newString+'</div></td>';
 								}
-								else
+								else if(bookState=="unbooked")
 								{
 									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Lunch">'+newString+'</div></td>';
+								}
+								else if(bookState=="lesson")
+								{
+									hiddenTxt = val['Lunch'].substr(val['Lunch'].indexOf(' ')+1)	
+									newString = val['Lunch'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="Lunch">'+newString+'</div></td>';
 								}
 								
 
 								newString = val['Period5'];
-								if(val['Period5']!="unbooked")
+								bookState = val['Period5'].split(' ')[0]
+								if(bookState=="booked")
 								{
 									hiddenTxt = val['Period5'].substr(val['Period5'].indexOf(' ')+1)	
 									newString = val['Period5'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Period5">'+newString+'</div></td>';
 								}
-								else
+								else if(bookState=="unbooked")
 								{
 									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Period5">'+newString+'</div></td>';
+								}
+								else if(bookState=="lesson")
+								{
+									hiddenTxt = val['Period5'].substr(val['Period5'].indexOf(' ')+1)	
+									newString = val['Period5'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="Period5">'+newString+'</div></td>';
 								}
 								
 							
 								newString = val['Period6'];
-								if(val['Period6']!="unbooked")
+								bookState = val['Period6'].split(' ')[0]
+								if(bookState=="booked")
 								{
 									hiddenTxt = val['Period6'].substr(val['Period6'].indexOf(' ')+1)	
 									newString = val['Period6'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="Period6">'+newString+'</div></td>';
 								}
-								else
+								else if(bookState=="unbooked")
 								{
 									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="Period6">'+newString+'</div></td>';
+								}
+								else if(bookState=="lesson")
+								{
+									hiddenTxt = val['Period6'].substr(val['Period6'].indexOf(' ')+1)	
+									newString = val['Period6'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="Period6">'+newString+'</div></td>';
 								}
 								
 							
 								newString = val['AfterschoolH1'];
-								if(val['AfterschoolH1']!="unbooked")
+								bookState = val['AfterschoolH1'].split(' ')[0]
+								if(bookState=="booked")
 								{
 									hiddenTxt = val['AfterschoolH1'].substr(val['AfterschoolH1'].indexOf(' ')+1)	
 									newString = val['AfterschoolH1'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="AfterschoolH1">'+newString+'</div></td>';
 								}
-								else
+								else if(bookState=="unbooked")
 								{
 									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="AfterschoolH1">'+newString+'</div></td>';
+								}
+								else if(bookState=="lesson")
+								{
+									hiddenTxt = val['AfterschoolH1'].substr(val['AfterschoolH1'].indexOf(' ')+1)	
+									newString = val['AfterschoolH1'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="AfterschoolH1">'+newString+'</div></td>';
 								}
 								
 							
 								newString = val['AfterschoolH2'];
-								if(val['AfterschoolH2']!="unbooked")
+								bookState = val['AfterschoolH2'].split(' ')[0]
+								if(bookState=="booked")
 								{
 									hiddenTxt = val['AfterschoolH2'].substr(val['AfterschoolH2'].indexOf(' ')+1)	
 									newString = val['AfterschoolH2'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 									tbl +='<td ><div class="row_data pointerCursor booked" edit_type="click" col_name="AfterschoolH2">'+newString+'</div></td>';
 								}
-								else
+								else if(bookState=="unbooked")
 								{
 									tbl +='<td ><div class="row_data pointerCursor unbooked" edit_type="click" col_name="AfterschoolH2">'+newString+'</div></td>';
+								}
+								else if(bookState=="lesson")
+								{
+									hiddenTxt = val['AfterschoolH2'].substr(val['AfterschoolH2'].indexOf(' ')+1)	
+									newString = val['AfterschoolH2'].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
+									tbl +='<td ><div class="row_data pointerCursor lesson" edit_type="click" col_name="AfterschoolH2">'+newString+'</div></td>';
 								}
 								
 							
@@ -1038,6 +1283,7 @@ function loadinTech1Week2()
 			$("#contactBtn").hide();
 			$("#bookBtn").hide();
 			$("#rbookBtn").hide();
+			$("#lessonLockBtn").hide();
 			
 			if(PrevSelect!=null)
 			{
@@ -1048,7 +1294,10 @@ function loadinTech1Week2()
 			row_div.addClass("selected");
 			PrevSelect = row_div;
 			//Populating Details Start
-			$("#bookingDetails").html("<strong>Week Beginning: </strong>" + getMonday(new Date()));
+			var CurDate = new Date();
+			var weekInMilliseconds = 7 * 24 * 60 * 60 * 1000;
+			CurDate.setTime(CurDate.getTime() + weekInMilliseconds);
+			$("#bookingDetails").html("<strong>Week Beginning: </strong>" + getMonday(CurDate));
 			var row_id = $(this).closest('tr').attr('row_id');	
 			var Row = document.getElementById(row_id);
 			var Cells = Row.getElementsByTagName("td");
@@ -1070,6 +1319,10 @@ function loadinTech1Week2()
 				$("#bookBtn").show();
 				$("#rbookBtn").show();
 				$("#bookingStatus").html("<strong>Status: </strong>unbooked<br>")
+				if(localStorage.getItem("adminPriv")=="true")
+				{
+					$("#lessonLockBtn").show();
+				}
 			}	
 			else if(currentStatus.split(' ')[0] == "booked")
 			{
@@ -1129,6 +1382,23 @@ function loadinTech1Week2()
 				else
 				{
 					$("#bookingStatus").html("<strong>Status: </strong> booked<br><strong>Email: </strong>"+clickedBookedEmail)
+					$("#contactBtn").show();
+				}
+			}
+			
+			else if(currentStatus.split(' ')[0] == "lesson")
+			{
+				clickedBookedEmail = extractContent(currentStatus.substr(currentStatus.indexOf(' ')+1))
+				clickedBookedEmail = clickedBookedEmail.split(' ')[0]
+				welcomeMsgEmail = $("#welcomeMsg").html().substr($("#welcomeMsg").html().indexOf(' ')+1)
+				if(welcomeMsgEmail == clickedBookedEmail)
+				{
+					$("#bookingStatus").html("<strong>Status: </strong> lesson<br><strong>Email: </strong>"+clickedBookedEmail)
+					$("#deleteBtn").show();
+				}
+				else
+				{
+					$("#bookingStatus").html("<strong>Status: </strong> lesson<br><strong>Email: </strong>"+clickedBookedEmail)
 					$("#contactBtn").show();
 				}
 			}
@@ -1209,6 +1479,36 @@ function loadinTech1Week2()
 		{
 			preLimLoader("Deleting Booking...")
 			event.preventDefault();
+			if(Description!=null)
+			{
+				if(Description.split(' ')[0] =="lock1lock2")
+				{
+					$.ajax
+					({
+						type:'POST',
+						url:API_URL_Tech1,
+						data: JSON.stringify(
+							{
+								"Day":manipulateDayWeek1(Day),
+								"Room":"Tech1",
+								"updateAttr":Period,
+								"updateValue":"unbooked"
+							}
+						),
+
+						contentType:"application/json",
+
+						success: function(data){
+							loadinTech1Week2()
+							exitpreLimLoader()
+						},
+						error: function(data)
+						{
+							$("#errorModule").show();
+						}
+					});
+				}
+			}
 			$.ajax
 			({
 				type:'POST',
@@ -1223,7 +1523,7 @@ function loadinTech1Week2()
 				),
 
 				contentType:"application/json",
-				
+
 				success: function(data){
 					loadinTech1Week2()
 					exitpreLimLoader()
@@ -1401,6 +1701,53 @@ function loadinTech1Week2()
 		    }
 		});
 		//BookRBtn > End
+		
+		//lesson Lock >Start
+		$(document).on('click', '#lessonLockBtn', function(event) 
+		{
+			preLimLoader("Booking Lesson...")
+			event.preventDefault();
+			var tbl_row = $(this).closest('tr');
+			var row_id = tbl_row.attr('row_id');
+			getEmail()
+			checkVariable()
+			function checkVariable() 
+			{
+				if (email != null) 
+				{
+				   $.ajax
+				   ({
+						type:'POST',
+						url:API_URL_Tech1,
+						data: JSON.stringify(
+								{
+									"Day":manipulateDayWeek2(Day),
+									"Room":"Tech1",
+									"updateAttr":Period,
+									"updateValue":"lesson " + email + " lock2"
+								}
+							  ),
+
+						contentType:"application/json",
+
+						success: function(data){
+							loadinTech1Week2()
+							exitpreLimLoader()
+						},
+
+						error: function(data)
+						{
+							$("#errorModule").show();
+						}
+				   });
+				}
+				else
+				{
+					window.setTimeout(checkVariable,1000)
+				}
+			}
+		});
+		//lesson Lock >End
 		
 		//Send > Start
 		$(document).on('click', '#sendBtn', function(event) 

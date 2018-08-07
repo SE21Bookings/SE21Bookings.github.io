@@ -58,6 +58,9 @@
 						<br>					
 						<button id="bookBtn">Quick Book</button>
 						<button id="rbookBtn">Book Recurring</button>
+						<button id="lessonLockBtn">Lesson</button>
+						<button id="quickLockBtn">Quick Lock</button>
+						<button id="rlockBtn">Lock Recurring</button>
 						<button id="deleteBtn">Delete</button>
 						<button id="contactBtn">Contact</button>
 					</div>	
@@ -84,7 +87,6 @@
 				<p id="emailErrMsg"></p>
 			</div>
 		</div>
-		
 		<div id="BookRecuring" class="HigherModal">
 			<div class="BookRecuring-content">
 				<span class="close2">&times;</span>
@@ -116,7 +118,18 @@
 		{
 			if (email != null) 
 			{
-			   $("#welcomeMsg").html("Welcome: " + email)
+			   if(localStorage.getItem("adminPriv") == "false")
+			   {
+				   $("#welcomeMsg").html("Welcome: " + email)
+			   }
+			   else if(localStorage.getItem("adminPriv") == "true")
+			   {
+				   $("#welcomeMsg").html("Welcome_Admin: " + email)
+			   }
+			   else
+			   {
+				   self.location = "../index.html"
+			   }
 		   	}
 			else
 			{
