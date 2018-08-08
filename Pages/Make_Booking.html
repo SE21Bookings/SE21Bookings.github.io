@@ -28,12 +28,12 @@
 		</div>
 		
 		<div id="mapBtnsDiv">
-			<div onClick="openModal(); loadinTech1Week1(); " id="Tech1Btn"></div>
-			<div onClick="openModal();" id="Tech2Btn"></div>
-			<div onClick="openModal();" id="Tech3Btn"></div>
-			<div onClick="openModal();" id="Tech4Btn"></div>
-			<div onClick="openModal();" id="Tech5Btn"></div>
-			<div onClick="openModal();" id="VRBtn"></div>
+			<div onClick="openModal(); loadinRoom('Tech1','1');" id="Tech1Btn"></div>
+			<div onClick="openModal(); loadinRoom('Tech2','1');"  id="Tech2Btn"></div>
+			<div onClick="openModal(); loadinRoom('Tech3','1');" id="Tech3Btn"></div>
+			<div onClick="openModal(); loadinRoom('Tech4','1');" id="Tech4Btn"></div>
+			<div onClick="openModal(); loadinRoom('Tech5','1');" id="Tech5Btn"></div>
+			<div onClick="openModal(); loadinRoom('VR','1');" id="VRBtn"></div>
 		</div>
 		
 		<div id="errorModule">
@@ -126,6 +126,7 @@
 	
 	<script>//Initlizers
 		$("#navBar").load("../DynamicLoad_Modules/NavBar.html")
+		DocFunctions();//loads in the important functions on the document
 		getEmail()
 		checkVariable()
 		function checkVariable()  // welcomeMsg Loader

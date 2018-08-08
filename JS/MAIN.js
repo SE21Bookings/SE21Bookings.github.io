@@ -282,48 +282,88 @@ function getMonday( date )
     return date;
 }
 
-function manipulateDayWeek1(day)
+function manipulateDay(day, whichWeek)
 {
-	switch(day) 
+	if(whichWeek == 1)
 	{
-		case "Monday":
-			return "1Monday";
-			break;
-		case "Tuesday":
-			return "2Tuesday";
-			break;
-		case "Wednesday":
-			return "3Wednesday";
-			break;
-		case "Thursday":
-			return "4Thursday";
-			break;
-		case "Friday":
-			return "5Friday";
-			break;
+		switch(day) 
+		{
+			case "Monday":
+				return "1Monday";
+				break;
+			case "Tuesday":
+				return "2Tuesday";
+				break;
+			case "Wednesday":
+				return "3Wednesday";
+				break;
+			case "Thursday":
+				return "4Thursday";
+				break;
+			case "Friday":
+				return "5Friday";
+				break;
+		}
 	}
+	else if(whichWeek ==2)
+	{
+		switch(day) 
+		{
+			case "Monday":
+				return "11Monday";
+				break;
+			case "Tuesday":
+				return "22Tuesday";
+				break;
+			case "Wednesday":
+				return "33Wednesday";
+				break;
+			case "Thursday":
+				return "44Thursday";
+				break;
+			case "Friday":
+				return "55Friday";
+				break;
+		}
+	}
+	
 }
 
-function manipulateDayWeek2(day)
+function manipulatePeriod(Period)
 {
-	switch(day) 
-	{
-		case "Monday":
-			return "11Monday";
-			break;
-		case "Tuesday":
-			return "22Tuesday";
-			break;
-		case "Wednesday":
-			return "33Wednesday";
-			break;
-		case "Thursday":
-			return "44Thursday";
-			break;
-		case "Friday":
-			return "55Friday";
-			break;
-	}
+	switch(Period) 
+		{
+			case "Period1":
+				return "Period 1";
+				break;
+			case "Period2":
+				return "Period 2";
+				break;
+			case "Break":
+				return "Break";
+				break;
+			case "Period3":
+				return "Period 3";
+				break;
+			case "Period4":
+				return "Period 4";
+				break;
+			case "Lunch":
+				return "Lunch";
+				break;
+			case "Period5":
+				return "Period 5";
+				break;
+			case "Period6":
+				return "Period 6";
+				break;
+			case "AfterschoolH1":
+				return "Afterschool Hour 1";
+				break;
+			case "AfterschoolH2":
+				return "Afterschool Hour 2";
+				break;
+		}
 }
 
 function plusDivs(n) 
@@ -447,7 +487,35 @@ function whichTrueWeek(day)
 	}
 }
 
+function ReloadRoom(Room, Week)
+{
+	loadinRoom(Room, Week.toString())
+}
+
 function newWeekClear()
 {
-	
+	$.ajax
+	({
+		type:'POST',
+		url:API_URL_Tech1,
+		data: JSON.stringify(
+		{
+			"Day":manipulateDayWeek2(Day),
+			"Room":"Tech1",
+			"updateAttr":Period,
+			"updateValue":"unbooked"
+		}
+		),
+
+		contentType:"application/json",
+
+		success: function(data){
+			loadinTech1Week1()
+			exitpreLimLoader()
+		},
+		error: function(data)
+		{
+			$("#errorModule").show();
+		}
+	});
 }
