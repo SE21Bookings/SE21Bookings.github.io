@@ -629,6 +629,28 @@ viewPort_Content
 	display: block;
 	margin: auto;
 }
+
+.Loader
+{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top:0;
+	background-color: white;
+	/*background-color: rgb(24,24,31);*/
+	z-index: 5;
+}
+.Loader img
+{
+	display: block;
+	margin: auto;
+	position: absolute;
+	top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
 #preLimLoader
 {
 	text-align: center;
@@ -760,7 +782,53 @@ viewPort_Content
 	background-color: rgba(0,0,0,0.5);
 }
 
-.timetableSlide
+#myProgress 
 {
-	display: none;
+  width: 100%;
+  background-color: #ddd;
+  position: absolute;
+  bottom: 0;
+}
+#myBar 
+{
+  width: 0%;
+  height: 30px;
+  background-color: #4CAF50;
+  text-align: center;
+  line-height: 30px;
+  color: white;
+}
+
+#DateViewer
+{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-right: -50%;
+	transform: translate(-50%, -50%);
+	width: 500px;
+	height: 400px;
+}
+#DateViewer h1
+{
+	font-weight: 300;
+}
+#DeleteConsole
+{
+	text-align: left;
+	display: block;
+	margin: auto;
+	width:400px;
+	height: 60%;
+	border: solid 3px black;
+	background-color: #F2F2F2;
+}
+#DeleteConsole p
+{
+	margin-left: 10px;
+	margin-right: 0px;
+	margin-top: 0;
+	margin-bottom: 0;
+	max-height: 100%;
+	overflow-y: auto;
 }

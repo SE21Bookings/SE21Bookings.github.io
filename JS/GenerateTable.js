@@ -13,6 +13,9 @@ var trueWeek;
 var Recurrence;
 var WhichRoom;
 var oppositeWeek;
+var doneLoading;
+var masterWeek;
+var overWriteTrueWeek;
 
 function PostData(whichRoom,WhichWeek)
 {
@@ -166,11 +169,11 @@ function DocFunctions()
 			row_div.addClass("selected");
 			PrevSelect = row_div;
 			//Populating Details Start
-			if(trueWeek ==1)
+			if(overWriteTrueWeek =="1")
 			{
 				$("#bookingDetails").html("<strong>Week Beginning: </strong>" + getMonday(new Date()));
 			}
-			else if(trueWeek ==2)
+			else if(overWriteTrueWeek =="2")
 			{
 				var nextWeekDate = new Date();
 				var weekInMilliseconds = 7 * 24 * 60 * 60 * 1000;
@@ -443,7 +446,7 @@ function DocFunctions()
 	//--->button > Delete > start	
 	$(document).on('click', '#deleteBtn', function(event) 
 	{
-			
+			console.log(trueWeek)
 			preLimLoader("Deleting Booking...")
 			event.preventDefault();
 			if(Description!=null)
@@ -466,8 +469,7 @@ function DocFunctions()
 						contentType:"application/json",
 
 						success: function(data){
-							ReloadRoom(WhichRoom,trueWeek)
-							exitpreLimLoader()
+							
 						},
 						error: function(data)
 						{
@@ -484,12 +486,16 @@ function DocFunctions()
 						oppositeWeek = 1
 					}
 				}
+				else
+				{
+					oppositeWeek = trueWeek
+				}
 			}
 			else
 			{
 				oppositeWeek = trueWeek
 			}
-
+			console.log(manipulateDay(Day, oppositeWeek) + " " + WhichRoom)
 			$.ajax
 			({
 				type:'POST',
@@ -548,6 +554,15 @@ function DocFunctions()
 			{
 				if (email != null) 
 				{
+					var w;
+					if(trueWeek == 1)
+					{
+						w=2
+					}
+					else if(trueWeek == 2)
+					{
+						w=1
+					}
 					newValue = "booked " + email +" "+week12Lock+" "+ ECA +" "+ECADes +" "+ howmanyWeeks
 					if(week12Lock =="lock1")
 					{
@@ -559,7 +574,7 @@ function DocFunctions()
 										"Key":"Room",
 										"Key2":"Day",
 										"searchAttr":WhichRoom,
-										"searchAttr2":manipulateDay(Day, trueWeek)
+										"searchAttr2":manipulateDay(Day, w)
 									}
 								),
 							contentType:"application/json",
@@ -584,6 +599,15 @@ function DocFunctions()
 					}
 					else if(week12Lock =="lock2")
 					{
+						var w;
+						if(trueWeek == 1)
+						{
+							w=2
+						}
+						else if(trueWeek == 2)
+						{
+							w=1
+						}
 						$.ajax({
 							type:'PATCH',
 							url: API_URL_Tech1,
@@ -592,7 +616,7 @@ function DocFunctions()
 										"Key":"Room",
 										"Key2":"Day",
 										"searchAttr":WhichRoom,
-										"searchAttr2":manipulateDay(Day, trueWeek)
+										"searchAttr2":manipulateDay(Day, w)
 									}
 								),
 							contentType:"application/json",
@@ -617,7 +641,16 @@ function DocFunctions()
 						
 					}
 					else if(week12Lock =="lock1lock2")
-					{		
+					{	
+						var w;
+						if(trueWeek == 1)
+						{
+							w=2
+						}
+						else if(trueWeek == 2)
+						{
+							w=1
+						}
 						$.ajax({
 							type:'PATCH',
 							url: API_URL_Tech1,
@@ -626,7 +659,7 @@ function DocFunctions()
 										"Key":"Room",
 										"Key2":"Day",
 										"searchAttr":WhichRoom,
-										"searchAttr2":manipulateDay(Day, trueWeek)
+										"searchAttr2":manipulateDay(Day, w)
 									}
 								),
 							contentType:"application/json",
@@ -1160,139 +1193,22 @@ function generateAdminTable()
 
  function loadinRoom(trueRoom, roomLoadWeek)
 {
+	
+	removeEventListeners()
+	DocFunctions()
 	WhichRoom = trueRoom
+	overWriteTrueWeek = roomLoadWeek;
 	
-	if(trueRoom == "Tech1" && roomLoadWeek =="1")
-	{
-		$("#timeTableTitle").html("Tech 1 Timetable [Week 1]:")
-		$("#Loader").show()
-		$("#timeTable").html("");
-		$("#viewPort").hide();
-		$("#viewPort_Content").hide();
-		$("#whichWeekBtn").html("See Week 2");
-		$("#whichWeekBtn").attr("onClick","loadinRoom('Tech1','2'); $('#timeTableTitle').html('Tech 1 Timetable [Week 2]:');")
-	}
-	else if(trueRoom == "Tech1" && roomLoadWeek =="2")
-	{
-		$("#timeTableTitle").html("Tech 1 Timetable [Week 2]:")
-		$("#Loader").show()
-		$("#timeTable").html("");
-		$("#viewPort").hide();
-		$("#viewPort_Content").hide();
-		$("#whichWeekBtn").html("See Week 1");
-		$("#whichWeekBtn").attr("onClick","loadinRoom('Tech1','1'); $('#timeTableTitle').html('Tech 1 Timetable [Week 1]:');")
-	}
-	
-	else if(trueRoom == "Tech2" && roomLoadWeek =="1")
-	{
-		$("#timeTableTitle").html("Tech 2 Timetable [Week 1]:")
-		$("#Loader").show()
-		$("#timeTable").html("");
-		$("#viewPort").hide();
-		$("#viewPort_Content").hide();
-		$("#whichWeekBtn").html("See Week 2");
-		$("#whichWeekBtn").attr("onClick","loadinRoom('Tech2','2'); $('#timeTableTitle').html('Tech 2 Timetable [Week 2]:');")
-	}
-	else if(trueRoom == "Tech2" && roomLoadWeek =="2")
-	{
-		$("#timeTableTitle").html("Tech 2 Timetable [Week 2]:")
-		$("#Loader").show()
-		$("#timeTable").html("");
-		$("#viewPort").hide();
-		$("#viewPort_Content").hide();
-		$("#whichWeekBtn").html("See Week 1");
-		$("#whichWeekBtn").attr("onClick","loadinRoom('Tech2','1'); $('#timeTableTitle').html('Tech 2 Timetable [Week 1]:');")
-	}
-	
-	else if(trueRoom == "Tech3" && roomLoadWeek =="1")
-	{
-		$("#timeTableTitle").html("Tech 3 Timetable [Week 1]:")
-		$("#Loader").show()
-		$("#timeTable").html("");
-		$("#viewPort").hide();
-		$("#viewPort_Content").hide();
-		$("#whichWeekBtn").html("See Week 2");
-		$("#whichWeekBtn").attr("onClick","loadinRoom('Tech3','2'); $('#timeTableTitle').html('Tech 3 Timetable [Week 2]:');")
-	}
-	else if(trueRoom == "Tech3" && roomLoadWeek =="2")
-	{
-		$("#timeTableTitle").html("Tech 3 Timetable [Week 2]:")
-		$("#Loader").show()
-		$("#timeTable").html("");
-		$("#viewPort").hide();
-		$("#viewPort_Content").hide();
-		$("#whichWeekBtn").html("See Week 1");
-		$("#whichWeekBtn").attr("onClick","loadinRoom('Tech3','1'); $('#timeTableTitle').html('Tech 3 Timetable [Week 1]:');")
-	}
-	
-	else if(trueRoom == "Tech4" && roomLoadWeek =="1")
-	{
-		$("#timeTableTitle").html("Tech 4 Timetable [Week 1]:")
-		$("#Loader").show()
-		$("#timeTable").html("");
-		$("#viewPort").hide();
-		$("#viewPort_Content").hide();
-		$("#whichWeekBtn").html("See Week 2");
-		$("#whichWeekBtn").attr("onClick","loadinRoom('Tech4','2'); $('#timeTableTitle').html('Tech 4 Timetable [Week 2]:');")
-	}
-	else if(trueRoom == "Tech4" && roomLoadWeek =="2")
-	{
-		$("#timeTableTitle").html("Tech 4 Timetable [Week 2]:")
-		$("#Loader").show()
-		$("#timeTable").html("");
-		$("#viewPort").hide();
-		$("#viewPort_Content").hide();
-		$("#whichWeekBtn").html("See Week 1");
-		$("#whichWeekBtn").attr("onClick","loadinRoom('Tech4','1'); $('#timeTableTitle').html('Tech 4 Timetable [Week 1]:');")
-	}
-	
-	else if(trueRoom == "Tech5" && roomLoadWeek =="1")
-	{
-		$("#timeTableTitle").html("Tech 5 Timetable [Week 1]:")
-		$("#Loader").show()
-		$("#timeTable").html("");
-		$("#viewPort").hide();
-		$("#viewPort_Content").hide();
-		$("#whichWeekBtn").html("See Week 2");
-		$("#whichWeekBtn").attr("onClick","loadinRoom('Tech5','2'); $('#timeTableTitle').html('Tech 5 Timetable [Week 2]:');")
-	}
-	else if(trueRoom == "Tech5" && roomLoadWeek =="2")
-	{
-		$("#timeTableTitle").html("Tech 5 Timetable [Week 2]:")
-		$("#Loader").show()
-		$("#timeTable").html("");
-		$("#viewPort").hide();
-		$("#viewPort_Content").hide();
-		$("#whichWeekBtn").html("See Week 1");
-		$("#whichWeekBtn").attr("onClick","loadinRoom('Tech5','1'); $('#timeTableTitle').html('Tech 5 Timetable [Week 1]:');")
-	}
-	
-	else if(trueRoom == "VR" && roomLoadWeek =="1")
-	{
-		$("#timeTableTitle").html("Reception & VR Timetable [Week 1]:")
-		$("#Loader").show()
-		$("#timeTable").html("");
-		$("#viewPort").hide();
-		$("#viewPort_Content").hide();
-		$("#whichWeekBtn").html("See Week 2");
-		$("#whichWeekBtn").attr("onClick","loadinRoom('VR','2'); $('#timeTableTitle').html('Reception & VR Timetable [Week 2]:');")
-	}
-	else if(trueRoom == "VR" && roomLoadWeek =="2")
-	{
-		$("#timeTableTitle").html("Reception & VR Timetable [Week 2]:")
-		$("#Loader").show()
-		$("#timeTable").html("");
-		$("#viewPort").hide();
-		$("#viewPort_Content").hide();
-		$("#whichWeekBtn").html("See Week 1");
-		$("#whichWeekBtn").attr("onClick","loadinRoom('VR','1'); $('#timeTableTitle').html('Reception & VR Timetable [Week 1]:');")
-	}
-	
+	$("#Loader").show()
+	$("#timeTable").html("");
+	$("#viewPort").show();
+	$("#viewPort_Content").hide();
+	$('#timeTableTitle').html('Timetable:');
 	var row_id = ""
 	var tbl = '';
 	$(document).ready(function($)
 	{
-
+		
 		$.ajax({
 			type:'PATCH',
 			url: API_URL_Tech1,
@@ -1310,9 +1226,9 @@ function generateAdminTable()
 				$("#Loader").hide();
 				$("#viewPort").show();
 				$("#viewPort_Content").hide();
-				$("#preLimLoader").show();
-						
+				$("#preLimLoader").show();	
 				//sorting array
+				
 				var temp;
 				if(whichTrueWeek(data.Items[0]['Day']) == 1)
 				{
@@ -1320,7 +1236,7 @@ function generateAdminTable()
 						data.Items[1] = data.Items[3];
 						data.Items[3] = temp;
 						trimNum = 1;
-						trueWeek = 1;
+						trueWeek = 1
 					}
 				else if(whichTrueWeek(data.Items[0]['Day']) == 2)
 				{
@@ -1335,10 +1251,12 @@ function generateAdminTable()
 						temp = data.Items[2]
 						data.Items[2]=data.Items[1]
 						data.Items[1] = temp
+						
 						trimNum = 2
-						trueWeek = 2;
+						trueWeek =2
 					}
-				console.log(data.Items)
+				console.log(data.Items);
+				console.log(" || TrueWeek: " + trueWeek)
 					
 
 				
@@ -1906,8 +1824,119 @@ function generateAdminTable()
 				//--->create data table > end
 
 				//out put table data
-				$(document).find('#timeTable').html(tbl);
+				
+				
+				if(trueRoom == "Tech1" && roomLoadWeek =="1")
+				{
+					$("#timeTableTitle").html("Tech 1 Timetable ["+weekBeginNow()+"]:")
+					$("#whichWeekBtn").html("Next Week");
+					$("#whichWeekBtn").attr("onClick","loadinRoom('Tech1','2'); $('#timeTableTitle').html('Tech 1 Timetable ["+weekBeginNext()+"]:');")
+				}
+				else if(trueRoom == "Tech1" && roomLoadWeek =="2")
+				{
+					$("#timeTableTitle").html("Tech 1 Timetable ["+weekBeginNext()+"]:")
+					
+						
+					
+					$("#whichWeekBtn").html("Previous Week");
+					$("#whichWeekBtn").attr("onClick","loadinRoom('Tech1','1'); $('#timeTableTitle').html('Tech 1 Timetable ["+weekBeginNow()+"]:');")
+				}
 
+				if(trueRoom == "Tech2" && roomLoadWeek =="1")
+				{
+					$("#timeTableTitle").html("Tech 2 Timetable ["+weekBeginNow()+"]:")
+						
+						
+					
+					$("#whichWeekBtn").html("Next Week");
+					$("#whichWeekBtn").attr("onClick","loadinRoom('Tech2','2'); $('#timeTableTitle').html('Tech 2 Timetable ["+weekBeginNext()+"]:');")
+				}
+				else if(trueRoom == "Tech2" && roomLoadWeek =="2")
+				{
+					$("#timeTableTitle").html("Tech 2 Timetable ["+weekBeginNext()+"]:")
+							
+						
+					
+					$("#whichWeekBtn").html("Previous Week");
+					$("#whichWeekBtn").attr("onClick","loadinRoom('Tech2','1'); $('#timeTableTitle').html('Tech 2 Timetable ["+weekBeginNow()+"]:');")
+				}
+
+				if(trueRoom == "Tech3" && roomLoadWeek =="1")
+				{
+					$("#timeTableTitle").html("Tech 3 Timetable ["+weekBeginNow()+"]:")
+						
+						
+					
+					$("#whichWeekBtn").html("Next Week");
+					$("#whichWeekBtn").attr("onClick","loadinRoom('Tech3','2'); $('#timeTableTitle').html('Tech 3 Timetable ["+weekBeginNext()+"]:');")
+				}
+				else if(trueRoom == "Tech3" && roomLoadWeek =="2")
+				{
+					$("#timeTableTitle").html("Tech 3 Timetable ["+weekBeginNext()+"]:")
+						
+						
+					
+					$("#whichWeekBtn").html("Previous Week");
+					$("#whichWeekBtn").attr("onClick","loadinRoom('Tech3','1'); $('#timeTableTitle').html('Tech 3 Timetable ["+weekBeginNow()+"]:');")
+				}
+
+				if(trueRoom == "Tech4" && roomLoadWeek =="1")
+				{
+					$("#timeTableTitle").html("Tech 4 Timetable ["+weekBeginNow()+"]:")
+						
+						
+					
+					$("#whichWeekBtn").html("Next Week");
+					$("#whichWeekBtn").attr("onClick","loadinRoom('Tech4','2'); $('#timeTableTitle').html('Tech 4 Timetable ["+weekBeginNext()+"]:');")
+				}
+				else if(trueRoom == "Tech4" && roomLoadWeek =="2")
+				{
+					$("#timeTableTitle").html("Tech 4 Timetable ["+weekBeginNext()+"]:")
+						
+						
+					
+					$("#whichWeekBtn").html("Previous Week");
+					$("#whichWeekBtn").attr("onClick","loadinRoom('Tech4','1'); $('#timeTableTitle').html('Tech 4 Timetable ["+weekBeginNow()+"]:');")
+				}
+
+				if(trueRoom == "Tech5" && roomLoadWeek =="1")
+				{
+					$("#timeTableTitle").html("Tech 5 Timetable ["+weekBeginNow()+"]:")
+						
+						
+					
+					$("#whichWeekBtn").html("Next Week");
+					$("#whichWeekBtn").attr("onClick","loadinRoom('Tech5','2'); $('#timeTableTitle').html('Tech 5 Timetable ["+weekBeginNext()+"]:');")
+				}
+				else if(trueRoom == "Tech5" && roomLoadWeek =="2")
+				{
+					$("#timeTableTitle").html("Tech 5 Timetable ["+weekBeginNext()+"]:")
+						
+						
+					
+					$("#whichWeekBtn").html("Previous Week");
+					$("#whichWeekBtn").attr("onClick","loadinRoom('Tech5','1'); $('#timeTableTitle').html('Tech 5 Timetable ["+weekBeginNow()+"]:');")
+				}
+
+				if(trueRoom == "VR" && roomLoadWeek =="1")
+				{
+					$("#timeTableTitle").html("Reception & VR Timetable ["+weekBeginNow()+"]:")
+						
+						
+					
+					$("#whichWeekBtn").html("Next Week");
+					$("#whichWeekBtn").attr("onClick","loadinRoom('VR','2'); $('#timeTableTitle').html('<strong>Tech 1</strong> Timetable ["+weekBeginNext()+"]:');")
+				}
+				else if(trueRoom == "VR" && roomLoadWeek =="2")
+				{
+					$("#timeTableTitle").html("Reception & VR Timetable ["+weekBeginNext()+"]:")
+						
+						
+					
+					$("#whichWeekBtn").html("Previous Week");
+					$("#whichWeekBtn").attr("onClick","loadinRoom('VR','1'); $('#timeTableTitle').html('Reception & VR Timetable ["+weekBeginNow()+"]:');")
+				}
+				$(document).find('#timeTable').html(tbl);
 			},
 
 			error: function(data)
@@ -1923,4 +1952,5 @@ function generateAdminTable()
 			return id_num + id_str;
 		}
 	}); 
+	
 }

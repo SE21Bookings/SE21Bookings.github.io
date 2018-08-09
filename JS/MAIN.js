@@ -4,8 +4,9 @@ var API_URL_Admin = "https://7l7do5pc6f.execute-api.ap-southeast-1.amazonaws.com
 
 var slideIndex = 1;
 var email;
-
+var localStorageWeek;
 var adminPriv;
+var width = 0;
 
 function Login(usernames, passwords) //used to log a user into the main page
 {
@@ -99,12 +100,12 @@ function forgotPassword(username)
 		// call forgotPassword on cognitoUser
 		cognitoUser.forgotPassword({
 			onSuccess: function(result) {
-				console.log('call result: ' + (result.message || JSON.stringify(result)));
+				writeToDeleteConsole('call result: ' + (result.message || JSON.stringify(result)));
 				$("#ForgotPasswordErrMsg").html("");
 				plusDivs(1);
 			},
 			onFailure: function(err) {
-				console.log((err.message || JSON.stringify(err)));
+				writeToDeleteConsole((err.message || JSON.stringify(err)));
 				$("#ForgotPasswordErrMsg").html((err.message || JSON.stringify(err)));
 			}
 		});	
@@ -239,6 +240,7 @@ window.onclick = function(event)
 	if (event.target == modal) 
 	{
 		modal.style.display = "none";
+		btnActivated = false;
 	}
 	else if (event.target == emailmodal) {
         emailmodal.style.display = "none";
@@ -287,7 +289,7 @@ function manipulateDay(day, whichWeek)
 	if(whichWeek == 1)
 	{
 		switch(day) 
-		{
+		{	
 			case "Monday":
 				return "1Monday";
 				break;
@@ -489,33 +491,631 @@ function whichTrueWeek(day)
 
 function ReloadRoom(Room, Week)
 {
-	loadinRoom(Room, Week.toString())
+
+	loadinRoom(Room, overWriteTrueWeek)
+	
 }
 
 function newWeekClear()
 {
-	$.ajax
-	({
-		type:'POST',
-		url:API_URL_Tech1,
-		data: JSON.stringify(
-		{
-			"Day":manipulateDayWeek2(Day),
-			"Room":"Tech1",
-			"updateAttr":Period,
-			"updateValue":"unbooked"
-		}
-		),
+	$("#myProgress").show()
+	var elem = document.getElementById("myBar");  
+	elem.style.width = 0 + '%';
+	
+	$("#dConsoleText").html("")
+	var DayArray = ["1Monday","2Tuesday","3Wednesday","4Thursday","5Friday","11Monday","22Tuesday","33Wednesday","44Thursday","55Friday"] 
+	
+	var PeriodArray = ["Period1","Period2","Break","Period3","Period4","Lunch","Period5","Period6","AfterschoolH1","AfterschoolH2"]
+	
+	var RoomArray = ["Tech1","Tech2","Tech3","Tech4","Tech5","VR"]
+	
+	var i =0;
+	var a =0;
+	var b = 0;
+	var checkVarInterval;
+	
+	var changingWeek = false;
+	var changed = false; 
+	
+	var deleted = false; 
+	var deleting = false;
+	
+	function checkTrueWeek()
+	{
+		$.ajax({
+			type:'PATCH',
+			url: API_URL_Tech1,
+			data:JSON.stringify(
+				{
+					"Key":"Room",
+					"Key2":"Day",
+					"searchAttr":"CheckWeek",
+					"searchAttr2":"CheckWeek"
+				}
+				),
+			contentType:"application/json",
+			success: function(data)
+			{
+				if(data.Items[0]["WeekCount"]=="1")
+				{
+					changeTrueWeek("2")	
+					localStorage.setItem("weekValue","2")
+					//alert("Changing LocalStorage: " + localStorage.getItem("weekValue"))
+					localStorageWeek = "2"
+				}
+				else if(data.Items[0]["WeekCount"]=="2")
+				{
+					changeTrueWeek("1")
+					localStorage.setItem("weekValue","1")
+					//alert("Changing LocalStorage: " + localStorage.getItem("weekValue"))
+					localStorageWeek = "1"
+				}
+				
 
+				},
+				error: function(data)
+				{
+					$("#errorModule").show();
+				}
+			});
+	}
+	
+	function loop1ChangeWeek(nweek)
+	{
+		loop2ChangeWeek(nweek)
+	}
+	function loop2ChangeWeek(nweek1)
+	{
+		writeToDeleteConsole(RoomArray[i]+" "+DayArray[a])
+		$.ajax({
+		type:'PATCH',
+		url: API_URL_Tech1,
+		data:JSON.stringify(
+			{
+				"Key":"Room",
+				"Key2":"Day",
+				"searchAttr":RoomArray[i],
+				"searchAttr2":DayArray[a]
+			}
+			),
 		contentType:"application/json",
+		success: function(data)
+			{
+				$.each(data.Items, function(index, val) 
+				{
+					loop3()
+					function loop3()
+					{
+						$('#dConsoleText').animate({scrollTop: $('#dConsoleText').prop("scrollHeight")}, 20);
+						changed = false;
+						changingWeek = false;
+						
+						checkVar()
+						function checkVar()
+						{
+							writeToDeleteConsole("CheckingVar: "+val[PeriodArray[b]] + " " +PeriodArray[b])
+							
+							if(changed == true)
+							{
+								nextLoop3()
+								return;
+							}
+							else
+							{
+								if(changingWeek == false)
+								{
+									if(a >= 5)
+									{
+										if(nweek1=="1")
+										{
+											newWeekCountChange(DayArray[a],RoomArray[i],"2")
+										}
+										else if(nweek1=="2")
+										{
+											newWeekCountChange(DayArray[a],RoomArray[i],"1")
+										}		
+									}	
+									else
+									{
+										newWeekCountChange(DayArray[a],RoomArray[i],nweek1)
+									}
+									changingWeek = true;
+								}
+								checkVarInterval = window.setTimeout(checkVar,500);
+							}
+							
+						}
+						
+					}
+					
+					function next()
+					{
+						a+=1;
+						if (a < DayArray.length) 
+						{   
+							//alert(localStorageWeek)
+							loop2ChangeWeek(localStorageWeek)
+							writeToDeleteConsole("CallingLoop2")
+						}
+						else
+						{
+							a = 0
+							if(i < 5)
+							{
+								i += 1;
+								writeToDeleteConsole("CallingLoop1")
+								loop1ChangeWeek(localStorageWeek)
+							}
+							else
+							{
+								i=0;
+								a=0;
+								b=0;
+								if(nweek1=="1")
+								{
+									DayArray =["11Monday","22Tuesday","33Wednesday","44Thursday","55Friday"]
+									
+									loop1()
+								}
+								else if(nweek1=="2")
+								{
+									DayArray =["1Monday","2Tuesday","3Wednesday","4Thursday","5Friday"]	
+									loop1()
+								}
+								writeToDeleteConsole("function finish excecution")
+							}
 
-		success: function(data){
-			loadinTech1Week1()
-			exitpreLimLoader()
+						}
+					}
+					
+					function nextLoop3()
+					{
+						b+=1
+						moveProgressBar()
+						if(b<10)
+						{
+							loop3();
+						}
+						else
+						{
+							b = 0;
+							next();
+						}
+					}
+					
+				});
+			},
+			error: function(data)
+			{
+				$("#errorModule").show();
+			}
+		});
+	}
+	
+	function changeTrueWeek(newTWeek)
+	{
+		$.ajax({
+			type:'POST',
+			url:API_URL_Tech1,
+			data: JSON.stringify(
+			{
+				"Day":"CheckWeek",
+				"Room":"CheckWeek",
+				"updateAttr":"WeekCount",
+				"updateValue":newTWeek
+			}
+			),
+
+			contentType:"application/json",
+
+			success: function(data)
+			{
+				loop1ChangeWeek(newTWeek)
+			},
+			error: function(data)
+			{
+				$("#errorModule").show();
+			}
+		});
+	}
+	
+	function newWeekCountChange(weekChangeDay, weekChangeRoom,weekCountChange)
+	{
+		$.ajax({
+			type:'POST',
+			url:API_URL_Tech1,
+			data: JSON.stringify(
+			{
+				"Day":weekChangeDay,
+				"Room":weekChangeRoom,
+				"updateAttr":"WeekCount",
+				"updateValue":weekCountChange
+			}
+			),
+
+			contentType:"application/json",
+
+			success: function(data)
+			{
+				changed = true; 
+				writeToDeleteConsole("weekChanged to: "+ weekCountChange)
+			},
+			error: function(data)
+			{
+				$("#errorModule").show();
+			}
+		});
+	}
+
+	function loop1()
+	{
+		loop2()	
+	}			
+	function loop2()
+	{
+		writeToDeleteConsole(RoomArray[i]+" "+DayArray[a])
+		$.ajax({
+		type:'PATCH',
+		url: API_URL_Tech1,
+		data:JSON.stringify(
+			{
+				"Key":"Room",
+				"Key2":"Day",
+				"searchAttr":RoomArray[i],
+				"searchAttr2":DayArray[a]
+			}
+			),
+		contentType:"application/json",
+		success: function(data)
+			{
+				$.each(data.Items, function(index, val) 
+				{
+					loop3()
+					function loop3()
+					{
+						$('#dConsoleText').animate({scrollTop: $('#dConsoleText').prop("scrollHeight")}, 20);
+						moveProgressBar()
+						deleted = false;
+						deleting = false;
+						checkVar()
+						function checkVar()
+						{
+							writeToDeleteConsole("CheckingVar: "+val[PeriodArray[b]] + " " +PeriodArray[b])						
+														
+							if((val[PeriodArray[b]]!= "unbooked" && val[PeriodArray[b]].indexOf("lock1") == -1) && (val[PeriodArray[b]]!= "unbooked" && val[PeriodArray[b]].indexOf("lock2") == -1))
+							{	
+									if(deleted == true)
+									{
+										nextLoop3()
+										return;
+									}
+									else
+									{
+										if(deleting == false)
+										{
+											writeToDeleteConsole("Deleting...: "+ DayArray[a]+" "+RoomArray[i]+" "+PeriodArray[b])
+											excecuteDelete(DayArray[a],RoomArray[i],PeriodArray[b])
+											deleting = true;
+										}
+										checkVarInterval = window.setTimeout(checkVar,500);
+									}
+									
+							}
+							else
+							{	
+								if(val[PeriodArray[b]]!= "unbooked" && (val[PeriodArray[b]].indexOf("lock1") >= 0 || val[PeriodArray[b]].indexOf("lock2") >=0 ))
+								{
+									
+									var n = val[PeriodArray[b]].split(" ");
+									var lastNum = n[n.length - 1];
+									writeToDeleteConsole(lastNum)
+									if(lastNum != "-1")
+									{
+										var lastIndex = val[PeriodArray[b]].lastIndexOf(" ");
+										var newStr = val[PeriodArray[b]].substring(0, lastIndex);
+										var newrBookWeek = newStr + " " + (parseInt(lastNum)-1).toString()
+										if(deleted == true)
+										{
+											nextLoop3()
+											return;
+										}
+										else
+										{
+											if(deleting == false)
+											{
+												writeToDeleteConsole("UpdatingArray...: "+ DayArray[a]+" "+RoomArray[i]+" "+PeriodArray[b])
+												excecuteWeekUpdate(DayArray[a],RoomArray[i],PeriodArray[b],newrBookWeek)
+												deleting = true;
+											}
+											checkVarInterval = window.setTimeout(checkVar,500);
+										}
+									}
+									else
+									{
+										nextLoop3()	
+									}
+								}
+								else
+								{
+									nextLoop3()	
+									return;
+								}
+							}
+						}
+						
+					}
+					
+					function next()
+					{
+						a+=1;
+						if (a < DayArray.length) 
+						{            
+							loop2()
+							writeToDeleteConsole("CallingLoop2")
+						}
+						else
+						{
+							a = 0
+							if(i < 5)
+							{
+								i += 1;
+								writeToDeleteConsole("CallingLoop1")
+								loop1()
+							}
+							else
+							{
+								checkWeekNum()
+								writeToDeleteConsole("function finish excecution")
+							}
+
+						}
+					}
+					
+					function nextLoop3()
+					{
+						b+=1
+						moveProgressBar()
+						if(b<10)
+						{
+							loop3();
+						}
+						else
+						{
+							b = 0;
+							next();
+						}
+					}
+					
+				});
+			},
+			error: function(data)
+			{
+				$("#errorModule").show();
+			}
+		});
+	}
+	
+	function excecuteDelete(givenDay,givenRoom,givenPeriod)
+	{
+		writeToDeleteConsole("Deleting....")
+		$.ajax
+		({
+			type:'POST',
+			url:API_URL_Tech1,
+			data: JSON.stringify(
+			{
+				"Day":givenDay,
+				"Room":givenRoom,
+				"updateAttr":givenPeriod,
+				"updateValue":"unbooked"
+			}
+			),
+
+			contentType:"application/json",
+
+			success: function(data)
+			{
+				deleted = true; 
+				writeToDeleteConsole("Deleted")
+			},
+			error: function(data)
+			{
+				$("#errorModule").show();
+			}
+		});
+	}
+	function excecuteWeekUpdate(givenDay,givenRoom,givenPeriod,newVal)
+	{
+		writeToDeleteConsole("Updating WeekStatus....")
+		$.ajax
+		({
+			type:'POST',
+			url:API_URL_Tech1,
+			data: JSON.stringify(
+			{
+				"Day":givenDay,
+				"Room":givenRoom,
+				"updateAttr":givenPeriod,
+				"updateValue":newVal
+			}
+			),
+
+			contentType:"application/json",
+
+			success: function(data)
+			{
+				deleted = true; 
+				writeToDeleteConsole("Updated")
+			},
+			error: function(data)
+			{
+				$("#errorModule").show();
+			}
+		});
+	}
+	
+	function loop1MasterDelete()
+	{
+		loop2MasterDelete()	
+	}			
+	function loop2MasterDelete()
+	{
+		writeToDeleteConsole(RoomArray[i]+" "+DayArray[a])
+		$.ajax({
+		type:'PATCH',
+		url: API_URL_Tech1,
+		data:JSON.stringify(
+			{
+				"Key":"Room",
+				"Key2":"Day",
+				"searchAttr":RoomArray[i],
+				"searchAttr2":DayArray[a]
+			}
+			),
+		contentType:"application/json",
+		success: function(data)
+			{
+				$.each(data.Items, function(index, val) 
+				{
+					loop3()
+					function loop3()
+					{
+						$('#dConsoleText').animate({scrollTop: $('#dConsoleText').prop("scrollHeight")}, 20);
+						moveProgressBar()
+						deleted = false;
+						deleting = false;
+						checkVar()
+						function checkVar()
+						{
+							writeToDeleteConsole("CheckingVar: "+val[PeriodArray[b]] + " " +PeriodArray[b])				
+							if(deleted == true)
+							{
+								nextLoop3()
+								return;
+							}
+							else
+							{
+								if(deleting == false)
+								{
+									writeToDeleteConsole("Deleting...: "+ DayArray[a]+" "+RoomArray[i]+" "+PeriodArray[b])
+									excecuteDelete(DayArray[a],RoomArray[i],PeriodArray[b])
+									deleting = true;
+								}
+								checkVarInterval = window.setTimeout(checkVar,500);
+							}		
+														
+						}
+						
+					}
+					
+					function next()
+					{
+						a+=1;
+						if (a < DayArray.length) 
+						{            
+							loop2MasterDelete()
+							writeToDeleteConsole("CallingLoop2")
+						}
+						else
+						{
+							a = 0
+							if(i < 5)
+							{
+								i += 1;
+								writeToDeleteConsole("CallingLoop1")
+								loop1MasterDelete()
+							}
+							else
+							{
+								checkWeekNum()
+								writeToDeleteConsole("function finish excecution")
+							}
+
+						}
+					}
+					
+					function nextLoop3()
+					{
+						b+=1
+						moveProgressBar()
+						if(b<10)
+						{
+							loop3();
+						}
+						else
+						{
+							b = 0;
+							next();
+						}
+					}
+					
+				});
+			},
+			error: function(data)
+			{
+				$("#errorModule").show();
+			}
+		});
+	}
+	
+}
+
+function checkWeekNum()
+{
+	$.ajax({
+		type:'PATCH',
+		url: API_URL_Tech1,
+		data:JSON.stringify(
+			{
+				"Key":"Room",
+				"Key2":"Day",
+				"searchAttr":"CheckWeek",
+				"searchAttr2":"CheckWeek"
+			}
+			),
+		contentType:"application/json",
+		success: function(data)
+		{
+			localStorage.setItem("weekValue", data.Items[0]['WeekCount'])
+			localStorageWeek = data.Items[0]['WeekCount']
+			doneLoading = true;
 		},
 		error: function(data)
 		{
 			$("#errorModule").show();
 		}
 	});
+}
+
+function weekBeginNext()
+{
+	var nextWeekDate = new Date();
+	var weekInMilliseconds = 7 * 24 * 60 * 60 * 1000;
+	nextWeekDate.setTime(nextWeekDate.getTime() + weekInMilliseconds);
+	return getMonday(nextWeekDate) + " Week "+trueWeek
+}
+function weekBeginNow()
+{
+	return getMonday(new Date())+ " Week "+trueWeek
+}
+			
+function moveProgressBar() 
+{
+  var elem = document.getElementById("myBar");   
+  frame()
+  function frame() {
+    if (width >= 99.99) {
+      width = 0
+	  elem.style.width = 0 + '%';
+    } else {
+      width+=0.08333333333; 
+      elem.style.width = width + '%'; 
+      elem.innerHTML = Math.round( width * 10 ) / 10 + '%';
+    }
+  }
+}
+
+function writeToDeleteConsole(Text)
+{
+	$("#dConsoleText").append(Text+"<br>")
 }

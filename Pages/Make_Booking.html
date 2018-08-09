@@ -21,7 +21,7 @@
 	<body id="bookingsBody">
 		<div id="navBar"></div>
 		<p id="welcomeMsg">Welcome:</p>
-		<button id="MAdminUser">Admin Users</button>
+		<button id="MAdminUser">Settings</button>
 		<div id="imgnHeaderDiv">
 			<center><em><h1 style="font-weight:300;">[Click on a room to book it]</h1></em></center>
 			<img src="../Img/se21 layout.png" id="frontPageMap" border="3px">
@@ -122,9 +122,15 @@
 			</div>
 		</div>
 		
+		
+		<div class="Loader" id="PageLoader">
+			<img width="30%" src="../Img/copper-loader.gif">
+		</div>
+		
 	</body>
 	
 	<script>//Initlizers
+		localStorage.setItem("weekValue",null)
 		$("#navBar").load("../DynamicLoad_Modules/NavBar.html")
 		DocFunctions();//loads in the important functions on the document
 		getEmail()
@@ -133,15 +139,17 @@
 		{
 			if (email != null) 
 			{
-			   if(localStorage.getItem("adminPriv") == "false")
+			   if(localStorage.getItem("adminPriv") == "false" )
 			   {
 				   $("#welcomeMsg").html("Welcome: " + email)
 				   $("#MAdminUser").hide();
+				   $("#PageLoader").fadeOut()
 			   }
 			   else if(localStorage.getItem("adminPriv") == "true")
 			   {
 				   $("#welcomeMsg").html("Welcome_Admin: " + email)
 				   $("#MAdminUser").show();
+				   $("#PageLoader").fadeOut()
 			   }
 			   else
 			   {
@@ -169,6 +177,7 @@
 		// When the user clicks on <span> (x), close the modal
 		span.onclick = function() {
 			modal.style.display = "none";
+			btnActivated = false;
 		}
 	</script>
 	<script>//email Modal Code
