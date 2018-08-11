@@ -12,38 +12,71 @@
 	</head>
 
 	<body>
+		<div class="Loader" id="PageLoader">
+			<img width="30%" src="../Img/copper-loader.gif">
+		</div>
+
+		<p id="CurrentWeek"></p>
+		<div id="buttonViewPortDelete">
+			<button onClick="newWeekClear('AlternateWeek')">Alternate Week</button><br>
+			<button onClick="newWeekClear('MasterDelete')">Master Delete</button><br>
+			<button onClick="newWeekClear('DeleteTech1')">Delete Tech 1</button><br>
+			<button onClick="newWeekClear('DeleteTech2')">Delete Tech 2</button><br>
+			<button onClick="newWeekClear('DeleteTech3')">Delete Tech 3</button><br>
+			<button onClick="newWeekClear('DeleteTech4')">Delete Tech 4</button><br>
+			<button onClick="newWeekClear('DeleteTech5')">Delete Tech 5</button><br>
+			<button onClick="newWeekClear('DeleteVR')">Delete VR Room</button><br>
+		</div>
+		
 		<div id="DateViewer">
 			<center>
 				<h1 id="TodayDate">Today's Date</h1>
 				<h1 id="NextDelete">Next Delete Countdown</h1>
 			</center>
 			<div id="DeleteConsole">
-				<p id="dConsoleText"><center><span>"Timetable Management"<br><br>Use this console to make large changes to the timetables<br><br>Every "Next Delete" Weeks will alternate where the current week's quickbooks will be deleted</span></center></p>
+				<p id="dConsoleText">
+					<center>
+						<span>
+							"Timetable Management"<br><br>Use this console to make large changes to the timetables<br><br>Every "Next Delete" Weeks will alternate. <br>The current week's quickbooks will be deleted
+						</span>
+					</center> 
+					
+					<label id="UserPermissionText"></label>
+					<label id="userPermissionValue" contenteditable="true"></label>
+					
+					<p id="dConsoleTextWrite"></p>
+				</p>
+				
 			</div>
 		</div>
+
 		<div id="myProgress">
 		  <div id="myBar">0%</div>
 		</div>
 	</body>
 	
-	<script>
+	<script>//Intilizers
+		
 		getCognitoUser();
 		$("#myProgress").hide()
 		startTime()
-	
-		getEmail()
+		
+		checkWeekNum()
+		checkWhichUser()
 		checkVariable()
 		function checkVariable() 
 		{
-			if (email != null) 
+			if (email != null && adminPriv != null && localStorageWeek != null) 
 			{
-			   if(localStorage.getItem("adminPriv") == "false" )
+			   if(adminPriv==false)
 			   {
 				   self.location = "../index.html"
 			   }
-			   else if(localStorage.getItem("adminPriv") == "true")
+			   else if(adminPriv==true)
 			   {
 				   console.log("AdminUser Registered")
+				   $("#PageLoader").fadeOut()
+				   $("#CurrentWeek").html("<strong>&nbsp;Current Week: " + localStorageWeek+"</strong>")
 			   }
 			   else
 			   {

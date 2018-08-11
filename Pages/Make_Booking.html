@@ -111,13 +111,28 @@
 		
 		<div id="ManageUsers" class="modal">
 			<div class="ManageUsers-content">
-				<span class="close3">&times;</span>
-				<h1>Admin Users:</h1>
-				<input placeholder="Email" id="emailInput">
-				<button id="addUserBtn">Add User</button>
-				<div id="AdminUserTable"></div>
-				<div id="LoaderUser">
-					<img width="30%" src="../Img/copper-loader.gif">
+				<div class="SettingsSlides">
+					<div id="SettingBtnsViewport">
+						<div id="AdminUserBtn" onClick="generateAdminTable(); plusDivsSettings(1);">
+							<br><br><br><br><br><br><br><br><br>
+							<p>Admin Users</p>
+						</div>
+						<div id="ManageTimeBtn" onClick="window.open('Delete_NewWeek.html');">
+							<br><br><br><br><br><br><br><br><br>
+							<p>Manage Timetable</p>
+						</div>
+					</div>
+				</div>
+				<div class="SettingsSlides">
+					<span class="close3">&times;</span>
+					<img src="../Img/Back.png" width="3.5%" style="cursor: pointer;" onClick="plusDivsSettings(-1)">
+					<h1>Admin Users:</h1>
+					<input placeholder="Email" id="emailInput">
+					<button id="addUserBtn">Add User</button>
+					<div id="AdminUserTable"></div>
+					<div id="LoaderUser">
+						<img width="30%" src="../Img/copper-loader.gif">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -125,6 +140,7 @@
 		
 		<div class="Loader" id="PageLoader">
 			<img width="30%" src="../Img/copper-loader.gif">
+			<p id="loaderTxt"></p>
 		</div>
 		
 	</body>
@@ -133,27 +149,35 @@
 		localStorage.setItem("weekValue",null)
 		$("#navBar").load("../DynamicLoad_Modules/NavBar.html")
 		DocFunctions();//loads in the important functions on the document
-		getEmail()
+		
+		checkWhichUser()
 		checkVariable()
 		function checkVariable()  // welcomeMsg Loader
 		{
-			if (email != null) 
-			{
-			   if(localStorage.getItem("adminPriv") == "false" )
+			if (email != null && adminPriv != null && EditStatus!=null) 
+			{	   
+			   if(EditStatus=="Edited")
 			   {
-				   $("#welcomeMsg").html("Welcome: " + email)
-				   $("#MAdminUser").hide();
-				   $("#PageLoader").fadeOut()
+				   if(adminPriv == false)
+				   {
+					   $("#welcomeMsg").html("Welcome: " + email)
+					   $("#MAdminUser").hide();
+					   $("#PageLoader").fadeOut()
+				   }
+				   else if(adminPriv == true)
+				   {
+					   $("#welcomeMsg").html("Welcome_Admin: " + email)
+					   $("#MAdminUser").show();
+					   $("#PageLoader").fadeOut()
+				   }
+				   else
+				   {
+					   self.location = "../index.html"
+				   }
 			   }
-			   else if(localStorage.getItem("adminPriv") == "true")
+			   else if(EditStatus=="Editing")
 			   {
-				   $("#welcomeMsg").html("Welcome_Admin: " + email)
-				   $("#MAdminUser").show();
-				   $("#PageLoader").fadeOut()
-			   }
-			   else
-			   {
-				   self.location = "../index.html"
+				   $("#loaderTxt").html("TIMETABLE UNDER MAINTENANCE...... Please check again in 6-8 minutes")
 			   }
 		   	}
 			else
@@ -203,7 +227,7 @@
 		
 		MAdminU.onclick = function() {
 			openMAdminU.style.display = "block";
-			generateAdminTable()
+			plusDivsSettings(3)
 		}
 		
 		// When the user clicks on <span> (x), close the modal
@@ -226,6 +250,26 @@
 		// When the user clicks on <span> (x), close the modal
 		span2.onclick = function() {
 			Rbook.style.display = "none";
+		}
+	</script>
+	<script>//windowOnclick Modal
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event)
+		{
+			if (event.target == modal) 
+			{
+				modal.style.display = "none";
+				btnActivated = false;
+			}
+			else if (event.target == emailmodal) {
+				emailmodal.style.display = "none";
+			}
+			else if (event.target == Rbook) {
+				Rbook.style.display = "none";
+			}
+			else if (event.target == openMAdminU) {
+				openMAdminU.style.display = "none";
+			}
 		}
 	</script>
 </html>

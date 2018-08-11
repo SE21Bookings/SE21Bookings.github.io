@@ -7,6 +7,8 @@ var email;
 var localStorageWeek;
 var adminPriv;
 var width = 0;
+var widthChange;
+var EditStatus;
 
 function Login(usernames, passwords) //used to log a user into the main page
 {
@@ -32,7 +34,7 @@ function Login(usernames, passwords) //used to log a user into the main page
             var accessToken = result.getAccessToken().getJwtToken();
 			document.getElementById("signInErrMsg").style.color="green"
 			document.getElementById("signInErrMsg").innerHTML="Sucessfully Logged In"
-			checkWhichUser()
+			self.location="Pages/Make_Booking.html"
         },
         onFailure: function(err) {
 			document.getElementById("signInErrMsg").style.color="red"
@@ -193,14 +195,13 @@ function checkWhichUser()// checks what user it is, and whether or not it is a m
 					
 					if(emailExist==true)
 					{
-						localStorage.setItem("adminPriv","true")
-						self.location="Pages/Make_Booking.html"
+						adminPriv=true
 					}
 					else
 					{
-						localStorage.setItem("adminPriv","false")
-						self.location="Pages/Make_Booking.html"
+						adminPriv=false
 					}
+					checkIfEditing()
 
 				}
 				else
@@ -232,25 +233,6 @@ function checkValid(jwtToken) // Used to see if session has ended
 	else{
 		return true
 	}
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event)
-{
-	if (event.target == modal) 
-	{
-		modal.style.display = "none";
-		btnActivated = false;
-	}
-	else if (event.target == emailmodal) {
-        emailmodal.style.display = "none";
-    }
-	else if (event.target == Rbook) {
-        Rbook.style.display = "none";
-    }
-	else if (event.target == openMAdminU) {
-        openMAdminU.style.display = "none";
-    }
 }
 
 function forgotPassContinue()
@@ -384,6 +366,22 @@ function showDivs(n)
 	x[slideIndex-1].style.display = "block";  
 }
 
+function plusDivsSettings(n) 
+{
+	showDivsSettings(slideIndex += n);
+}
+function showDivsSettings(n) 
+{
+	var i;
+	var x = document.getElementsByClassName("SettingsSlides");
+	if (n > x.length) {slideIndex = 1}    
+	if (n < 1) {slideIndex = x.length}
+	for (i = 0; i < x.length; i++) {
+		x[i].style.display = "none";  
+	}
+	x[slideIndex-1].style.display = "block";  
+}
+
 function getEmail()
 {
 	cognitoUser = getCognitoUser()
@@ -496,13 +494,11 @@ function ReloadRoom(Room, Week)
 	
 }
 
-function newWeekClear()
+function newWeekClear(DeletionMode)
 {
-	$("#myProgress").show()
-	var elem = document.getElementById("myBar");  
-	elem.style.width = 0 + '%';
+	$("#userPermissionValue").removeAttr("keypress");
+	clearProgressBar()
 	
-	$("#dConsoleText").html("")
 	var DayArray = ["1Monday","2Tuesday","3Wednesday","4Thursday","5Friday","11Monday","22Tuesday","33Wednesday","44Thursday","55Friday"] 
 	
 	var PeriodArray = ["Period1","Period2","Break","Period3","Period4","Lunch","Period5","Period6","AfterschoolH1","AfterschoolH2"]
@@ -513,12 +509,163 @@ function newWeekClear()
 	var a =0;
 	var b = 0;
 	var checkVarInterval;
-	
+		
 	var changingWeek = false;
 	var changed = false; 
 	
 	var deleted = false; 
 	var deleting = false;
+	
+	if(DeletionMode=="AlternateWeek")
+	{
+		$("#dConsoleTextWrite").html("")
+		var oppositeLocalWeek;
+		if(localStorageWeek=="1")
+		{
+			oppositeLocalWeek = "2"
+		}
+		else if(localStorageWeek=="2")
+		{
+			oppositeLocalWeek = "1"
+		}
+		
+		$("#UserPermissionText").html("<br>$. Initiating Alternate Week....<br>");
+		window.setTimeout(function(){
+			$("#UserPermissionText").append("$. Current Week: "+localStorageWeek+" || ");
+			$("#UserPermissionText").append("Next Week: "+oppositeLocalWeek+"<br>");
+			window.setTimeout(function(){
+				$("#UserPermissionText").append("$. You are calling this function off schedule <br>")
+				$("#UserPermissionText").append("$. Are you sure you want to continue?(y/n): ")
+				deleteConsoleScroll()
+			},500)
+		},500);
+		
+		$("#userPermissionValue").attr("contenteditable","true")
+		$("#userPermissionValue").html("&nbsp;")
+		$("#userPermissionValue").focus()
+		
+		$('#userPermissionValue').keypress(function (e) {
+		 
+		 var key = e.which;
+		 if(key == 13)  // the enter key code
+		  {
+			if($("#userPermissionValue").text().trim()=="yes" || $("#userPermissionValue").text().trim()=="y")
+			{
+				$("#userPermissionValue").attr("contenteditable","false")
+				$("#myProgress").show()
+				$("#CurrentWeek").html("<strong>&nbsp;Current Week: Editing....</strong>")
+				checkTrueWeek()
+			}
+			else
+			{
+				$("#userPermissionValue").attr("contenteditable","false");
+				$("#userPermissionValue").append("<br>$. Exiting...");
+				deleteConsoleScroll()
+				$("#myProgress").hide()
+			}
+		  }
+		});
+		
+	}
+	else if(DeletionMode=="MasterDelete")
+	{
+		$("#dConsoleTextWrite").html("")		
+		$("#UserPermissionText").html("<br>$. Initiating Master Delete....<br>");
+		window.setTimeout(function(){
+			$("#UserPermissionText").append("$. This will delete all bookings indiscriminately <br>")
+			$("#UserPermissionText").append("$. Are you sure you want to continue?(y/n): ")
+			deleteConsoleScroll()
+		},500);
+		
+		$("#userPermissionValue").attr("contenteditable","true")
+		$("#userPermissionValue").html("&nbsp;")
+		$("#userPermissionValue").focus()
+		
+		$('#userPermissionValue').keypress(function (e) {
+		 
+		 var key = e.which;
+		 if(key == 13)  // the enter key code
+		  {
+			if($("#userPermissionValue").text().trim()=="yes" || $("#userPermissionValue").text().trim()=="y")
+			{
+				$("#userPermissionValue").attr("contenteditable","false")
+				$("#myProgress").show()
+				loop1MasterDelete()
+				widthChange=0.1851851667;
+			}
+			else
+			{
+				$("#userPermissionValue").attr("contenteditable","false");
+				$("#userPermissionValue").append("<br>$. Exiting...");
+				deleteConsoleScroll()
+				$("#myProgress").hide()
+			}
+		  }
+		});
+	}
+	else if(DeletionMode=="DeleteTech1")
+	{
+		deleteTechs("Tech1")	
+	}
+	else if(DeletionMode=="DeleteTech2")
+	{
+		
+		deleteTechs("Tech2")
+	}
+	else if(DeletionMode=="DeleteTech3")
+	{
+		deleteTechs("Tech3")
+	}
+	else if(DeletionMode=="DeleteTech4")
+	{
+		deleteTechs("Tech4")
+	}
+	else if(DeletionMode=="DeleteTech5")
+	{
+		deleteTechs("Tech5")
+	}
+	else if(DeletionMode=="DeleteVR")
+	{
+		deleteTechs("VR")
+	}
+	
+	function deleteTechs(Room)
+	{
+		$("#dConsoleTextWrite").html("")		
+		$("#UserPermissionText").html("<br>$. Initiating Delete "+Room+"....<br>");
+		window.setTimeout(function(){
+			$("#UserPermissionText").append("$. This will delete all bookings in "+Room+" indiscriminately <br>")
+			$("#UserPermissionText").append("$. Are you sure you want to continue?(y/n): ")
+			deleteConsoleScroll()
+		},500);
+		
+		$("#userPermissionValue").attr("contenteditable","true")
+		$("#userPermissionValue").html("&nbsp;")
+		$("#userPermissionValue").focus()
+		
+		$('#userPermissionValue').keypress(function (e) {
+		 
+		 var key = e.which;
+		 if(key == 13)  // the enter key code
+		  {
+			if($("#userPermissionValue").text().trim()=="yes" || $("#userPermissionValue").text().trim()=="y")
+			{
+				$("#userPermissionValue").attr("contenteditable","false")
+				$("#myProgress").show()
+				RoomArray =[Room]
+				widthChange=1.1111155556;
+				loop1MasterDelete()
+			}
+			else
+			{
+				$("#userPermissionValue").attr("contenteditable","false");
+				$("#userPermissionValue").append("<br>$. Exiting...");
+				deleteConsoleScroll()
+				$("#myProgress").hide()
+			}
+		  }
+		});
+	}
 	
 	function checkTrueWeek()
 	{
@@ -542,6 +689,7 @@ function newWeekClear()
 					localStorage.setItem("weekValue","2")
 					//alert("Changing LocalStorage: " + localStorage.getItem("weekValue"))
 					localStorageWeek = "2"
+					PushEditing("Editing")
 				}
 				else if(data.Items[0]["WeekCount"]=="2")
 				{
@@ -549,6 +697,7 @@ function newWeekClear()
 					localStorage.setItem("weekValue","1")
 					//alert("Changing LocalStorage: " + localStorage.getItem("weekValue"))
 					localStorageWeek = "1"
+					PushEditing("Editing")
 				}
 				
 
@@ -586,7 +735,7 @@ function newWeekClear()
 					loop3()
 					function loop3()
 					{
-						$('#dConsoleText').animate({scrollTop: $('#dConsoleText').prop("scrollHeight")}, 20);
+						deleteConsoleScroll()
 						changed = false;
 						changingWeek = false;
 						
@@ -773,8 +922,7 @@ function newWeekClear()
 					loop3()
 					function loop3()
 					{
-						$('#dConsoleText').animate({scrollTop: $('#dConsoleText').prop("scrollHeight")}, 20);
-						moveProgressBar()
+						deleteConsoleScroll()
 						deleted = false;
 						deleting = false;
 						checkVar()
@@ -864,8 +1012,24 @@ function newWeekClear()
 							}
 							else
 							{
+								i =0;
+								a =0;
+								b = 0;
+								localStorageWeek = null;
 								checkWeekNum()
-								writeToDeleteConsole("function finish excecution")
+								checkVariable()
+								function checkVariable() 
+								{
+									if (localStorageWeek != null) 
+									{
+										$("#CurrentWeek").html("<strong>&nbsp;Current Week: " + localStorageWeek+"</strong>")
+									}
+									else
+									{
+										setTimeout(checkVariable, 1000);
+									}
+								}
+								PushEditing("Edited")
 							}
 
 						}
@@ -980,30 +1144,35 @@ function newWeekClear()
 					loop3()
 					function loop3()
 					{
-						$('#dConsoleText').animate({scrollTop: $('#dConsoleText').prop("scrollHeight")}, 20);
-						moveProgressBar()
+						deleteConsoleScroll()
 						deleted = false;
 						deleting = false;
 						checkVar()
 						function checkVar()
 						{
-							writeToDeleteConsole("CheckingVar: "+val[PeriodArray[b]] + " " +PeriodArray[b])				
-							if(deleted == true)
+							writeToDeleteConsole("CheckingVar: "+val[PeriodArray[b]] + " " +PeriodArray[b])	
+							if(val[PeriodArray[b]] != "unbooked")
 							{
-								nextLoop3()
-								return;
+								if(deleted == true)
+								{
+									nextLoop3()
+									return;
+								}
+								else
+								{
+									if(deleting == false)
+									{
+										writeToDeleteConsole("Deleting...: "+ DayArray[a]+" "+RoomArray[i]+" "+PeriodArray[b])
+										excecuteDelete(DayArray[a],RoomArray[i],PeriodArray[b])
+										deleting = true;
+									}
+									checkVarInterval = window.setTimeout(checkVar,500);
+								}
 							}
 							else
 							{
-								if(deleting == false)
-								{
-									writeToDeleteConsole("Deleting...: "+ DayArray[a]+" "+RoomArray[i]+" "+PeriodArray[b])
-									excecuteDelete(DayArray[a],RoomArray[i],PeriodArray[b])
-									deleting = true;
-								}
-								checkVarInterval = window.setTimeout(checkVar,500);
-							}		
-														
+								nextLoop3()
+							}
 						}
 						
 					}
@@ -1019,7 +1188,7 @@ function newWeekClear()
 						else
 						{
 							a = 0
-							if(i < 5)
+							if(i < RoomArray.length-1)
 							{
 								i += 1;
 								writeToDeleteConsole("CallingLoop1")
@@ -1027,8 +1196,11 @@ function newWeekClear()
 							}
 							else
 							{
-								checkWeekNum()
+								i =0;
+								a =0;
+								b = 0;
 								writeToDeleteConsole("function finish excecution")
+								PushEditing("Edited")
 							}
 
 						}
@@ -1037,9 +1209,9 @@ function newWeekClear()
 					function nextLoop3()
 					{
 						b+=1
-						moveProgressBar()
 						if(b<10)
 						{
+							moveProgressBarMasterDelete()
 							loop3();
 						}
 						else
@@ -1058,6 +1230,10 @@ function newWeekClear()
 		});
 	}
 	
+	function displayDefaultText()
+	{
+		$("#dConsoleText").append('<br><center><span>Timetable Management<br><br>Use this console to make large changes to the timetables<br><br>Every "Next Delete" Weeks will alternate. <br>The current week\'s quickbooks will be deleted</span></center>')
+	}
 }
 
 function checkWeekNum()
@@ -1104,18 +1280,88 @@ function moveProgressBar()
   var elem = document.getElementById("myBar");   
   frame()
   function frame() {
-    if (width >= 99.99) {
-      width = 0
-	  elem.style.width = 0 + '%';
-    } else {
-      width+=0.08333333333; 
-      elem.style.width = width + '%'; 
-      elem.innerHTML = Math.round( width * 10 ) / 10 + '%';
-    }
+    width+=0.1111111111; 
+    elem.style.width = width + '%'; 
+    elem.innerHTML = Math.round( width * 10 ) / 10 + '%';
   }
+}
+function moveProgressBarMasterDelete() 
+{
+  var elem = document.getElementById("myBar");   
+  frame()
+  function frame() {
+	width+=widthChange;
+    elem.style.width = width + '%'; 
+    elem.innerHTML = Math.round( width * 10 ) / 10 + '%';
+  }
+}
+function clearProgressBar()
+{
+	var elem = document.getElementById("myBar");
+	elem.style.width = 0 + '%';
 }
 
 function writeToDeleteConsole(Text)
 {
-	$("#dConsoleText").append(Text+"<br>")
+	$("#dConsoleTextWrite").append(Text+"<br>")
+}
+
+function deleteConsoleScroll()
+{
+	$('#DeleteConsole').animate({scrollTop: $('#DeleteConsole').prop("scrollHeight")}, 10);
+}
+
+function checkIfEditing()
+{
+	$.ajax({
+		type:'PATCH',
+		url: API_URL_Tech1,
+		data:JSON.stringify(
+			{
+				"Key":"Room",
+				"Key2":"Day",
+				"searchAttr":"EditStatus",
+				"searchAttr2":"EditStatus"
+			}
+			),
+		contentType:"application/json",
+		success: function(data)
+		{
+			EditStatus = data.Items[0]['Status']
+		},
+		error: function(data)
+		{
+			$("#errorModule").show();
+		}
+	});
+}
+
+function PushEditing(NewStatus)
+{
+	$.ajax
+		({
+			type:'POST',
+			url:API_URL_Tech1,
+			data: JSON.stringify(
+			{
+				"Day":"EditStatus",
+				"Room":"EditStatus",
+				"updateAttr":"Status",
+				"updateValue":NewStatus
+			}
+			),
+
+			contentType:"application/json",
+
+			success: function(data)
+			{
+				console.log("Sucessfully Pushed Data");
+			},
+			error: function(data)
+			{
+				window.setTimeout(function(){
+					PushEditing(NewStatus);
+				},3000)
+			}
+		});
 }

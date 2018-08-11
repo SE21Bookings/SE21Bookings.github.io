@@ -599,7 +599,7 @@ viewPort_Content
 }
 
 .ForgotPasswordSlides {display:none;}
-
+.SettingsSlides{display:none;}
 #Loader
 {
 	height: 100%;
@@ -649,6 +649,10 @@ viewPort_Content
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
+}
+.Loader p
+{
+	text-align: center;
 }
 
 #preLimLoader
@@ -822,6 +826,7 @@ viewPort_Content
 	height: 60%;
 	border: solid 3px black;
 	background-color: #F2F2F2;
+	overflow-y: auto;
 }
 #DeleteConsole p
 {
@@ -830,5 +835,64 @@ viewPort_Content
 	margin-top: 0;
 	margin-bottom: 0;
 	max-height: 100%;
-	overflow-y: auto;
+}
+
+#buttonViewPortDelete button
+{
+	border: none;
+	height: 30px;
+	width: 120px;
+	background-color: #9C9C9C;
+	color: white;
+	margin-top: 2px;
+}
+#buttonViewPortDelete button:hover
+{
+	background-color: #CACACA;
+	color: black;
+}
+#buttonViewPortDelete
+{
+	margin-left: 3px;
+	position: absolute;
+	right:0;
+	top:0;
+}
+[contenteditable]:focus
+{ 
+    outline: 0px solid transparent;
+}
+
+#SettingBtnsViewport
+{
+	height: 400px;
+	width:100%;
+}
+#AdminUserBtn
+{
+	height: 400px;
+	width: 47%;
+	float: left;
+	cursor: pointer;
+	background-color: #EFEFEF;
+}
+#AdminUserBtn p
+{
+	text-align: center;
+	font-weight: 300;
+	font-size: 17px;
+}
+#ManageTimeBtn
+{
+	height: 400px;
+	width: 47%;
+	float: right;
+	cursor: pointer;
+	background-color: #EFEFEF;
+}
+#ManageTimeBtn p
+{
+	text-align: center;
+	font-weight: 300;
+	font-size: 17px;
 }
