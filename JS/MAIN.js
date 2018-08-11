@@ -9,6 +9,7 @@ var adminPriv;
 var width = 0;
 var widthChange;
 var EditStatus;
+var editingPushed;
 
 function Login(usernames, passwords) //used to log a user into the main page
 {
@@ -258,7 +259,7 @@ function forgotPassContinue()
 function getMonday( date ) 
 {
     var day = date.getDay() || 7;  
-    if( day !== 1 ) 
+    if( day !== 0 ) 
         date.setHours(-24 * (day - 2)); 
 	
 	date = date.toUTCString();
@@ -552,9 +553,26 @@ function newWeekClear(DeletionMode)
 			if($("#userPermissionValue").text().trim()=="yes" || $("#userPermissionValue").text().trim()=="y")
 			{
 				$("#userPermissionValue").attr("contenteditable","false")
-				$("#myProgress").show()
-				$("#CurrentWeek").html("<strong>&nbsp;Current Week: Editing....</strong>")
-				checkTrueWeek()
+				editingPushed = null;
+				PushEditing("Editing")
+				checkVariable()
+				function checkVariable() 
+				{
+					if (editingPushed != null) 
+					{
+						if(editingPushed==true)
+						{
+							$("#myProgress").show()
+							$("#CurrentWeek").html("<strong>&nbsp;Current Week: Editing....</strong>")
+							checkTrueWeek()
+						}	
+					}
+					else
+					{
+						setTimeout(checkVariable, 1000);
+					}
+				}
+				
 			}
 			else
 			{
@@ -588,10 +606,26 @@ function newWeekClear(DeletionMode)
 		  {
 			if($("#userPermissionValue").text().trim()=="yes" || $("#userPermissionValue").text().trim()=="y")
 			{
-				$("#userPermissionValue").attr("contenteditable","false")
-				$("#myProgress").show()
-				loop1MasterDelete()
-				widthChange=0.1851851667;
+				editingPushed = null;
+				PushEditing("Editing")
+				checkVariable()
+				function checkVariable() 
+				{
+					if (editingPushed != null) 
+					{
+						if(editingPushed==true)
+						{
+							$("#userPermissionValue").attr("contenteditable","false")
+							$("#myProgress").show()
+							loop1MasterDelete()
+							widthChange=0.1851851667;
+						}	
+					}
+					else
+					{
+						setTimeout(checkVariable, 1000);
+					}
+				}		
 			}
 			else
 			{
@@ -605,28 +639,146 @@ function newWeekClear(DeletionMode)
 	}
 	else if(DeletionMode=="DeleteTech1")
 	{
-		deleteTechs("Tech1")	
+		editingPushed = null;
+		PushEditing("Editing")
+		checkVariable()
+		function checkVariable() 
+		{
+			if (editingPushed != null) 
+			{
+				if(editingPushed==true)
+				{
+					deleteTechs("Tech1")
+				}	
+			}
+			else
+			{
+				setTimeout(checkVariable, 1000);
+			}
+		}
+			
 	}
 	else if(DeletionMode=="DeleteTech2")
 	{
-		
-		deleteTechs("Tech2")
+		editingPushed = null;
+		PushEditing("Editing")
+		checkVariable()
+		function checkVariable() 
+		{
+			if (editingPushed != null) 
+			{
+				if(editingPushed==true)
+				{
+					deleteTechs("Tech2")
+				}	
+			}
+			else
+			{
+				setTimeout(checkVariable, 1000);
+			}
+		}
 	}
 	else if(DeletionMode=="DeleteTech3")
 	{
-		deleteTechs("Tech3")
+		editingPushed = null;
+		PushEditing("Editing")
+		checkVariable()
+		function checkVariable() 
+		{
+			if (editingPushed != null) 
+			{
+				if(editingPushed==true)
+				{
+					deleteTechs("Tech3")
+				}	
+			}
+			else
+			{
+				setTimeout(checkVariable, 1000);
+			}
+		}
 	}
 	else if(DeletionMode=="DeleteTech4")
 	{
-		deleteTechs("Tech4")
+		editingPushed = null;
+		PushEditing("Editing")
+		checkVariable()
+		function checkVariable() 
+		{
+			if (editingPushed != null) 
+			{
+				if(editingPushed==true)
+				{
+					deleteTechs("Tech4")
+				}	
+			}
+			else
+			{
+				setTimeout(checkVariable, 1000);
+			}
+		}
 	}
 	else if(DeletionMode=="DeleteTech5")
 	{
-		deleteTechs("Tech5")
+		editingPushed = null;
+		PushEditing("Editing")
+		checkVariable()
+		function checkVariable() 
+		{
+			if (editingPushed != null) 
+			{
+				if(editingPushed==true)
+				{
+					deleteTechs("Tech5")
+				}	
+			}
+			else
+			{
+				setTimeout(checkVariable, 1000);
+			}
+		}
 	}
 	else if(DeletionMode=="DeleteVR")
 	{
-		deleteTechs("VR")
+		editingPushed = null;
+		PushEditing("Editing")
+		checkVariable()
+		function checkVariable() 
+		{
+			if (editingPushed != null) 
+			{
+				if(editingPushed==true)
+				{
+					deleteTechs("VR")
+				}	
+			}
+			else
+			{
+				setTimeout(checkVariable, 1000);
+			}
+		}
+	}
+	else if(DeletionMode=="NewWeekDelete")
+	{
+		editingPushed = null;
+		PushEditing("Editing")
+		checkVariable()
+		function checkVariable() 
+		{
+			if (editingPushed != null) 
+			{
+				if(editingPushed==true)
+				{
+					$("#myProgress").show()
+					$("#CurrentWeek").html("<strong>&nbsp;Current Week: Editing....</strong>")
+					checkTrueWeek()
+				}	
+			}
+			else
+			{
+				setTimeout(checkVariable, 1000);
+			}
+		}
 	}
 	
 	function deleteTechs(Room)
@@ -689,7 +841,7 @@ function newWeekClear(DeletionMode)
 					localStorage.setItem("weekValue","2")
 					//alert("Changing LocalStorage: " + localStorage.getItem("weekValue"))
 					localStorageWeek = "2"
-					PushEditing("Editing")
+					
 				}
 				else if(data.Items[0]["WeekCount"]=="2")
 				{
@@ -697,7 +849,7 @@ function newWeekClear(DeletionMode)
 					localStorage.setItem("weekValue","1")
 					//alert("Changing LocalStorage: " + localStorage.getItem("weekValue"))
 					localStorageWeek = "1"
-					PushEditing("Editing")
+					
 				}
 				
 
@@ -1023,13 +1175,15 @@ function newWeekClear(DeletionMode)
 									if (localStorageWeek != null) 
 									{
 										$("#CurrentWeek").html("<strong>&nbsp;Current Week: " + localStorageWeek+"</strong>")
+										PushEditing("Edited")
+										writeToDeleteConsole("Function Complete")
 									}
 									else
 									{
 										setTimeout(checkVariable, 1000);
 									}
 								}
-								PushEditing("Edited")
+								
 							}
 
 						}
@@ -1268,11 +1422,21 @@ function weekBeginNext()
 	var nextWeekDate = new Date();
 	var weekInMilliseconds = 7 * 24 * 60 * 60 * 1000;
 	nextWeekDate.setTime(nextWeekDate.getTime() + weekInMilliseconds);
+	if(nextWeekDate.getDay()==0)
+	{
+		nextWeekDate.setDate(nextWeekDate.getDate() + 1);
+	}
 	return getMonday(nextWeekDate) + " Week "+trueWeek
 }
 function weekBeginNow()
 {
-	return getMonday(new Date())+ " Week "+trueWeek
+	var today = new Date();
+	if(today.getDay()==0)
+	{
+		today.setDate(today.getDate() + 1);
+	}
+	
+	return getMonday(today)+ " Week "+trueWeek
 }
 			
 function moveProgressBar() 
@@ -1280,7 +1444,7 @@ function moveProgressBar()
   var elem = document.getElementById("myBar");   
   frame()
   function frame() {
-    width+=0.1111111111; 
+    width+=0.05555555555; 
     elem.style.width = width + '%'; 
     elem.innerHTML = Math.round( width * 10 ) / 10 + '%';
   }
@@ -1327,7 +1491,7 @@ function checkIfEditing()
 		contentType:"application/json",
 		success: function(data)
 		{
-			EditStatus = data.Items[0]['Status']
+			EditStatus = data.Items[0]['EStatusV']
 		},
 		error: function(data)
 		{
@@ -1338,6 +1502,7 @@ function checkIfEditing()
 
 function PushEditing(NewStatus)
 {
+	editingPushed=null
 	$.ajax
 		({
 			type:'POST',
@@ -1346,7 +1511,7 @@ function PushEditing(NewStatus)
 			{
 				"Day":"EditStatus",
 				"Room":"EditStatus",
-				"updateAttr":"Status",
+				"updateAttr":"EStatusV",
 				"updateValue":NewStatus
 			}
 			),
@@ -1355,13 +1520,11 @@ function PushEditing(NewStatus)
 
 			success: function(data)
 			{
-				console.log("Sucessfully Pushed Data");
+				editingPushed=true;
 			},
 			error: function(data)
 			{
-				window.setTimeout(function(){
-					PushEditing(NewStatus);
-				},3000)
+				//error
 			}
 		});
 }

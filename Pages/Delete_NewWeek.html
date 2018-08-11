@@ -60,7 +60,6 @@
 		getCognitoUser();
 		$("#myProgress").hide()
 		startTime()
-		
 		checkWeekNum()
 		checkWhichUser()
 		checkVariable()
@@ -94,6 +93,7 @@
 			var today = new Date();
 			$("#TodayDate").html("<strong>Today: </strong>"+formatAMPM(today))
 			$("#NextDelete").html("<strong>Next Delete: </strong>"+getSaturday(today))
+			ActivateNewWeek()
 			window.setTimeout(startTime,500)
 		}
 		function formatAMPM(date) 
@@ -106,12 +106,20 @@
 		function getSaturday(date) 
 		{
 			var resultDate = new Date(date.getTime());
-			resultDate.setDate(date.getDate() + (7 + 5 - date.getDay()) % 7);
+			resultDate.setDate(date.getDate() + (7 + 0 - date.getDay()) % 7);
 			resultDate = new Date(resultDate).toString();
 			resultDate = resultDate.split(' ').slice(0, 4).join(' ');
-			return resultDate + " 23:59:59";
+			return resultDate + " 00:00:00";
 		}
 		
+		function ActivateNewWeek()
+		{
+			var today = new Date();
+			if(formatAMPM(today)==getSaturday(today))
+			{
+				newWeekClear("NewWeekDelete")
+			}
+		}
 	
 	</script>
 </html>

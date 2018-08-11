@@ -171,14 +171,11 @@ function DocFunctions()
 			//Populating Details Start
 			if(overWriteTrueWeek =="1")
 			{
-				$("#bookingDetails").html("<strong>Week Beginning: </strong>" + getMonday(new Date()));
+				$("#bookingDetails").html("<strong>Week Beginning: </strong>" + weekBeginNow());
 			}
 			else if(overWriteTrueWeek =="2")
 			{
-				var nextWeekDate = new Date();
-				var weekInMilliseconds = 7 * 24 * 60 * 60 * 1000;
-				nextWeekDate.setTime(nextWeekDate.getTime() + weekInMilliseconds);
-				$("#bookingDetails").html("<strong>Week Beginning: </strong>" + getMonday(nextWeekDate));
+				$("#bookingDetails").html("<strong>Week Beginning: </strong>" + weekBeginNext());
 			}
 			var row_id = $(this).closest('tr').attr('row_id');	
 			var Row = document.getElementById(row_id);
@@ -1204,6 +1201,8 @@ function generateAdminTable()
 	$("#viewPort").show();
 	$("#viewPort_Content").hide();
 	$('#timeTableTitle').html('Timetable:');
+	$("#whichWeekBtn").html("");
+	$("#whichWeekBtn").attr("onClick","")
 	var row_id = ""
 	var tbl = '';
 	$(document).ready(function($)
