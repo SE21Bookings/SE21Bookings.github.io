@@ -210,7 +210,7 @@ function DocFunctions()
 				}
 				
 				$("#bookingStatus").html("<strong>Status: </strong>unbooked<br>")
-				if(localStorage.getItem("adminPriv")=="true")
+				if(adminPriv==true)
 				{
 					$("#lessonLockBtn").show();
 					$("#quickLockBtn").show();
@@ -231,7 +231,7 @@ function DocFunctions()
 					var lastIndex = newString.lastIndexOf(" ");
 					newString = newString.substring(0, lastIndex);
 					
-					var ECA = newString.split(' ')[0]
+					var ECA = newString.split(' ')[0].split('_').join(' ')
 					var ECADes = newString.substr(newString.indexOf(' ')+1)
 					
 					$("#Description").append("<strong>ECA: </strong>"+ECA + "<br>")
@@ -325,7 +325,7 @@ function DocFunctions()
 			
 			else if(currentStatus.split(' ')[0] == "locked")
 			{	
-				if(localStorage.getItem("adminPriv") == "true")
+				if(adminPriv == true)
 				{
 					$("#bookingStatus").html("<strong>Status: </strong> locked")
 					$("#deleteBtn").show();
@@ -537,7 +537,7 @@ function DocFunctions()
 			
 			preLimLoader("Booking Room...")
 			Rbook.style.display = "none";
-			var ECA = $("#eca").val();
+			var ECA = $("#eca").val().split(' ').join('_');
 			var ECADes = $("#ecaDes").val();
 			var week12Lock = $("#AlternatingWeeks").val(); 
 			var howmanyWeeks = $("#howManyWeeks").val();
