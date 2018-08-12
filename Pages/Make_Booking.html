@@ -3,44 +3,191 @@
 	<head>
 		<title>SE21 Make Bookings</title>
 		<link rel="stylesheet" href="../CSS/MAIN.css">
+		<link rel="stylesheet" href="../CSS/bootstrap.css">
 		<script src="../JS/jquery.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../JS/MAIN.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../JS/GenerateTable.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../JS/aws-cognito.js"></script>
+		<script src="../JS/NicEdit.js" type="text/javascript"></script>
+		<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
+		<script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+		<script type="text/javascript">
+		   (function(){
+			  emailjs.init("user_dNUTnHrGIx2yGv4lkBnqw");
+		   })();
+		</script>
 	</head>
 	
 	<body id="bookingsBody">
 		<div id="navBar"></div>
+		<p id="welcomeMsg">Welcome:</p>
+		<button id="MAdminUser">Settings</button>
 		<div id="imgnHeaderDiv">
 			<center><em><h1 style="font-weight:300;">[Click on a room to book it]</h1></em></center>
 			<img src="../Img/se21 layout.png" id="frontPageMap" border="3px">
 		</div>
+		
 		<div id="mapBtnsDiv">
-			<div onClick="openModal('Tech_1');" id="Tech1Btn"></div>
-			<div onClick="openModal('Tech_2');" id="Tech2Btn"></div>
-			<div onClick="openModal('Tech_3');" id="Tech3Btn"></div>
-			<div onClick="openModal('Tech_4');" id="Tech4Btn"></div>
-			<div onClick="openModal('Tech_5');" id="Tech5Btn"></div>
-			<div onClick="openModal('Tech_VR');" id="VRBtn"></div>
+			<div onClick="openModal(); loadinRoom('Tech1','1');" id="Tech1Btn"></div>
+			<div onClick="openModal(); loadinRoom('Tech2','1');"  id="Tech2Btn"></div>
+			<div onClick="openModal(); loadinRoom('Tech3','1');" id="Tech3Btn"></div>
+			<div onClick="openModal(); loadinRoom('Tech4','1');" id="Tech4Btn"></div>
+			<div onClick="openModal(); loadinRoom('Tech5','1');" id="Tech5Btn"></div>
+			<div onClick="openModal(); loadinRoom('VR','1');" id="VRBtn"></div>
 		</div>
+		
+		<div id="errorModule">
+			<div id="ErrorBox" class="ErrorColor">
+				<p>Error: timetable connection broken</p>
+				<button onClick="location.reload();">Reload</button>
+			</div>
+		</div>
+		
 		<div id="timeTableModal" class="modal">
 		  <div class="timeTableModal-content">
-			<span class="close">&times;</span>
+			<span class="close">&times;</span>	
 				<h3 id="timeTableTitle">Timetable:</h3>
+				<button id="whichWeekBtn"></button>
+				<div id="viewPort">
+					<div id="viewPort_Content">
+						<div id="DivDescription">
+							<label id="Description"></label>
+						</div>
+						<label id="bookingDetails">.......</label>
+						<br class="noHeightBreak">
+						<label id="bookingStatus">.......</label><br>
+						<br>					
+						<button id="bookBtn">Quick Book</button>
+						<button id="rbookBtn">Book Recurring</button>				
+						<button id="quickLockBtn">Lock</button>
+						<button id="lessonLockBtn">Lesson</button>
+						<button id="deleteBtn">Delete</button>
+						<button id="contactBtn">Contact</button>
+					</div>	
+					<div id="preLimLoader">
+						<em><p id="preLimLoaderText">[Click on a Timeslot to View Bookings]</p></em>
+					</div>
+				</div>
+				
 				<div id="timeTable"></div>
+				
+				<div id="Loader">
+					<img width="30%" src="../Img/copper-loader.gif">
+				</div>
 		  </div>
 		</div>
 		
-		<div id="Loader">
-			<img width="30%" src="../Img/copper-loader.gif">
+		<div id="emailModal" class="HigherModal">
+			<div class="emailModal-content">
+				<span class="close1">&times;</span>
+				<input disabled type="email" id="toEmail"><br>
+				<input placeHolder="Subject" type="text" id="subject">
+				<textarea id="emailText"></textarea>
+				<button id="sendBtn">Send</button>
+				<p id="emailErrMsg"></p>
+			</div>
 		</div>
+		
+		<div id="BookRecuring" class="HigherModal">
+			<div class="BookRecuring-content">
+				<span class="close2">&times;</span>
+				<input placeholder="ECA:" type="text" id="eca"><br>
+				<input placeholder="Description" type="text" id="ecaDes"><br>
+				<select id="AlternatingWeeks">
+					<option value="lock1">Week 1s Only</option>
+					<option value="lock2">Week 2s Only</option>
+					<option value="lock1lock2">Week 1 & Week 2</option>
+				</select>
+				<br>
+				<select id="Recurrence" onChange="checkRecurrence()">
+					<option value="PR">Perpetual Recurrence</option>
+					<option value="NPR">Non-Perpetual Recurrence</option>
+				</select>
+				<br>
+				<input type="number" placeholder="How many Weeks" id="howManyWeeks"><br>
+				<button id="BookRecrBtn">Book</button>
+			</div>
+		</div>
+		
+		<div id="ManageUsers" class="modal">
+			<div class="ManageUsers-content">
+				<div class="SettingsSlides">
+					<div id="SettingBtnsViewport">
+						<div id="AdminUserBtn" onClick="generateAdminTable(); plusDivsSettings(1);">
+							<br><br><br><br><br><br><br><br><br>
+							<p>Admin Users</p>
+						</div>
+						<div id="ManageTimeBtn" onClick="window.open('Delete_NewWeek.html');">
+							<br><br><br><br><br><br><br><br><br>
+							<p>Manage Timetable</p>
+						</div>
+					</div>
+				</div>
+				<div class="SettingsSlides">
+					<span class="close3">&times;</span>
+					<img src="../Img/Back.png" width="3.5%" style="cursor: pointer;" onClick="plusDivsSettings(-1)">
+					<h1>Admin Users:</h1>
+					<input placeholder="Email" id="emailInput">
+					<button id="addUserBtn">Add User</button>
+					<div id="AdminUserTable"></div>
+					<div id="LoaderUser">
+						<img width="30%" src="../Img/copper-loader.gif">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="Loader" id="PageLoader">
+			<img width="30%" src="../Img/copper-loader.gif">
+			<p id="loaderTxt"></p>
+		</div>
+		
 	</body>
 	
 	<script>//Initlizers
+		localStorage.setItem("weekValue",null)
 		$("#navBar").load("../DynamicLoad_Modules/NavBar.html")
-		window.setTimeout(function(){
-			$("#Loader").fadeOut(1000, "swing")
-		},2000)
+		DocFunctions();//loads in the important functions on the document
 		
+		checkWhichUser()
+		checkVariable()
+		function checkVariable()  // welcomeMsg Loader
+		{
+			if (email != null && adminPriv != null && EditStatus!=null) 
+			{	   
+			   if(EditStatus=="Edited")
+			   {
+				   if(adminPriv == false)
+				   {
+					   $("#welcomeMsg").html("Welcome: " + email)
+					   $("#MAdminUser").hide();
+					   $("#PageLoader").fadeOut()
+				   }
+				   else if(adminPriv == true)
+				   {
+					   $("#welcomeMsg").html("Welcome_Admin: " + email)
+					   $("#MAdminUser").show();
+					   $("#PageLoader").fadeOut()
+				   }
+				   else
+				   {
+					   self.location = "../index.html"
+				   }
+			   }
+			   else if(EditStatus=="Editing")
+			   {
+				   $("#loaderTxt").html("TIMETABLE UNDER MAINTENANCE...... Please check again in 6-8 minutes")
+			   }
+		   	}
+			else
+			{
+				setTimeout(checkVariable, 1000);
+			}
+		}
+
+		 
+		$("#welcomeMsg")
 	</script>
 	<script> //Timetable Modal Code
 		var modal = document.getElementById('timeTableModal');
@@ -48,14 +195,81 @@
 		var span = document.getElementsByClassName("close")[0];
 
 		// When the user clicks on the button, open the modal 
-		function openModal(whichTech) {
+		function openModal() {
 			modal.style.display = "block";
-			$("#timeTableTitle").html(whichTech+" Timetable:")
 		}
 		// When the user clicks on <span> (x), close the modal
 		span.onclick = function() {
 			modal.style.display = "none";
+			btnActivated = false;
 		}
 	</script>
-	
+	<script>//email Modal Code
+		var emailmodal = document.getElementById('emailModal');
+		var openEmailbtn = document.getElementById("contactBtn");
+		var span1 = document.getElementsByClassName("close1")[0];
+		
+		openEmailbtn.onclick = function() {
+			//modal.style.display = "none";
+			emailmodal.style.display = "block";
+			
+		}
+		
+		// When the user clicks on <span> (x), close the modal
+		span1.onclick = function() {
+			emailmodal.style.display = "none";
+		}	
+	</script>	
+	<script>//AdminUsers Management
+		var MAdminU = document.getElementById('MAdminUser');//button
+		var openMAdminU = document.getElementById("ManageUsers");
+		var span3 = document.getElementsByClassName("close3")[0];
+		
+		MAdminU.onclick = function() {
+			openMAdminU.style.display = "block";
+			plusDivsSettings(3)
+		}
+		
+		// When the user clicks on <span> (x), close the modal
+		span3.onclick = function() {
+			openMAdminU.style.display = "none";
+		}
+	</script>
+	<script>//Recurring Booking Modal
+		var Rbook = document.getElementById('BookRecuring');
+		var openrBookbtn = document.getElementById("rbookBtn");
+		var span2 = document.getElementsByClassName("close2")[0];
+		
+		openrBookbtn.onclick = function() {
+			//modal.style.display = "none";
+			Rbook.style.display = "block";
+			$("#howManyWeeks").hide();
+			
+		}
+		
+		// When the user clicks on <span> (x), close the modal
+		span2.onclick = function() {
+			Rbook.style.display = "none";
+		}
+	</script>
+	<script>//windowOnclick Modal
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event)
+		{
+			if (event.target == modal) 
+			{
+				modal.style.display = "none";
+				btnActivated = false;
+			}
+			else if (event.target == emailmodal) {
+				emailmodal.style.display = "none";
+			}
+			else if (event.target == Rbook) {
+				Rbook.style.display = "none";
+			}
+			else if (event.target == openMAdminU) {
+				openMAdminU.style.display = "none";
+			}
+		}
+	</script>
 </html>

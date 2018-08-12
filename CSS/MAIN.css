@@ -4,7 +4,12 @@ body
 {
 	font-family: 'Roboto', sans-serif;
 }
-
+#welcomeMsg
+{
+	position: absolute;
+	top:50px;
+	left:5px;
+}
 .LoginColor
 {
 	height: auto;
@@ -165,8 +170,8 @@ body
 	width:800px;
 	height: 500px;
 	position: absolute;
-	top: 50%;
-    left: 50%;
+	top: 51%;
+    left: 50.21%;
     margin-right: -50%;
     transform: translate(-50%, -57%);
 	margin: 0;
@@ -268,11 +273,84 @@ body
 	background-color: rgba(211,0,19,0.3)
 }
 
+#viewPort
+{
+	height: 150px;
+	width: auto;
+}
+viewPort_Content
+{
+	display: none;
+}
+#viewPort button
+{
+	border: none;
+	height: 30px;
+	width: 120px;
+	background-color: #9C9C9C;
+	color: white;
+}
+#viewPort button:hover
+{
+	background-color: #CACACA;
+	color: black;
+}
+
+#viewPort button:disabled {
+    background: #dddddd;
+	color:white
+}
+#viewPort button:disabled:hover {
+    background: #dddddd;
+	color:white
+}
+#MAdminUser
+{
+	border: none;
+	height: 30px;
+	width: 120px;
+	background-color: #9C9C9C;
+	color: white;
+	position: absolute;
+	bottom:0;
+	left: 0;
+	display: none;
+}
+#MAdminUser:hover
+{
+	background-color: #CACACA;
+	color: black;
+}
+#lessonLockBtn
+{
+	display:none;
+}
+#quickLockBtn
+{
+	display:none;
+}
+#rlockBtn
+{
+	display:none;
+}
 .modal 
 {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-index: 3; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.HigherModal 
+{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 4; /* Sit on top */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -285,54 +363,536 @@ body
 /* Modal Content/Box */
 .timeTableModal-content 
 {
-    background-color: rgba(245,245,245,1.00);
+    background-color: white;/*rgba(245,245,245,1.00);*/
     margin: 10% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
 	border-radius: 25px;
-    width: 60%; /* Could be more or less, depending on screen size */
+    width: 95%; /* Could be more or less, depending on screen size */
+	min-width: 944px;
 }
 
 .timeTableModal-content h3
 {
-	font-weight: 300;
+	font-weight: 500;
+	font-size: 23px;
+	margin: 0;
+	display: inline-block;
+}
+.timeTableModal-content label
+{
+	margin: 0;
 }
 /* The Close Button */
-.close {
+.close 
+{
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
-
 .close:hover,
-.close:focus {
+.close:focus 
+{
     color: black;
     text-decoration: none;
     cursor: pointer;
 }
 
-.ForgotPasswordSlides {display:none;}
+.emailModal-content 
+{
+    background-color: white;/*rgba(245,245,245,1.00);*/
+    margin: 10% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+	border-radius: 25px;
+    width: 640px; /* Could be more or less, depending on screen size */
+}
+.emailModal-content input[type=text],[type=email]
+{
+    width: 600px;
+    padding: 7px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+.emailModal-content input[type=text]:focus, input[type=email]:focus
+{
+    border: 3px solid #555;
+}
+.emailModal-content textarea
+{
+	width:600px;
+	height: 200px;
+}
+.emailModal-content label
+{
+	top:178px;
+	position: absolute;
+}
+#sendBtn
+{
+	margin-top: 5px;
+	width: 600px;
+	height: 30px;
+	color: white;
+	background-color: #8E8E8E;
+}
+#sendBtn:hover
+{
+	background-color: #CFCFCF;
+	color: black;
+}
+.close1 
+{
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close1:hover,
+.close1:focus 
+{
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
 
+
+.BookRecuring-content 
+{
+    background-color: white;/*rgba(245,245,245,1.00);*/
+    margin: 10% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+	border-radius: 25px;
+    width: 640px; /* Could be more or less, depending on screen size */
+}
+.BookRecuring-content input
+{
+    width: 600px;
+    padding: 7px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+.BookRecuring-content input:focus
+{
+    border: 3px solid #555;
+}
+.BookRecuring-content select
+{
+    width: 600px;
+    padding: 7px 20px;
+    margin: 8px 0;
+	height: 40px;
+    box-sizing: border-box;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+.close2
+{
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close2:hover,
+.close2:focus 
+{
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.BookRecuring-content button
+{
+	margin-top: 5px;
+	width: 600px;
+	height: 30px;
+	color: white;
+	background-color: #8E8E8E;
+}
+.BookRecuring-content button:hover
+{
+	background-color: #CFCFCF;
+	color: black;
+}
+.BookRecuring-content input[type=text],[type=email]
+{
+    width: 600px;
+    padding: 7px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+.BookRecuring-content input[type=text]:focus, input[type=email]:focus
+{
+    border: 3px solid #555;
+}
+/* Modal Content/Box */
+.ManageUsers-content 
+{
+    background-color: white;/*rgba(245,245,245,1.00);*/
+    margin: 10% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+	border-radius: 25px;
+    width: 640px; /* Could be more or less, depending on screen size */
+}
+.ManageUsers-content input
+{
+    width: 600px;
+    padding: 7px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+.ManageUsers-content input:focus
+{
+    border: 3px solid #555;
+}
+.ManageUsers-content h1
+{
+    font-weight: 500;
+	margin: 0;
+}
+/* The Close Button */
+.close3 
+{
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close3:hover,
+.close3:focus 
+{
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.ManageUsers-content button
+{
+	margin-top: 5px;
+	width: 600px;
+	height: 30px;
+	color: white;
+	background-color: #8E8E8E;
+}
+.ManageUsers-content button:hover
+{
+	background-color: #CFCFCF;
+	color: black;
+}
+
+.ForgotPasswordSlides {display:none;}
+.SettingsSlides{display:none;}
 #Loader
 {
-	position: absolute;
 	height: 100%;
 	width: 100%;
 	top:0;
-	bottom: 0;
-	left: 0;
-	right: 0;
 	background-color: white;
 	/*background-color: rgb(24,24,31);*/
 	z-index: 5;
 }
 #Loader img
 {
+	display: block;
+	margin: auto;
+}
+
+#LoaderUser
+{
+	height: 100%;
+	width: 100%;
+	top:0;
+	background-color: white;
+	/*background-color: rgb(24,24,31);*/
+	z-index: 5;
+}
+#LoaderUser img
+{
+	display: block;
+	margin: auto;
+}
+
+.Loader
+{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top:0;
+	background-color: white;
+	/*background-color: rgb(24,24,31);*/
+	z-index: 5;
+}
+.Loader img
+{
+	display: block;
+	margin: auto;
+	position: absolute;
+	top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+.Loader p
+{
+	text-align: center;
+}
+
+#preLimLoader
+{
+	text-align: center;
+	display: none;
+	margin: 0;
+}
+#preLimLoaderText
+{
+	margin: 0;
+}
+
+.defaultCursor
+{
+	cursor: default;
+}
+.pointerCursor
+{
+	cursor: pointer;
+	font-weight: 300;
+}
+.light
+{
+	font-weight: 300;
+}
+.bold
+{
+	font-weight: 500;
+}
+.editColor
+{
+	background-color: #BDCAF2;
+}
+.noHeightBreak
+{
+	display: block; /* makes it have a width */
+    content: ""; /* clears default height */
+    margin-top: 0; /* change this to whatever height you want it */
+}
+.indent
+{
+	display: block;
+	margin-left: 40px;
+}
+.hidden
+{
+	display: none;
+}
+
+.booked
+{
+	color:red;
+}
+.unbooked
+{
+	color:#08DD00;
+}
+.lesson
+{
+	color:orange;
+}
+.locked
+{
+	color: gray;
+}
+.Disabled
+{
+	background-color: #f5f5f5;
+}
+.selected
+{
+	background-color: #C8C8C8;
+}
+#DivDescription
+{
+	position: absolute;
+	margin-left: 380px;
+}
+
+#whichWeekBtn
+{
+	border: none;
+	height: 30px;
+	width: 120px;
+	background-color: #9C9C9C;
+	color: white;
+	display: inline-block;
+	float: right;
+	margin-top: 40px;
+}
+#whichWeekBtn:hover
+{
+	background-color: #CACACA;
+	color: black;
+}
+
+#ErrorBox
+{
+	height:70px;
+	width:160px;
+	background-color:rgba(255,179,180,0.87);
+	position: absolute;
 	top: 50%;
 	left: 50%;
 	margin-right: -50%;
 	transform: translate(-50%, -50%);
-	position: absolute;
+	margin: 0;
 	z-index: 5;
+}
+#ErrorBox p
+{
+	font-size: 10px;
+	margin-left: 2px;
+}
+#ErrorBox button
+{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+#errorModule
+{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top:0px;
+	bottom: 0px;
+	z-index: 8;
+	display: none;
+	background-color: rgba(0,0,0,0.5);
+}
+
+#myProgress 
+{
+  width: 100%;
+  background-color: #ddd;
+  position: absolute;
+  bottom: 0;
+}
+#myBar 
+{
+  width: 0%;
+  height: 30px;
+  background-color: #4CAF50;
+  text-align: center;
+  line-height: 30px;
+  color: white;
+}
+
+#DateViewer
+{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-right: -50%;
+	transform: translate(-50%, -50%);
+	width: 500px;
+	height: 400px;
+}
+#DateViewer h1
+{
+	font-weight: 300;
+}
+#DeleteConsole
+{
+	text-align: left;
+	display: block;
+	margin: auto;
+	width:400px;
+	height: 60%;
+	border: solid 3px black;
+	background-color: #F2F2F2;
+	overflow-y: auto;
+}
+#DeleteConsole p
+{
+	margin-left: 10px;
+	margin-right: 0px;
+	margin-top: 0;
+	margin-bottom: 0;
+	max-height: 100%;
+}
+
+#buttonViewPortDelete button
+{
+	border: none;
+	height: 30px;
+	width: 120px;
+	background-color: #9C9C9C;
+	color: white;
+	margin-top: 2px;
+}
+#buttonViewPortDelete button:hover
+{
+	background-color: #CACACA;
+	color: black;
+}
+#buttonViewPortDelete
+{
+	margin-left: 3px;
+	position: absolute;
+	right:0;
+	top:0;
+}
+[contenteditable]:focus
+{ 
+    outline: 0px solid transparent;
+}
+
+#SettingBtnsViewport
+{
+	height: 400px;
+	width:100%;
+}
+#AdminUserBtn
+{
+	height: 400px;
+	width: 47%;
+	float: left;
+	cursor: pointer;
+	background-color: #EFEFEF;
+}
+#AdminUserBtn p
+{
+	text-align: center;
+	font-weight: 300;
+	font-size: 17px;
+}
+#ManageTimeBtn
+{
+	height: 400px;
+	width: 47%;
+	float: right;
+	cursor: pointer;
+	background-color: #EFEFEF;
+}
+#ManageTimeBtn p
+{
+	text-align: center;
+	font-weight: 300;
+	font-size: 17px;
 }

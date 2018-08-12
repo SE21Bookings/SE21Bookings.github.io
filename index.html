@@ -32,7 +32,7 @@
 					<h1>Sign In</h1>
 					<input placeholder="Email" id="username" type="email"><br>
 					<input placeholder="Password" type="password" id="password"><br>
-					<button onClick="LoginNow();">Login</button><br>
+					<button id="loginBtn" onClick="LoginNow();">Login</button><br>
 				</center>
 				<a href="#" id="SignUpNow">Sign Up</a>
 				<div id="forgotPasswordDiv"><a href="#" id="ForgotPassLink">Forgot Password</a></div>
@@ -108,7 +108,6 @@
 			}
 		}
 	</script> 
-	
 	<script>//Forgot Password Module Script
 		var forgotPasswordModal = document.getElementById('ForgotPassword');
 		var forgotPasswordBtn = document.getElementById("ForgotPassLink");
@@ -124,10 +123,11 @@
 			forgotPasswordModal.style.display = "none";
 		}
 	</script> 
-	
 	<script> //Login and Sign Up
 		function LoginNow()
 		{
+			$("#signInErrMsg").css("color","black");
+			document.getElementById("signInErrMsg").innerHTML="Logging In..."
 			Login($("#username").val(),$("#password").val())
 		}
 		function SignUp()
@@ -145,6 +145,18 @@
 				createNewUser($("#email").val(),$("#pass").val())
 			}
 		}
+		// Get the input field
+		var input = document.getElementById("password");
+		// Execute a function when the user releases a key on the keyboard
+		input.addEventListener("keyup", function(event) {
+		  // Cancel the default action, if needed
+		  event.preventDefault();
+		  // Number 13 is the "Enter" key on the keyboard
+		  if (event.keyCode === 13) {
+			// Trigger the button element with a click
+			document.getElementById("loginBtn").click();
+		  }
+		});
 	</script>
 	
 </html>
