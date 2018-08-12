@@ -106,6 +106,7 @@
 				<br>
 				<input type="number" placeholder="How many Weeks" id="howManyWeeks"><br>
 				<button id="BookRecrBtn">Book</button>
+				<p id="RBookErrMsg"></p>
 			</div>
 		</div>
 		
@@ -242,9 +243,8 @@
 		
 		openrBookbtn.onclick = function() {
 			//modal.style.display = "none";
+			checkRecurrence()
 			Rbook.style.display = "block";
-			$("#howManyWeeks").hide();
-			
 		}
 		
 		// When the user clicks on <span> (x), close the modal

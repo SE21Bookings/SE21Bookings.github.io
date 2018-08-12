@@ -530,10 +530,8 @@ function DocFunctions()
 	
 	//BookRBtn > Start
 	$(document).on('click', '#BookRecrBtn', function(event) 
-	{
-			
-			preLimLoader("Booking Room...")
-			Rbook.style.display = "none";
+	{		
+			$("#RBookErrMsg").html("")
 			var ECA = $("#eca").val().split(' ').join('_');
 			var ECADes = $("#ecaDes").val();
 			var week12Lock = $("#AlternatingWeeks").val(); 
@@ -544,13 +542,38 @@ function DocFunctions()
 				howmanyWeeks = -1; 
 			}
 			
+			if(ECA.length > 2 && ECADes.length > 2 )
+			{
+				if(howmanyWeeks != -1)
+				{
+					if(howManyWeeks>=2)
+					{
+						getEmail()
+						checkVariable()
+					}
+					else
+					{
+						$("#RBookErrMsg").html("ERR, Num of weeks needs to be bigger than 1")
+					}
+				}
+				else
+				{
+					getEmail()
+					checkVariable()
+				}
+			}
+			else
+			{
+				$("#RBookErrMsg").html("ERR, You cannot leave the fields Blank")
+			}
 			
-			getEmail()
-			checkVariable()
 			function checkVariable() 
 			{
 				if (email != null) 
 				{
+					preLimLoader("Booking Room...")
+					Rbook.style.display = "none";
+					
 					var w;
 					if(trueWeek == 1)
 					{
@@ -1190,8 +1213,21 @@ function generateAdminTable()
 
 function loadinRoom(trueRoom, roomLoadWeek)
 {
+	removeEventListeners()
+	DocFunctions()
+	WhichRoom = trueRoom
+	overWriteTrueWeek = roomLoadWeek;
+
+	$("#Loader").show()
+	$("#timeTable").html("");
+	$("#viewPort").show();
+	$("#viewPort_Content").hide();
+	$('#timeTableTitle').html('Timetable:');
+	$("#whichWeekBtn").html("");
+	$("#whichWeekBtn").attr("onClick","")
+	
 	EditStatus = null;
-	checkIfEditing()
+	checkIfEditing()//could choose to put this on the outisde when they click the btn to decrease load time but idk. 
 	checkVariable()
 	function checkVariable() 
 	{
@@ -1214,18 +1250,6 @@ function loadinRoom(trueRoom, roomLoadWeek)
 	
 	function editValidated()
 	{
-		removeEventListeners()
-		DocFunctions()
-		WhichRoom = trueRoom
-		overWriteTrueWeek = roomLoadWeek;
-
-		$("#Loader").show()
-		$("#timeTable").html("");
-		$("#viewPort").show();
-		$("#viewPort_Content").hide();
-		$('#timeTableTitle').html('Timetable:');
-		$("#whichWeekBtn").html("");
-		$("#whichWeekBtn").attr("onClick","")
 		var row_id = ""
 		var tbl = '';
 		$(document).ready(function($)

@@ -429,6 +429,7 @@ function checkRecurrence()
 	var selectR = $("#Recurrence").val()
 	if(selectR == "NPR")
 	{
+		$("#howManyWeeks").val('')
 		$("#howManyWeeks").show()
 	}
 	else
