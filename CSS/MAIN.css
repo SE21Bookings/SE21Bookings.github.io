@@ -188,19 +188,19 @@ body
 	height: 500px;
 	position: absolute;
 	top: 50%;
-    left: 47%;
+    left: 50%;
     margin-right: -50%;
-    transform: translate(-50%, -41%);
+    transform: translate(-50%, -50%);
 	margin: 0;
 }
 
 #Tech1Btn
 {
 	position: absolute;
-	top:125px;
-	left:44px;
-	height:162px;
-	width:176px;
+	top:165px;
+	left:31px;
+	height:171px;
+	width:181px;
 	cursor: pointer;
 }
 #Tech1Btn:hover
@@ -210,10 +210,10 @@ body
 #Tech2Btn
 {
 	position: absolute;
-	top:297px;
-	left:44px;
-	height:168px;
-	width:177px;
+	top:346px;
+	left:31px;
+	height:177px;
+	width:182px;
 	cursor: pointer;
 }
 #Tech2Btn:hover
@@ -223,10 +223,10 @@ body
 #Tech3Btn
 {
 	position: absolute;
-	bottom:33px;
-	right:33px;
-	height:186px;
-	width:193px;
+	bottom:-23px;
+	right:28px;
+	height:195px;
+	width:198px;
 	cursor: pointer;
 }
 #Tech3Btn:hover
@@ -236,10 +236,10 @@ body
 #Tech4Btn
 {
 	position: absolute;
-	top:130px;
-	left:290px;
-	height:140px;
-	width:172px;
+	top:173px;
+	left:285px;
+	height:144px;
+	width:174px;
 	cursor: pointer;
 }
 #Tech4Btn:hover
@@ -249,8 +249,8 @@ body
 #Tech5Btn
 {
 	position: absolute;
-	top:315px;
-	left:420px;
+	top:366px;
+	left:417px;
 	height:30px;
 	width:35px;
 	cursor: pointer;
@@ -262,8 +262,8 @@ body
 #VRBtn
 {
 	position: absolute;
-	top:108px;
-	right:140px;
+	top:153px;
+	right:135px;
 	height:112px;
 	width:130px;
 	cursor: pointer;
