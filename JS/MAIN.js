@@ -1477,6 +1477,7 @@ function deleteConsoleScroll()
 
 function checkIfEditing()
 {
+	EditStatus=null;
 	$.ajax({
 		type:'PATCH',
 		url: API_URL_Tech1,
