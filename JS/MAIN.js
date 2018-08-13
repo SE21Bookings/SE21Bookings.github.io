@@ -1110,25 +1110,46 @@ function newWeekClear(DeletionMode)
 									var n = val[PeriodArray[b]].split(" ");
 									var lastNum = n[n.length - 1];
 									writeToDeleteConsole(lastNum)
-									if(lastNum != "-1")
+									if(lastNum != "-1")//if its a N.P Booking
 									{
 										var lastIndex = val[PeriodArray[b]].lastIndexOf(" ");
 										var newStr = val[PeriodArray[b]].substring(0, lastIndex);
 										var newrBookWeek = newStr + " " + (parseInt(lastNum)-1).toString()
-										if(deleted == true)
+										if((parseInt(lastNum)-1)<=0)// if num of weeks ran out
 										{
-											nextLoop3()
-											return;
-										}
-										else
-										{
-											if(deleting == false)
+											if(deleted == true)
 											{
-												writeToDeleteConsole("UpdatingArray...: "+ DayArray[a]+" "+RoomArray[i]+" "+PeriodArray[b])
-												excecuteWeekUpdate(DayArray[a],RoomArray[i],PeriodArray[b],newrBookWeek)
-												deleting = true;
+												nextLoop3()
+												return;
 											}
-											checkVarInterval = window.setTimeout(checkVar,500);
+											else
+											{
+												if(deleting == false)
+												{
+													writeToDeleteConsole("Weeks Exceeded Limit...: "+ DayArray[a]+" "+RoomArray[i]+" "+PeriodArray[b])
+													excecuteDelete(DayArray[a],RoomArray[i],PeriodArray[b])
+													deleting = true;
+												}
+												checkVarInterval = window.setTimeout(checkVar,500);
+											}
+										}
+										else// else continue with Updating week
+										{
+											if(deleted == true)
+											{
+												nextLoop3()
+												return;
+											}
+											else
+											{
+												if(deleting == false)
+												{
+													writeToDeleteConsole("UpdatingArray...: "+ DayArray[a]+" "+RoomArray[i]+" "+PeriodArray[b])
+													excecuteWeekUpdate(DayArray[a],RoomArray[i],PeriodArray[b],newrBookWeek)
+													deleting = true;
+												}
+												checkVarInterval = window.setTimeout(checkVar,500);
+											}
 										}
 									}
 									else
