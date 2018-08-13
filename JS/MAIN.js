@@ -972,10 +972,10 @@ function newWeekClear(DeletionMode)
 					
 					function nextLoop3()
 					{
-						b+=1
-						moveProgressBar()
+						b+=1			
 						if(b<10)
 						{
+							moveProgressBar()
 							loop3();
 						}
 						else
@@ -1193,9 +1193,9 @@ function newWeekClear(DeletionMode)
 					function nextLoop3()
 					{
 						b+=1
-						moveProgressBar()
 						if(b<10)
 						{
+							moveProgressBar()
 							loop3();
 						}
 						else
@@ -1445,7 +1445,7 @@ function moveProgressBar()
   var elem = document.getElementById("myBar");   
   frame()
   function frame() {
-    width+=0.05555555555; 
+    width+=0.08333333333; 
     elem.style.width = width + '%'; 
     elem.innerHTML = Math.round( width * 10 ) / 10 + '%';
   }
