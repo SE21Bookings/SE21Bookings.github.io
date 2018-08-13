@@ -537,6 +537,7 @@ function DocFunctions()
 			var week12Lock = $("#AlternatingWeeks").val(); 
 			var howmanyWeeks = $("#howManyWeeks").val();
 			
+			
 			if (howmanyWeeks.toString().length == 0 )
 			{
 				howmanyWeeks = -1; 
@@ -546,7 +547,7 @@ function DocFunctions()
 			{
 				if(howmanyWeeks != -1)
 				{
-					if(howManyWeeks>=2)
+					if(howmanyWeeks>=2)
 					{
 						getEmail()
 						checkVariable()
