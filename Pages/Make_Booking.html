@@ -10,6 +10,7 @@
 		<script src="../JS/GenerateTable.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../JS/aws-cognito.js"></script>
 		<script src="../JS/NicEdit.js" type="text/javascript"></script>
+		<script src="../JS/UploadCode.js"></script>
 		<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
 		<script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
 		<script type="text/javascript">
@@ -23,6 +24,8 @@
 		<div id="navBar"></div>
 		<p id="welcomeMsg">Welcome:</p>
 		<button id="MAdminUser">Settings</button>
+		<button id="UploadFileBtn">Upload</button>
+		
 		<div id="imgnHeaderDiv">
 			<center><em><h1 style="font-weight:300;">[Click on a room to book it]</h1></em></center>
 			<img src="../Img/se21 layout.png" id="frontPageMap" border="3px">
@@ -139,6 +142,23 @@
 			</div>
 		</div>
 		
+		<div id="uploadFileModal" class="modal">	
+			<div class="uploadFileModal-content">
+				<span class="close4">&times;</span>
+				<br>
+				<a href="#">Download Template</a>
+				<input id="PathToFile" type="text" placeholder="Enter Full Absolute Path Of File">
+				<center>
+					<button id="UT1" onClick="upload();">Tech1</button>
+					<button id="UT2">Tech2</button>
+					<button id="UT3">Tech3</button>
+					<button id="UT4">Tech4</button>
+					<button id="UT5">Tech5</button>
+					<button id="UVR">VR</button>
+				</center>
+				
+			</div>
+		</div>
 		
 		<div class="Loader" id="PageLoader">
 			<img width="30%" src="../Img/copper-loader.gif">
@@ -164,6 +184,7 @@
 				   {
 					   $("#welcomeMsg").html("Welcome: " + email)
 					   $("#MAdminUser").hide();
+					   $("#UploadFileBtn").hide();
 					   $("#PageLoader").fadeOut()
 				   }
 				   else if(adminPriv == true)
@@ -171,6 +192,7 @@
 					   $("#welcomeMsg").html("Welcome_Admin: " + email)
 					   $("#MAdminUser").show();
 					   $("#PageLoader").fadeOut()
+					   $("#UploadFileBtn").show();
 				   }
 				   else
 				   {
@@ -179,7 +201,14 @@
 			   }
 			   else if(EditStatus=="Editing")
 			   {
-				   $("#loaderTxt").html("TIMETABLE UNDER MAINTENANCE...... Please check again in 6-8 minutes")
+				   if(adminPriv==true)
+				   {
+					   self.location = "Delete_NewWeek.html"
+				   }
+				   else
+				   {
+					   $("#loaderTxt").html("TIMETABLE UNDER MAINTENANCE...... Please check again in 6-8 minutes")
+				   } 
 			   }
 		   	}
 			else
@@ -253,6 +282,20 @@
 			Rbook.style.display = "none";
 		}
 	</script>
+	<script>//UploadFile Modal
+		var UFileModal = document.getElementById('uploadFileModal');
+		var OpenModalBtn = document.getElementById("UploadFileBtn");
+		var span4 = document.getElementsByClassName("close4")[0];
+		
+		OpenModalBtn.onclick = function() {
+			UFileModal.style.display = "block";
+		}
+		
+		// When the user clicks on <span> (x), close the modal
+		span4.onclick = function() {
+			UFileModal.style.display = "none";
+		}
+	</script>
 	<script>//windowOnclick Modal
 		// When the user clicks anywhere outside of the modal, close it
 		window.onclick = function(event)
@@ -270,6 +313,9 @@
 			}
 			else if (event.target == openMAdminU) {
 				openMAdminU.style.display = "none";
+			}
+			else if (event.target == UFileModal) {
+				UFileModal.style.display = "none";
 			}
 		}
 	</script>
