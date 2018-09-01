@@ -1,7 +1,6 @@
 var AdmimUserpoolID = "ap-southeast-1_5uiXeZzFB";
 var AdminAppClientID = "2qis1u4uur3e17ua9a28r7b6ol";
-var API_URL_Admin = "https://7l7do5pc6f.execute-api.ap-southeast-1.amazonaws.com/ReadWriteFromTableSE21/adminusers";
-
+var API_URL_Admin="https://7l7do5pc6f.execute-api.ap-southeast-1.amazonaws.com/ReadWriteFromTableSE21/adminusers";
 var slideIndex = 1;
 var email;
 var localStorageWeek;
@@ -496,9 +495,11 @@ function ReloadRoom(Room, Week)
 	
 }
 
-function newWeekClear(DeletionMode)
+function newWeekClear(DeletionMode) // patch will retrieve bookings
 {
+	widthChange =0;
 	$("#userPermissionValue").removeAttr("keypress");
+	$('#userPermissionValue').unbind();
 	clearProgressBar()
 	
 	var DayArray = ["1Monday","2Tuesday","3Wednesday","4Thursday","5Friday","11Monday","22Tuesday","33Wednesday","44Thursday","55Friday"] 
@@ -543,7 +544,7 @@ function newWeekClear(DeletionMode)
 		},500);
 		
 		$("#userPermissionValue").attr("contenteditable","true")
-		$("#userPermissionValue").html("&nbsp;")
+		$("#userPermissionValue").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")
 		$("#userPermissionValue").focus()
 		
 		$('#userPermissionValue').keypress(function (e) {
@@ -597,7 +598,7 @@ function newWeekClear(DeletionMode)
 		},500);
 		
 		$("#userPermissionValue").attr("contenteditable","true")
-		$("#userPermissionValue").html("&nbsp;")
+		$("#userPermissionValue").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")
 		$("#userPermissionValue").focus()
 		
 		$('#userPermissionValue').keypress(function (e) {
@@ -792,8 +793,9 @@ function newWeekClear(DeletionMode)
 			deleteConsoleScroll()
 		},500);
 		
+		
 		$("#userPermissionValue").attr("contenteditable","true")
-		$("#userPermissionValue").html("&nbsp;")
+		$("#userPermissionValue").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")
 		$("#userPermissionValue").focus()
 		
 		$('#userPermissionValue').keypress(function (e) {
@@ -1049,11 +1051,11 @@ function newWeekClear(DeletionMode)
 		});
 	}
 
-	function loop1()
+	function loop1() //called when changing weeks to delete quickbooks
 	{
 		loop2()	
 	}			
-	function loop2()
+	function loop2() //called when changing weeks to delete quickbooks
 	{
 		writeToDeleteConsole(RoomArray[i]+" "+DayArray[a])
 		$.ajax({
@@ -1410,6 +1412,14 @@ function newWeekClear(DeletionMode)
 	{
 		$("#dConsoleText").append('<br><center><span>Timetable Management<br><br>Use this console to make large changes to the timetables<br><br>Every "Next Delete" Weeks will alternate. <br>The current week\'s quickbooks will be deleted</span></center>')
 	}
+}
+
+function clearConsole()
+{
+	$("#myProgress").hide()
+	$("#dConsoleTextWrite").html("")
+	$("#UserPermissionText").html("")
+	$("#userPermissionValue").html("")
 }
 
 function checkWeekNum()
