@@ -1476,7 +1476,7 @@ function moveProgressBar()
   var elem = document.getElementById("myBar");   
   frame()
   function frame() {
-    width+=0.08333333333; 
+    width+=0.06172839506; 
     elem.style.width = width + '%'; 
     elem.innerHTML = Math.round( width * 10 ) / 10 + '%';
   }
