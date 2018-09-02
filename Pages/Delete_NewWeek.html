@@ -60,12 +60,16 @@
 	
 	<script>//Intilizers
 		var audio = new Audio('../Audio/AlertNoInternetSound.mp3');
-		getCognitoUser();
+		var CheckCounter = 0; 
+		var errorDetected = false; 
 		$("#myProgress").hide()
+		
+		getCognitoUser();
 		startTime()
 		checkWeekNum()
 		checkWhichUser()
 		checkVariable()
+		
 		function checkVariable() 
 		{
 			if (email != null && adminPriv != null && localStorageWeek != null) 
@@ -90,18 +94,32 @@
 				setTimeout(checkVariable, 1000);
 			}
 		}
-	
-		function startTime() 
+		function checkNetwork()
 		{
 			var img = new Image();   // Create new image element
 			var d=new Date();
 			img.src="https://gss2.bdstatic.com/-fo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=34f6ae03998fa0ec7fc7630b1eac3ed3/4034970a304e251fc3ec88c8af86c9177f3e53e2.jpg?"+d.getTime();
 			img.onerror = function(){
-			  $("body").css("background-color","red")
-			  audio.play();
+			    $("body").css("background-color","red")
+			    audio.play();
+				errorDetected=true;
 			};
 			img.onload = function(){
 				$("body").css("background-color","white")
+				errorDetected=false;
+			}
+		}
+		function startTime() 
+		{
+			CheckCounter +=1;
+			if(CheckCounter>=120)
+			{
+				CheckCounter=0;
+				checkNetwork();
+			}
+			else if(errorDetected==true)
+			{
+				checkNetwork();
 			}
 			
 			var today = new Date();
@@ -116,7 +134,6 @@
 			date = date.split(' ').slice(0, 5).join(' ');
 			return date;
 		}
-
 		function getSaturday(date) 
 		{
 			var resultDate = new Date(date.getTime());
@@ -125,7 +142,6 @@
 			resultDate = resultDate.split(' ').slice(0, 4).join(' ');
 			return resultDate + " 00:00:00";
 		}
-		
 		function ActivateNewWeek()
 		{
 			var today = new Date();
