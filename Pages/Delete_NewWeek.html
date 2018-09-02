@@ -59,7 +59,7 @@
 	</body>
 	
 	<script>//Intilizers
-		
+		var audio = new Audio('../Audio/AlertNoInternetSound.mp3');
 		getCognitoUser();
 		$("#myProgress").hide()
 		startTime()
@@ -93,6 +93,17 @@
 	
 		function startTime() 
 		{
+			var img = new Image();   // Create new image element
+			var d=new Date();
+			img.src="https://gss2.bdstatic.com/-fo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=34f6ae03998fa0ec7fc7630b1eac3ed3/4034970a304e251fc3ec88c8af86c9177f3e53e2.jpg?"+d.getTime();
+			img.onerror = function(){
+			  $("body").css("background-color","red")
+			  audio.play();
+			};
+			img.onload = function(){
+				$("body").css("background-color","white")
+			}
+			
 			var today = new Date();
 			$("#TodayDate").html("<strong>Today: </strong>"+formatAMPM(today))
 			$("#NextDelete").html("<strong>Next Delete: </strong>"+getSaturday(today))
