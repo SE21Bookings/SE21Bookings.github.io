@@ -5,7 +5,7 @@ var rawData = [];
 var tempRawData = [];
 var a = 0;
 var b = 0;
-function upload() //starts the upload code by populating the primary key and sort key arrays 
+function uploadCustom() //starts the upload code by populating the primary key and sort key arrays 
 {	
 	widthChange=2;
 	$("#myProgressUpload").show();
@@ -189,7 +189,7 @@ function upload() //starts the upload code by populating the primary key and sor
 		});
 	}
 }
-function Preview() //Shows a preview table of the uploaded CSV file
+function PreviewCustom() //Shows a preview table of the uploaded CSV file
 {
 	var newString;
 	var bookState;
@@ -267,3 +267,223 @@ function Preview() //Shows a preview table of the uploaded CSV file
 
 	fileReader.readAsText(fileToLoad, "UTF-8");
 }
+
+function uploadSims()
+{	
+
+}
+
+function previewCustom()
+{
+	var numOfRooms = 0; 
+	var deletingIndex = [];
+	var RoomArray = [];
+	var timetable_data;
+	var tbl = "";
+	var uploadedRoomOrder = [];
+	var PrimaryKeyW1 = ["1Monday","2Tuesday","3Wednesday","4Thursday","5Friday"];
+	var PrimaryKeyW2 = ["11Monday","22Tuesday","33Wednesday","44Thursday","55Friday"];
+	var fullRoomsData = [];
+	var oneRoomData = [];
+	var oneRowData = [];
+	var firstOccurenceRow=false;
+	var dayCounter = 0;
+	
+	var fileToLoad = document.getElementById("fileToLoad").files[0];
+	var fileReader = new FileReader();
+	
+	fileReader.onload = function(fileLoadedEvent)//formatting timetableData for Sims Upload
+	{
+	  var textFromFileLoaded = fileLoadedEvent.target.result;
+	  timetable_data = textFromFileLoaded.split(/\r?\n|\r/);
+		console.log(timetable_data.length);
+		var index = timetable_data.indexOf("")
+			if (index > -1) {
+				timetable_data.splice(index, 1);
+			}
+		for(var count = 0; count<timetable_data.length; count++)
+		{
+			var cell_data = timetable_data[count].split(",");
+			for (var cell_count = 0; cell_count < cell_data.length; cell_count++) 
+			{	
+				
+				if(cell_data[cell_count].trim()=="Bus")
+				{
+					deletingIndex.push(count)
+				}
+				else if(cell_data[cell_count].trim()=="Reg")
+				{
+					deletingIndex.push(count)
+					deletingIndex.push(count+1)
+				}
+				else if(cell_data[cell_count].trim()=="1"||cell_data[cell_count].trim()=="2"||cell_data[cell_count].trim()=="3"||cell_data[cell_count].trim()=="4"||cell_data[cell_count].trim()=="5"||cell_data[cell_count].trim()=="6")
+				{
+					deletingIndex.push(count+1)
+				}
+			}
+		}
+		for(var i = 0; i<deletingIndex.length;i++)
+		{
+			timetable_data.splice(deletingIndex[i]-i, 1);
+		}
+		for(var count=0; count<timetable_data.length;count++)
+		{
+			index = timetable_data.indexOf(",,,,,,,,,,");
+			if (index > -1) {
+				timetable_data.splice(index, 1);
+			}
+		}
+		console.log(timetable_data)
+		numOfRooms = timetable_data.length/11;
+		
+		$("#PreviewTable").html(generateTechPreviewTable(timetable_data,2));//Pasting Preview into html
+		//consolidating all bookings in all rooms into 3D array
+		fullRoomsData = [];
+		for(var room_count = 1; room_count < numOfRooms+1;room_count++)
+		{
+			generateTechPreviewTable(timetable_data,room_count)
+		}
+		console.log(fullRoomsData);
+	};
+	fileReader.readAsText(fileToLoad, "UTF-8");
+	
+	function generateTechPreviewTable(data, roomInteration)
+	{
+		dayCounter = 0;
+		oneRoomData = [];
+		tbl = "";
+		for(var i = (roomInteration-1)*11; i < (roomInteration-1)*11+11; i++) //Detected what room it is building
+		{
+			if(data[i].indexOf("Technology 1")>-1)
+			{
+				uploadedRoomOrder.push("Tech1");
+			}
+			else if(data[i].indexOf("Technology 2")>-1)
+			{
+				uploadedRoomOrder.push("Tech2");
+			}
+			else if(data[i].indexOf("Technology 3")>-1)
+			{
+				uploadedRoomOrder.push("Tech3");
+			}
+			else if(data[i].indexOf("Technology 4")>-1)
+			{
+				uploadedRoomOrder.push("Tech4");
+			}
+			else if(data[i].indexOf("Technology 5")>-1)
+			{
+				uploadedRoomOrder.push("Tech5");
+			}
+		}
+		//generating Week 1 Data
+		tbl+="<em><p>Room: "+uploadedRoomOrder[uploadedRoomOrder.length-1]+" || Week 1</p></em>"
+		tbl +='<table class="table table-hover">'
+		tbl +='<thead>';
+			tbl +='<tr>';
+			tbl +='<th>Day</th>';
+			tbl +='<th>Period 1</th>';
+			tbl +='<th>Period 2</th>';
+			tbl +='<th>Break</th>';
+			tbl +='<th>Period 3</th>';
+			tbl +="<th>Period 4</th>";
+			tbl +='<th>Lunch</th>';
+			tbl +='<th>Period 5</th>';
+			tbl +='<th>Period 6</th>';
+			tbl +='<th>ECA 1</th>';
+			tbl +='<th>ECA 2</th>';
+			tbl +='</tr>';
+		tbl +='</thead>';
+		for(var cell_count = 1; cell_count<6;cell_count++)
+		{
+			firstOccurenceRow = true; 
+			tbl += '<tr>';
+			for(i = (roomInteration-1)*11+3; i < (roomInteration-1)*11+11; i++)
+			{	
+				var cell_data = data[i].split(",");
+				if(firstOccurenceRow==true)
+				{
+					tbl +='<td>'+PrimaryKeyW1[dayCounter].substr(1)+'</td>';
+					firstOccurenceRow=false; 
+					dayCounter+=1;
+				}
+				if(cell_data[cell_count]=="")
+				{
+					tbl +='<td ><div class="unbooked row_data pointerCursor disable" edit_type="click" col_name="Period1">unbooked</div></td>';
+					oneRowData.push("unbooked")
+				}
+				else
+				{
+					tbl +='<td ><div class="lesson row_data pointerCursor disable" edit_type="click" col_name="Period1">lesson <span class="hidden">designcentre@dulwich-beijing.cn lock1</span></div></td>';
+					oneRowData.push("lesson <span class='hidden'>designcentre@dulwich-beijing.cn lock1</span>")
+				}
+
+			}//add 2 Empty ECAs
+			tbl +='<td ><div class="unbooked row_data pointerCursor disable" edit_type="click" col_name="Period1">unbooked</div></td>';
+			tbl +='<td ><div class="unbooked row_data pointerCursor disable" edit_type="click" col_name="Period1">unbooked</div></td>';
+			oneRowData.push("unbooked")
+			oneRowData.push("unbooked")
+			tbl += '</tr>';
+			oneRoomData.push(oneRowData);
+			oneRowData = [];
+		}
+		
+		tbl+="</table>"
+		//generating Week 2 Data
+		dayCounter = 0;
+		tbl+="<em><p>Room: "+uploadedRoomOrder[uploadedRoomOrder.length-1]+" || Week 2</p></em>"
+		tbl +='<table class="table table-hover">'
+		tbl +='<thead>';
+			tbl +='<tr>';
+			tbl +='<th>Day</th>';
+			tbl +='<th>Period 1</th>';
+			tbl +='<th>Period 2</th>';
+			tbl +='<th>Break</th>';
+			tbl +='<th>Period 3</th>';
+			tbl +="<th>Period 4</th>";
+			tbl +='<th>Lunch</th>';
+			tbl +='<th>Period 5</th>';
+			tbl +='<th>Period 6</th>';
+			tbl +='<th>ECA 1</th>';
+			tbl +='<th>ECA 2</th>';
+			tbl +='</tr>';
+		tbl +='</thead>';
+		for(var cell_count = 6; cell_count<11;cell_count++)
+		{
+			firstOccurenceRow = true; 
+			tbl += '<tr>';
+			for(i = (roomInteration-1)*11+3; i < (roomInteration-1)*11+11; i++)
+			{	
+				var cell_data = data[i].split(",");
+				if(firstOccurenceRow==true)
+				{
+					tbl +='<td>'+PrimaryKeyW2[dayCounter].substr(2)+'</td>';
+					firstOccurenceRow=false; 
+					dayCounter+=1;
+				}
+				if(cell_data[cell_count]=="")
+				{
+					tbl +='<td ><div class="unbooked row_data pointerCursor disable" edit_type="click" col_name="Period1">unbooked</div></td>';
+					oneRowData.push("unbooked")
+				}
+				else
+				{
+					tbl +='<td ><div class="lesson row_data pointerCursor disable" edit_type="click" col_name="Period1">lesson <span class="hidden">designcentre@dulwich-beijing.cn lock1</span></div></td>';
+					oneRowData.push("lesson <span class='hidden'>designcentre@dulwich-beijing.cn lock1</span>")
+				}
+
+			}//add 2 Empty ECAs
+			tbl +='<td ><div class="unbooked row_data pointerCursor disable" edit_type="click" col_name="Period1">unbooked</div></td>';
+			tbl +='<td ><div class="unbooked row_data pointerCursor disable" edit_type="click" col_name="Period1">unbooked</div></td>';
+			tbl += '</tr>';
+			oneRowData.push("unbooked")
+			oneRowData.push("unbooked")
+			oneRoomData.push(oneRowData)
+			oneRowData = [];
+		}
+		tbl+="</table>"
+		fullRoomsData.push(oneRoomData);
+		return tbl;
+	}
+}
+	
+

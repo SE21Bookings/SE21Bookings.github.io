@@ -19,7 +19,6 @@
 
 		<p id="CurrentWeek"></p>
 		
-		
 		<div id="buttonViewPortDelete">
 			<button onClick="newWeekClear('AlternateWeek')">Alternate Week</button><br>
 			<button onClick="newWeekClear('MasterDelete')">Master Delete</button><br>
@@ -29,6 +28,9 @@
 			<button onClick="newWeekClear('DeleteTech4')">Delete Tech 4</button><br>
 			<button onClick="newWeekClear('DeleteTech5')">Delete Tech 5</button><br>
 			<button onClick="newWeekClear('DeleteVR')">Delete VR Room</button><br>
+			<button onClick="">Delete VR Trolley</button><br>
+			<button onClick="">Lock Site</button><br>
+			<button onClick="">Unlock Site</button><br>
 		</div>
 		
 		<div id="DateViewer">
@@ -94,14 +96,14 @@
 				setTimeout(checkVariable, 1000);
 			}
 		}
-		function checkNetwork()
+		function checkNetwork()// sees if theres an internet connection by loading a cat img
 		{
 			var img = new Image();   // Create new image element
 			var d=new Date();
-			img.src="https://gss2.bdstatic.com/-fo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=34f6ae03998fa0ec7fc7630b1eac3ed3/4034970a304e251fc3ec88c8af86c9177f3e53e2.jpg?"+d.getTime();
+			img.src="../Img/se21 layout.png?"+d.getTime();
 			img.onerror = function(){
 			    $("body").css("background-color","red")
-			    audio.play();
+			    audio.play();//playing audio to alert user
 				errorDetected=true;
 			};
 			img.onload = function(){
@@ -112,12 +114,12 @@
 		function startTime() 
 		{
 			CheckCounter +=1;
-			if(CheckCounter>=120)
+			if(CheckCounter>=120*10)//only checks 10 every minute
 			{
 				CheckCounter=0;
 				checkNetwork();
 			}
-			else if(errorDetected==true)
+			else if(errorDetected==true)//if network detected false is true then it'll check every 500ms
 			{
 				checkNetwork();
 			}

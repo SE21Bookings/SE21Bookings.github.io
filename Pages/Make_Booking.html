@@ -145,23 +145,24 @@
 		<div id="uploadFileModal" class="modal">
 			<div class="uploadFileModal-content">
 				<span class="close4">&times;</span>
-				<br><br>
 				<center>
-					<a href="../Documents/SE21_Upload_Template.zip" target="_blank">Download Template</a>
-					<label>&nbsp;||&nbsp;</label>
-					<a href="../Documents/SE21_README_UserDoc.pdf" target="_blank">Read User Documentation</a>
+					<div id="customUploadDocs">
+						<br><br>
+						<a href="../Documents/SE21_Upload_Template.zip" target="_blank">Download Template</a>
+						<label>&nbsp;||&nbsp;</label>
+						<a href="../Documents/SE21_README_UserDoc.pdf" target="_blank">Read User Documentation</a>
+					</div>
 				</center>
 				<br><br>
-				<input id="fileToLoad" type="file" accept=".csv" onChange="Preview();">
+				<input id="fileToLoad" type="file" accept=".csv" onChange="previewCustom();">
 				<br><br>
 				<center>
 					<div id="PreviewTable">
 						<em><p>[Preview Table]</p></em>
 					</div>
 				</center>
-				<br>
-				<br>
-				<button onClick="upload();">Upload</button>
+				<br><br>
+				<button onClick="uploadSims();">Upload</button>
 				<div id="myProgressUpload">
 				  <div id="myBar">0%</div>
 				</div>
@@ -300,6 +301,7 @@
 			$("#fileToLoad").val('');
 			$("#PreviewTable").html("<em><p>[Preview Table]</p></em>")
 			$("#myProgressUpload").hide();
+			$("#customUploadDocs").hide();
 		}
 		
 		// When the user clicks on <span> (x), close the modal
