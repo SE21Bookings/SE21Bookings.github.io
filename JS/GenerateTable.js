@@ -300,6 +300,11 @@ function DocFunctions()
 						$("#contactBtn").removeAttr("disabled");
 					}
 				}
+				if(adminPriv == true)
+				{
+					$("#deleteBtn").show();
+					$("#deleteBtn").removeAttr("disabled");
+				}
 			}
 			
 			else if(currentStatus.split(' ')[0] == "lesson")
@@ -317,6 +322,11 @@ function DocFunctions()
 					$("#bookingStatus").html("<strong>Status: </strong> lesson<br><strong>Email: </strong>"+clickedBookedEmail)
 					$("#contactBtn").show();
 					$("#contactBtn").removeAttr("disabled");	
+				}
+				if(adminPriv == true)
+				{
+					$("#deleteBtn").show();
+					$("#deleteBtn").removeAttr("disabled");
 				}
 			}
 			

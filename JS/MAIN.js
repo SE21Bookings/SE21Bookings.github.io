@@ -641,124 +641,27 @@ function newWeekClear(DeletionMode) // patch will retrieve bookings
 	}
 	else if(DeletionMode=="DeleteTech1")
 	{
-		editingPushed = null;
-		PushEditing("Editing")
-		checkVariable()
-		function checkVariable() 
-		{
-			if (editingPushed != null) 
-			{
-				if(editingPushed==true)
-				{
-					deleteTechs("Tech1")
-				}	
-			}
-			else
-			{
-				setTimeout(checkVariable, 1000);
-			}
-		}
-			
+		deleteTechs("Tech1");		
 	}
 	else if(DeletionMode=="DeleteTech2")
 	{
-		editingPushed = null;
-		PushEditing("Editing")
-		checkVariable()
-		function checkVariable() 
-		{
-			if (editingPushed != null) 
-			{
-				if(editingPushed==true)
-				{
-					deleteTechs("Tech2")
-				}	
-			}
-			else
-			{
-				setTimeout(checkVariable, 1000);
-			}
-		}
+		deleteTechs("Tech2");
 	}
 	else if(DeletionMode=="DeleteTech3")
 	{
-		editingPushed = null;
-		PushEditing("Editing")
-		checkVariable()
-		function checkVariable() 
-		{
-			if (editingPushed != null) 
-			{
-				if(editingPushed==true)
-				{
-					deleteTechs("Tech3")
-				}	
-			}
-			else
-			{
-				setTimeout(checkVariable, 1000);
-			}
-		}
+		deleteTechs("Tech3");
 	}
 	else if(DeletionMode=="DeleteTech4")
 	{
-		editingPushed = null;
-		PushEditing("Editing")
-		checkVariable()
-		function checkVariable() 
-		{
-			if (editingPushed != null) 
-			{
-				if(editingPushed==true)
-				{
-					deleteTechs("Tech4")
-				}	
-			}
-			else
-			{
-				setTimeout(checkVariable, 1000);
-			}
-		}
+		deleteTechs("Tech4");
 	}
 	else if(DeletionMode=="DeleteTech5")
 	{
-		editingPushed = null;
-		PushEditing("Editing")
-		checkVariable()
-		function checkVariable() 
-		{
-			if (editingPushed != null) 
-			{
-				if(editingPushed==true)
-				{
-					deleteTechs("Tech5")
-				}	
-			}
-			else
-			{
-				setTimeout(checkVariable, 1000);
-			}
-		}
+		deleteTechs("Tech5");
 	}
 	else if(DeletionMode=="DeleteVR")
 	{
-		editingPushed = null;
-		PushEditing("Editing")
-		checkVariable()
-		function checkVariable() 
-		{
-			if (editingPushed != null) 
-			{
-				if(editingPushed==true)
-				{
-					deleteTechs("VR")
-				}	
-			}
-			else
-			{
-				setTimeout(checkVariable, 1000);
-			}
-		}
+		deleteTechs("VR");
 	}
 	else if(DeletionMode=="NewWeekDelete")
 	{
@@ -805,11 +708,27 @@ function newWeekClear(DeletionMode) // patch will retrieve bookings
 		  {
 			if($("#userPermissionValue").text().trim()=="yes" || $("#userPermissionValue").text().trim()=="y")
 			{
-				$("#userPermissionValue").attr("contenteditable","false")
-				$("#myProgress").show()
-				RoomArray =[Room]
-				widthChange=1.1111155556;
-				loop1MasterDelete()
+				editingPushed = null;
+				PushEditing("Editing")
+				checkVariable()
+				function checkVariable() 
+				{
+					if (editingPushed != null) 
+					{
+						if(editingPushed==true)
+						{
+							$("#userPermissionValue").attr("contenteditable","false")
+							$("#myProgress").show()
+							RoomArray =[Room]
+							widthChange=1.1111155556;
+							loop1MasterDelete()
+						}	
+					}
+					else
+					{
+						setTimeout(checkVariable, 1000);
+					}
+				}
 			}
 			else
 			{
@@ -817,6 +736,7 @@ function newWeekClear(DeletionMode) // patch will retrieve bookings
 				$("#userPermissionValue").append("<br>$. Exiting...");
 				deleteConsoleScroll()
 				$("#myProgress").hide()
+				PushEditing("Edited")
 			}
 		  }
 		});
@@ -1476,7 +1396,7 @@ function moveProgressBar()
   var elem = document.getElementById("myBar");   
   frame()
   function frame() {
-    width+=0.06172839506; 
+    width+=0.06172839506*2; 
     elem.style.width = width + '%'; 
     elem.innerHTML = Math.round( width * 10 ) / 10 + '%';
   }

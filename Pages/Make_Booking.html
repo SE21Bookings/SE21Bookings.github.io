@@ -38,6 +38,7 @@
 			<div onClick="openModal(); loadinRoom('Tech4','1');" id="Tech4Btn"></div>
 			<div onClick="openModal(); loadinRoom('Tech5','1');" id="Tech5Btn"></div>
 			<div onClick="openModal(); loadinRoom('VR','1');" id="VRBtn"></div>
+			<div onClick="openModal(); loadinRoom('VRT','1');" id="VRTBtn"></div>
 		</div>
 		
 		<div id="errorModule">
@@ -145,7 +146,29 @@
 		<div id="uploadFileModal" class="modal">
 			<div class="uploadFileModal-content">
 				<span class="close4">&times;</span>
-				<center>
+				<center>			
+					<div id="Options">
+						<strong><label>Choose a upload source:</label></strong>
+						<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						<strong><label>Choose a upload method:</label></strong>
+						<br>
+						
+						<select onChange="checkAvailableUpload()" id="uploadSource">
+							<option selected value="invalid">UPLOAD SOURCE...</option>
+							<option value="sims">SIMS</option>
+							<option value="custom">CUSTOM</option>
+						</select>
+						
+						<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						
+						<select onChange="checkAvailableUpload()" id="uploadMethods">
+							<option selected value="invalid">UPLOAD METHOD...</option>
+							<option value="merge">MERGE</option>
+							<option value="override">OVERRIDE</option>
+						</select>
+						
+						<label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+					</div>
 					<div id="customUploadDocs">
 						<br><br>
 						<a href="../Documents/SE21_Upload_Template.zip" target="_blank">Download Template</a>
@@ -153,8 +176,13 @@
 						<a href="../Documents/SE21_README_UserDoc.pdf" target="_blank">Read User Documentation</a>
 					</div>
 				</center>
+				
 				<br><br>
-				<input id="fileToLoad" type="file" accept=".csv" onChange="previewCustom();">
+				<div id="uploadBlock"></div>
+				<form id="fileLoadForm">
+					<input id="fileToLoad" type="file" accept=".csv" onChange="PreviewSims()">
+				</form>
+				<div id="previewRoomDiv"></div>
 				<br><br>
 				<center>
 					<div id="PreviewTable">
@@ -162,7 +190,7 @@
 					</div>
 				</center>
 				<br><br>
-				<button onClick="uploadSims();">Upload</button>
+				<button>Upload</button>
 				<div id="myProgressUpload">
 				  <div id="myBar">0%</div>
 				</div>
@@ -180,7 +208,7 @@
 		localStorage.setItem("weekValue",null)
 		$("#navBar").load("../DynamicLoad_Modules/NavBar.html")
 		DocFunctions();//loads in the important functions on the document
-		
+		localStorage.setItem("uploadFirst","true")
 		checkWhichUser()
 		checkVariable()
 		function checkVariable()  // welcomeMsg Loader
@@ -226,7 +254,13 @@
 			}
 		}
 
-		 
+		 if(localStorage.getItem("openUploadModal")=="true")
+		 {
+			 document.getElementById('uploadFileModal').style.display = "block";
+			 checkAvailableUpload()
+			 enableOptions()
+			 localStorage.setItem("openUploadModal","false")
+		 }
 		$("#welcomeMsg")
 	</script>
 	<script> //Timetable Modal Code
@@ -297,11 +331,20 @@
 		var span4 = document.getElementsByClassName("close4")[0];
 		
 		OpenModalBtn.onclick = function() {
+			if(localStorage.getItem("uploadFirst")=="false")
+			{
+				location.reload()
+				localStorage.setItem("uploadFirst","true")
+			}
 			UFileModal.style.display = "block";
-			$("#fileToLoad").val('');
+			$("#fileLoadForm").val(null)
 			$("#PreviewTable").html("<em><p>[Preview Table]</p></em>")
 			$("#myProgressUpload").hide();
 			$("#customUploadDocs").hide();
+			$("#uploadSource").val("invalid")
+			$("#uploadMethods").val("invalid")
+			checkAvailableUpload()
+			enableOptions()
 		}
 		
 		// When the user clicks on <span> (x), close the modal

@@ -269,7 +269,19 @@ body
 {
 	background-color: rgba(211,0,19,0.3)
 }
-
+#VRTBtn
+{
+	position: absolute;
+	top:259px;
+	right:61px;
+	height:37px;
+	width:42px;
+	cursor: pointer;
+}
+#VRTBtn:hover
+{
+	background-color: rgba(211,0,19,0.3)
+}
 #viewPort
 {
 	height: 150px;
@@ -974,4 +986,25 @@ viewPort_Content
 	text-align: center;
 	font-weight: 300;
 	font-size: 17px;
+}
+#previewRoomDiv
+{
+	display: inline-block;
+	float: right;
+}
+#uploadBlock
+{
+	position:absolute;
+	background-color:white;
+	height: 170px;
+	width: 92.3%;
+	min-width: 970px;
+}
+#previewWhichRoom
+{
+	float:right;
+}
+#fileLoadForm
+{
+	display: inline-block;
 }
