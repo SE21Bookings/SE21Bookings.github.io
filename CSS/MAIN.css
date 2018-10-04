@@ -739,7 +739,7 @@ viewPort_Content
 {
 	text-align: center;
 	display: none;
-	margin: 0;
+	margin-left: 100px;
 }
 #preLimLoaderText
 {

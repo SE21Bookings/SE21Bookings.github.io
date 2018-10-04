@@ -1,4 +1,4 @@
-<!doctype html>
+ <!doctype html>
 <html>
 	<head>
 		<title>SE21 Make Bookings</title>
@@ -174,15 +174,22 @@
 						<a href="../Documents/SE21_Upload_Template.zip" target="_blank">Download Template</a>
 						<label>&nbsp;||&nbsp;</label>
 						<a href="../Documents/SE21_README_UserDoc.pdf" target="_blank">Read User Documentation</a>
+						<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+					</div>
+					<div id="SimUploadDocs">
+						<br><br>
+						<em><label>[Save SIMS file as .CSV with UTF-8 Encryption] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></em>
 					</div>
 				</center>
 				
 				<br><br>
+				
 				<div id="uploadBlock"></div>
 				<form id="fileLoadForm">
 					<input id="fileToLoad" type="file" accept=".csv" onChange="PreviewSims()">
 				</form>
 				<div id="previewRoomDiv"></div>
+				<!--This Will Hold All the Options to allow users to choose between different rooms-->
 				<br><br>
 				<center>
 					<div id="PreviewTable">
@@ -190,7 +197,7 @@
 					</div>
 				</center>
 				<br><br>
-				<button>Upload</button>
+				<button id="uploadButton" onClick="uploadSims()">Upload</button>
 				<div id="myProgressUpload">
 				  <div id="myBar">0%</div>
 				</div>
@@ -254,7 +261,7 @@
 			}
 		}
 
-		 if(localStorage.getItem("openUploadModal")=="true")
+		 if(localStorage.getItem("openUploadModal")=="true") //This will see if the upload modal was what triggered the page reload. If this is true then the upload file modal will open and let you choose your uploads
 		 {
 			 document.getElementById('uploadFileModal').style.display = "block";
 			 checkAvailableUpload()

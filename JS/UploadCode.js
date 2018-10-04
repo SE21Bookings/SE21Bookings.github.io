@@ -14,6 +14,7 @@ var uploadedRoomOrder = [];
 var nonManipulatedRoomOrder = [];
 var PrimaryKeyW1 = ["1Monday","2Tuesday","3Wednesday","4Thursday","5Friday"];
 var PrimaryKeyW2 = ["11Monday","22Tuesday","33Wednesday","44Thursday","55Friday"];
+var PeriodArray = ["Period1","Period2","Break","Period3","Period4","Lunch","Period5","Period6","AfterschoolH1","AfterschoolH2"]
 var fullRoomsData = [];
 var nonManipulatedRoomData = [];
 var oneRoomData = [];
@@ -24,6 +25,7 @@ var dayCounter = 0;
 function uploadCustom() //starts the upload code by populating the primary key and sort key arrays 
 {	
 	widthChange=2;
+	$("#uploadButton").hide()
 	$("#myProgressUpload").show();
 	
 	var updated = false;
@@ -205,7 +207,7 @@ function uploadCustom() //starts the upload code by populating the primary key a
 		});
 	}
 }
-function PreviewCustom() //Shows a preview table of the uploaded CSV file
+function PreviewCustom() //Shows a preview table of the uploaded CSV file from the custom file following its format.
 {
 	removeEventListeners()
 	disableOptions()
@@ -287,9 +289,219 @@ function PreviewCustom() //Shows a preview table of the uploaded CSV file
 
 	fileReader.readAsText(fileToLoad, "UTF-8");
 }
-function uploadSims()
+function uploadSims()//uploadcode from generated from a SIM File
 {	
+	widthChange=100/(100*numOfRooms);
+	$("#uploadButton").hide()
+	$("#myProgressUpload").show();
+	
+	var i = 0;
+	var a = 0;
+	var b = 0;
+	var firstIteration = true; //this variable sees whether it is the first time the loop has run, if it is then it will run it again but this time switching out the primary key to week 2's primary key. 
+	var week2Weight = 0; //this variable will add a weight to week 2 days that allows the loop to access the 3D array's week 2 days when it goes to second w2 Primary Keys
+	var RoomArray = nonManipulatedRoomOrder;
+	var DayArray = PrimaryKeyW1;
+	uploadSimsLoop1()
+	function uploadSimsLoop1() 
+	{
+		uploadSimsLoop2()	
+	}			
+	function uploadSimsLoop2() // i is Room, a is Day, b is pEriod
+	{
+		var updating = false; 
+		var updated = false; 
+		$.ajax({
+		type:'PATCH',
+		url: API_URL_Tech1,
+		data:JSON.stringify(
+			{
+				"Key":"Room",
+				"Key2":"Day",
+				"searchAttr":RoomArray[i],
+				"searchAttr2":DayArray[a]
+			}
+			),
+		contentType:"application/json",
+		success: function(data)
+			{
+				console.log(data)
+				console.log(nonManipulatedRoomData)
+				
+				$.each(data.Items, function(index, val) 
+				{
+					loop3()
+					function loop3()
+					{
+						moveProgressBarMasterDelete()
+						updated=false;
+						updating=false;
+						checkVar()	
+						function checkVar()
+						{
+							if($("#uploadMethods").val()=="merge")//if we are merging the timetable it'll not overide rooms unless it's absolutely nessaraly
+							{
+								console.log(RoomArray[i]+" "+DayArray[a]+" "+PeriodArray[b]+": "+nonManipulatedRoomData[i][a+week2Weight][b])
+								if(nonManipulatedRoomData[i][a+week2Weight][b]!="unbooked")//only activate if the the uploaded slot is not an empty space. 
+								{
+									if(nonManipulatedRoomData[i][a+week2Weight][b] != val[PeriodArray[b]])//only activate if the current slot is different from the uploaded slot
+									{						
+										if(updating==false)
+										{
+											console.log("Updating: " + DayArray[a] + " " + RoomArray[i] + " "+ PeriodArray[b] +" To: "+nonManipulatedRoomData[i][a+week2Weight][b])
+											uploadData(DayArray[a],RoomArray[i],PeriodArray[b],nonManipulatedRoomData[i][a+week2Weight][b])
 
+											updating=true
+											checkVar();
+										}
+										else
+										{
+											if(updated!=true)
+											{	
+												window.setTimeout(checkVar,1000);
+											}
+											else
+											{
+												nextLoop3();
+												return;
+											}
+										}
+									}
+									else
+									{
+										nextLoop3();
+										return;
+									}
+									
+								}
+								else
+								{
+									nextLoop3();
+									return;
+								}
+							}
+							else if($("#uploadMethods").val()=="override")//if we are overridng the timetable it'll  overide all rooms, deleting all bookings except for lessons
+							{
+								console.log(RoomArray[i]+" "+DayArray[a]+" "+PeriodArray[b]+": "+nonManipulatedRoomData[i][a+week2Weight][b])
+								if(nonManipulatedRoomData[i][a+week2Weight][b] != val[PeriodArray[b]])//only activate if the current slot is different from the uploaded slot
+								{						
+									if(updating==false)
+									{
+										console.log("Updating: " + DayArray[a] + " " + RoomArray[i] + " "+ PeriodArray[b] +" To: "+nonManipulatedRoomData[i][a+week2Weight][b])
+										uploadData(DayArray[a],RoomArray[i],PeriodArray[b],nonManipulatedRoomData[i][a+week2Weight][b])
+
+										updating=true
+										checkVar();
+									}
+									else
+									{
+										if(updated!=true)
+										{	
+											window.setTimeout(checkVar,1000);
+										}
+										else
+										{
+											nextLoop3();
+											return;
+										}
+									}
+								}
+								else
+								{
+									nextLoop3();
+									return;
+								}
+							}
+						}
+					}
+					
+					function next()
+					{
+						a+=1;
+						if (a < DayArray.length) 
+						{ 
+							uploadSimsLoop2()
+						}
+						else
+						{
+							a = 0
+							i += 1;
+							if(i < RoomArray.length)
+							{
+								uploadSimsLoop1()
+							}
+							else
+							{
+								i =0;
+								a =0;
+								b = 0;	
+								if(firstIteration==true)
+								{
+									firstIteration=false;
+									week2Weight=5;
+									DayArray=PrimaryKeyW2;
+									uploadSimsLoop1();//Restarting from the begining with Week 2 Primary Keys
+									console.log("Excecuting Week 2 Primary Keys.")
+								}
+								else
+								{
+									console.log("Function Excecution Finish")
+								}
+							}
+
+						}
+					}
+					
+					function nextLoop3()
+					{
+						b+=1
+						if(b<PeriodArray.length)
+						{
+							loop3();
+						}
+						else
+						{
+							b = 0;
+							next();
+						}
+					}
+					
+					function uploadData(Day, Room, UpdateAttr, UpdateValue)
+					{
+						console.log("Uploading......")
+						updated = false;
+						$.ajax({
+						type:'POST',
+						url: API_URL_Tech1,
+						data:JSON.stringify(
+							{
+								"Room":Room,
+								"Day":Day,
+								"updateAttr":UpdateAttr,
+								"updateValue":UpdateValue							
+							}
+							),
+						contentType:"application/json",
+						success: function(data)
+							{
+								console.log("Upload Sucessful")
+								updated = true;
+							},
+						error: function(data)
+							{
+								$("#errorModule").show();
+							}
+						});
+					}
+				});
+				
+			},
+			error: function(data)
+			{
+				$("#errorModule").show();
+			}
+		});
+	}
 }
 function PreviewSims()
 {	
@@ -359,7 +571,7 @@ function PreviewSims()
 	
 	
 }
-function populateSelect()
+function populateSelect() //creates a new select element and then appends all the rooms into it
 {
 	$("#previewRoomDiv").html("")
 	var newSelect=document.createElement('select');
@@ -368,7 +580,7 @@ function populateSelect()
 	{
 	   opt = document.createElement("option");
 	   opt.value = i+1;
-	   opt.innerHTML = nonManipulatedRoomOrder[i]; // whatever property it has
+	   opt.innerHTML = nonManipulatedRoomOrder[i]; // whatever property it has, this array stores all the rooms inside it
 	   // then append it to the select element
 	   newSelect.appendChild(opt);
 	}
@@ -378,11 +590,11 @@ function populateSelect()
 	document.getElementById("previewRoomDiv").appendChild(newSelect);
 	console.log(newSelect);
 }
-function generatePrevTable()
+function generatePrevTable()//will generate a new preview room depdning on the selection choice in the newly generated select option. 
 {
 	$("#PreviewTable").html(generateTechPreviewTable(timetable_data,parseInt($("#previewWhichRoom").val())))
 }
-function generateTechPreviewTable(data, roomInteration)
+function generateTechPreviewTable(data, roomInteration) // Will generate a table code from the given data and will selectively make a table code depeneing on what you input for the room interation
 {
 	dayCounter = 0;
 	oneRoomData = [];
@@ -452,7 +664,8 @@ function generateTechPreviewTable(data, roomInteration)
 				oneRowData.push("lesson <span class='hidden'>designcentre@dulwich-beijing.cn lock1</span>")
 			}
 
-		}//add 2 Empty ECAs
+		}
+		//add 2 Empty ECAs
 		tbl +='<td ><div class="unbooked row_data pointerCursor disable" edit_type="click" col_name="Period1">unbooked</div></td>';
 		tbl +='<td ><div class="unbooked row_data pointerCursor disable" edit_type="click" col_name="Period1">unbooked</div></td>';
 		oneRowData.push("unbooked")
@@ -519,9 +732,10 @@ function generateTechPreviewTable(data, roomInteration)
 	fullRoomsData.push(oneRoomData);
 	return tbl;
 }
-function checkAvailableUpload()
+function checkAvailableUpload()//this method will check what option has been chosen for the upload code and then populate the modal accordingly by hiding and showing the different modals. 
 {	
-
+	$("#uploadButton").show()
+	$("#SimUploadDocs").hide();
 	if($("#uploadSource").val()!="invalid" && $("#uploadMethods").val()!="invalid")
 	{
 		$("#uploadBlock").hide();
@@ -529,11 +743,13 @@ function checkAvailableUpload()
 		{
 			$("#customUploadDocs").show();
 			$("#previewWhichRoom").hide();
+			$("#SimUploadDocs").hide();
 		}
 		else
 		{
 			$("#customUploadDocs").hide();
 			$("#previewWhichRoom").show();
+			$("#SimUploadDocs").show();
 		}
 	}
 	else
@@ -547,7 +763,7 @@ function disableOptions()
 	$("#uploadSource").attr("disabled","disabled")
 	$("#uploadMethods").attr("disabled","disabled")
 }
-function enableOptions()
+function enableOptions()//This will take away the diabled attrs from the uploadmethod and upload source methodology allowing the user to make decisions and uploads again. Useful when reopinging the mddal from a reload. 
 {
 	$("#uploadMethods").removeAttr("disabled")
 	$("#uploadSource").removeAttr("disabled")
