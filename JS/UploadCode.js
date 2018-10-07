@@ -14,7 +14,7 @@ var uploadedRoomOrder = [];
 var nonManipulatedRoomOrder = [];
 var PrimaryKeyW1 = ["1Monday","2Tuesday","3Wednesday","4Thursday","5Friday"];
 var PrimaryKeyW2 = ["11Monday","22Tuesday","33Wednesday","44Thursday","55Friday"];
-var PeriodArray = ["Period1","Period2","Break","Period3","Period4","Lunch","Period5","Period6","AfterschoolH1","AfterschoolH2"]
+var PeriodArray = ["Period1","Period2","Break","Period3","Period4","Lunch","Period5","Period6","AfterschoolH1","AfterschoolH2"];
 var fullRoomsData = [];
 var nonManipulatedRoomData = [];
 var oneRoomData = [];
@@ -22,7 +22,13 @@ var oneRowData = [];
 var firstOccurenceRow=false;
 var dayCounter = 0;
 
-function uploadCustom() //starts the upload code by populating the primary key and sort key arrays 
+var prevCustomRoom = "";
+var prevCustomWeek = 0;
+var prevCustomEmail = "";
+var prevCustomTimetableArray = [];
+var prevCustomPrimaryKey = [];
+
+function uploadCustom() //uploads custom CSV file to the server
 {	
 	widthChange=2;
 	$("#uploadButton").hide()
@@ -31,56 +37,8 @@ function uploadCustom() //starts the upload code by populating the primary key a
 	var updated = false;
 	var updating = false;	
 	
-	var fileToLoad = document.getElementById("fileToLoad").files[0];
-
-	var fileReader = new FileReader();
-	fileReader.onload = function(fileLoadedEvent)
-	{
-		var textFromFileLoaded = fileLoadedEvent.target.result;
-		var timetable_data = textFromFileLoaded.split(/\r?\n|\r/);
-		for(var count = 0; count<timetable_data.length; count++)
-		{
-			var cell_data = timetable_data[count].split(",");
-			for(var cell_count=0; cell_count<cell_data.length; cell_count++)
-			{
-				if(count==0)
-				{
-					if(cell_count > 1)
-					{
-						Periods.push(cell_data[cell_count].trim());
-					}
-				}
-				else
-				{
-					if(cell_count==0)
-					{
-						PrimaryKey.push(cell_data[cell_count].trim());
-					}
-					else if(cell_count == 1)
-					{
-						SortKey = cell_data[cell_count].trim();
-					}
-					else
-					{
-						tempRawData.push(cell_data[cell_count].trim());
-					}
-					
-				}
-			}
-			if(count!=0)
-			{
-				rawData.push(tempRawData)
-				tempRawData = [];
-			}
-		}
-		console.log(PrimaryKey)
-		console.log(SortKey)
-		console.log(Periods)
-		console.log(rawData)
-		uploadLoop()
-	};
-	fileReader.readAsText(fileToLoad, "UTF-8");	
 	$("#myProgressUpload").show();
+	uploadLoop();
 	function uploadLoop()
 	{
 		$.ajax({
@@ -90,14 +48,14 @@ function uploadCustom() //starts the upload code by populating the primary key a
 			{
 				"Key":"Room",
 				"Key2":"Day",
-				"searchAttr":SortKey,
-				"searchAttr2":PrimaryKey[a]
+				"searchAttr":prevCustomRoom,
+				"searchAttr2":prevCustomPrimaryKey[a]
 			}
 			),
 		contentType:"application/json",
 		success: function(data)
 		{
-			console.log(PrimaryKey[a])
+			console.log(prevCustomPrimaryKey[a])
 			console.log(data)
 			$.each(data.Items, function(index, val) 
 			{
@@ -107,32 +65,69 @@ function uploadCustom() //starts the upload code by populating the primary key a
 					updated = false;
 					updating = false;
 					moveProgressBarMasterDelete()
-					console.log(val[Periods[b]] + " " +rawData[a][b])
+					console.log(val[PeriodArray[b]] + " " +prevCustomTimetableArray[a][b])
 					checkVar()
 					function checkVar()
 					{
-						if((val[Periods[b]] != rawData[a][b]) && val[Periods[b]] != undefined)
+						if($("#uploadMethods").val()=="override")//will only activate if it is the override action, this will override everything in the current booking. 
 						{
-							console.log("Attempting to update "+updated)
-							if(updated == true)
+							if((val[PeriodArray[b]] != prevCustomTimetableArray[a][b]) && val[PeriodArray[b]] != undefined)
 							{
-								window.clearTimeout(checkVarInterval);
-								nextLoop3()
-								return;
+								console.log("Attempting to update "+updated)
+								if(updated == true)
+								{
+									window.clearTimeout(checkVarInterval);
+									nextLoop3()
+									return;
+								}
+								else
+								{
+									if(updating == false)
+									{
+										updateValue(prevCustomPrimaryKey[a],PeriodArray[b],prevCustomTimetableArray[a][b],prevCustomRoom)
+										updating = true;
+									}
+									checkVarInterval = window.setTimeout(checkVar,500);
+								}
 							}
 							else
 							{
-								if(updating == false)
-								{
-									updateValue(PrimaryKey[a],Periods[b],rawData[a][b],SortKey)
-									updating = true;
-								}
-								checkVarInterval = window.setTimeout(checkVar,500);
+								nextLoop3()
 							}
 						}
 						else
 						{
-							nextLoop3()
+							if(prevCustomTimetableArray[a][b] != "unbooked")
+							{
+								if((val[PeriodArray[b]] != prevCustomTimetableArray[a][b]) && val[PeriodArray[b]] != undefined)
+								{
+									console.log("Attempting to update "+updated)
+									if(updated == true)
+									{
+										window.clearTimeout(checkVarInterval);
+										nextLoop3()
+										return;
+									}
+									else
+									{
+										if(updating == false)
+										{
+											updateValue(prevCustomPrimaryKey[a],PeriodArray[b],prevCustomTimetableArray[a][b],prevCustomRoom)
+											updating = true;
+										}
+										checkVarInterval = window.setTimeout(checkVar,500);
+									}
+								}
+								else
+								{
+									nextLoop3()
+								}
+							}
+							else
+							{
+								nextLoop3()
+							}
+							
 						}
 					}
 
@@ -141,7 +136,7 @@ function uploadCustom() //starts the upload code by populating the primary key a
 				function next()
 				{
 					a+=1;
-					if (a < PrimaryKey.length) 
+					if (a < prevCustomPrimaryKey.length) 
 					{            
 						uploadLoop()
 					}
@@ -209,6 +204,8 @@ function uploadCustom() //starts the upload code by populating the primary key a
 }
 function PreviewCustom() //Shows a preview table of the uploaded CSV file from the custom file following its format.
 {
+	var prevCustomDeletingIndex = [0,1,8,9,10,11,12,13,14,15,16]//the rows that need to be deleted cuz they r useless
+	
 	removeEventListeners()
 	disableOptions()
 	localStorage.setItem("uploadFirst","false")
@@ -216,77 +213,102 @@ function PreviewCustom() //Shows a preview table of the uploaded CSV file from t
 	var newString;
 	var bookState;
 	var hiddenTxt;
+	var dayArray = [];
 	var tbl ="";
 	tbl +='<table class="table table-hover">'
 	var fileToLoad = document.getElementById("fileToLoad").files[0];
-	//--->create table header > start
-	tbl +='<thead>';
-		tbl +='<tr>';
-		tbl +='<th>Day</th>';
-		tbl +='<th>Room</th>';
-		tbl +='<th>Period 1</th>';
-		tbl +='<th>Period 2</th>';
-		tbl +='<th>Break</th>';
-		tbl +='<th>Period 3</th>';
-		tbl +="<th>Period 4</th>";
-		tbl +='<th>Lunch</th>';
-		tbl +='<th>Period 5</th>';
-		tbl +='<th>Period 6</th>';
-		tbl +='<th>ECA 1</th>';
-		tbl +='<th>ECA 2</th>';
-		tbl +='</tr>';
-	tbl +='</thead>';
-	//--->create table header > end
+	
 	var fileReader = new FileReader();
 	fileReader.onload = function(fileLoadedEvent)
 	{
-	  var textFromFileLoaded = fileLoadedEvent.target.result;
-	  var timetable_data = textFromFileLoaded.split(/\r?\n|\r/);
-		for(var count = 0; count<timetable_data.length; count++)
+		var textFromFileLoaded = fileLoadedEvent.target.result;
+		var timetable_data = textFromFileLoaded.split(/\r?\n|\r/);
+		//logging important variables provided by the user for the upload later
+		prevCustomRoom = timetable_data[0].split(",")[5];
+		prevCustomWeek = timetable_data[0].split(",")[1];
+		prevCustomEmail = timetable_data[0].split(",")[3];
+		tbl += "<p><strong>Room:</strong> "+prevCustomRoom+" || <strong>Week:</strong> "+ prevCustomWeek+ " || <strong>Email:</strong> " +prevCustomEmail;
+		
+		//--->create table header > start
+		tbl +='<thead>';
+			tbl +='<tr>';
+			tbl +='<th>Day</th>';
+			tbl +='<th>Period 1</th>';
+			tbl +='<th>Period 2</th>';
+			tbl +='<th>Break</th>';
+			tbl +='<th>Period 3</th>';
+			tbl +="<th>Period 4</th>";
+			tbl +='<th>Lunch</th>';
+			tbl +='<th>Period 5</th>';
+			tbl +='<th>Period 6</th>';
+			tbl +='<th>ECA 1</th>';
+			tbl +='<th>ECA 2</th>';
+			tbl +='</tr>';
+		tbl +='</thead>';
+		//--->create table header > end
+		
+		//excuting the deletion of useless rows of data. 
+		for(var i = 0; i<prevCustomDeletingIndex.length;i++)
 		{
+			timetable_data.splice(prevCustomDeletingIndex[i]-i, 1);//will delete backwards to prevent deletion structure collasp when it starts to jenga itself to death cuz ure retard. 
+		}
+		
+		console.log(timetable_data);
+		
+		for(var count = 1; count<timetable_data.length; count++)
+		{
+			dayArray = []
 			var cell_data = timetable_data[count].split(",");
 			tbl += '<tr>';
 			for (var cell_count = 0; cell_count < cell_data.length; cell_count++) {
 				if (count === 0) {
-					//tbl += '<th>' + cell_data[cell_count] + '</th>';
+					//nothing
 				} else {
 					newString = cell_data[cell_count];
 					bookState = cell_data[cell_count].split(' ')[0]
 					if(bookState=="booked")
 					{
-						hiddenTxt = cell_data[cell_count].substr(cell_data[cell_count].indexOf(' ')+1)	
+						hiddenTxt = prevCustomEmail
+						dayArray.push(bookState+" "+hiddenTxt)
 						newString = cell_data[cell_count].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 						tbl +='<td ><div class="booked row_data pointerCursor disable" edit_type="click" col_name="Period1">'+newString+'</div></td>';
 					}
 					else if(bookState=="unbooked")
 					{
+						dayArray.push(bookState)
 						tbl +='<td ><div class="unbooked row_data pointerCursor disable" edit_type="click" col_name="Period1">'+newString+'</div></td>';
 					}
 					else if(bookState=="lesson")
 					{
-						hiddenTxt = cell_data[cell_count].substr(cell_data[cell_count].indexOf(' ')+1)	
+						hiddenTxt = prevCustomEmail + " lock"+prevCustomWeek.toString();
+						dayArray.push(bookState+" "+hiddenTxt)
 						newString = cell_data[cell_count].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 						tbl +='<td ><div class="lesson row_data pointerCursor disable" edit_type="click" col_name="Period1">'+newString+'</div></td>';
 					}
 					else if(bookState=="locked")
 					{
-						hiddenTxt = cell_data[cell_count].substr(cell_data[cell_count].indexOf(' ')+1)	
+						hiddenTxt = "lock"+prevCustomWeek.toString();
+						dayArray.push(bookState+" "+hiddenTxt)
 						newString = cell_data[cell_count].replace(hiddenTxt, '<span 	class="hidden">'+hiddenTxt+'</span>');
 						tbl +='<td ><div class="locked row_data pointerCursor disable" edit_type="click" col_name="Period1">'+newString+'</div></td>';
 					}
 					else
 					{
+						prevCustomPrimaryKey.push(previewCustomPrimaryKeyGenerator(cell_data[cell_count],prevCustomWeek))
 						tbl +='<td >'+newString+'</td>';
 					}
 				}
 			}
+			prevCustomTimetableArray.push(dayArray);
 			tbl += '</tr>';
 		}
+		
 		tbl += '</table>';
 		$('#PreviewTable').html("");
 		$('#PreviewTable').html(tbl);
+		console.log(prevCustomTimetableArray)
+		console.log(prevCustomPrimaryKey)
 	};
-
 	fileReader.readAsText(fileToLoad, "UTF-8");
 }
 function uploadSims()//uploadcode from generated from a SIM File
@@ -535,15 +557,15 @@ function PreviewSims()
 					deletingIndex.push(count)
 					deletingIndex.push(count+1)
 				}
-				else if(cell_data[cell_count].trim()=="1"||cell_data[cell_count].trim()=="2"||cell_data[cell_count].trim()=="3"||cell_data[cell_count].trim()=="4"||cell_data[cell_count].trim()=="5"||cell_data[cell_count].trim()=="6")
+				else if(cell_data[cell_count].trim()=="1"||cell_data[cell_count].trim()=="2"||cell_data[cell_count].trim()=="3"||cell_data[cell_count].trim()=="4"||cell_data[cell_count].trim()=="5"||cell_data[cell_count].trim()=="6")//will delete all empty lines containing random ass numbers 
 				{
-					deletingIndex.push(count+1)
+					deletingIndex.push(count+1)//telling them which lines to delete and storing the lines they needa delete in an array
 				}
 			}
 		}
 		for(var i = 0; i<deletingIndex.length;i++)
 		{
-			timetable_data.splice(deletingIndex[i]-i, 1);
+			timetable_data.splice(deletingIndex[i]-i, 1);//will delete backwards to prevent deletion structure collasp when it starts to jenga itself to death cuz ure retard. 
 		}
 		for(var count=0; count<timetable_data.length;count++)
 		{
@@ -562,7 +584,7 @@ function PreviewSims()
 		{
 			generateTechPreviewTable(timetable_data,room_count)
 		}
-		nonManipulatedRoomOrder = uploadedRoomOrder;
+		nonManipulatedRoomOrder = uploadedRoomOrder;// contains all the different rooms uploaded
 		nonManipulatedRoomData = fullRoomsData;
 		populateSelect()
 		
@@ -578,7 +600,7 @@ function populateSelect() //creates a new select element and then appends all th
 	var opt;
 	for(var i = 0; i < nonManipulatedRoomOrder.length; i++)
 	{
-	   opt = document.createElement("option");
+	   opt = document.createElement("option");//creating option
 	   opt.value = i+1;
 	   opt.innerHTML = nonManipulatedRoomOrder[i]; // whatever property it has, this array stores all the rooms inside it
 	   // then append it to the select element
@@ -600,7 +622,7 @@ function generateTechPreviewTable(data, roomInteration) // Will generate a table
 	oneRoomData = [];
 	tbl = "";
 	for(var i = (roomInteration-1)*11; i < (roomInteration-1)*11+11; i++) //Detected what room it is building
-	{
+	{//*11+11 because every room will have 11 lines dedicated to it, it'll need to iterate through all 11 lines
 		if(data[i].indexOf("Technology 1")>-1)
 		{
 			uploadedRoomOrder.push("Tech1");
@@ -739,17 +761,21 @@ function checkAvailableUpload()//this method will check what option has been cho
 	if($("#uploadSource").val()!="invalid" && $("#uploadMethods").val()!="invalid")
 	{
 		$("#uploadBlock").hide();
-		if($("#uploadSource").val()=="custom")
+		if($("#uploadSource").val()=="custom")//if user chose custom upload docs
 		{
 			$("#customUploadDocs").show();
 			$("#previewWhichRoom").hide();
-			$("#SimUploadDocs").hide();
+			$("#SimUploadDocs").hide();			
+			$("#fileToLoad").attr("onChange","PreviewCustom()");
+			$("#uploadButton").attr("onClick","uploadCustom()");
 		}
-		else
+		else // if user chose sims upload docs
 		{
 			$("#customUploadDocs").hide();
 			$("#previewWhichRoom").show();
 			$("#SimUploadDocs").show();
+			$("#fileToLoad").attr("onChange","PreviewSims()");
+			$("#uploadButton").attr("onClick","uploadSims()");
 		}
 	}
 	else
@@ -770,3 +796,48 @@ function enableOptions()//This will take away the diabled attrs from the uploadm
 	$("#previewRoomDiv").html("")
 }
 
+function previewCustomPrimaryKeyGenerator(Day,Week)//used in the preview custom function to quickly generate the primary key by inputting the day and the week it is
+{
+	if(Week==1)
+	{
+		switch(Day)
+		{
+			case "Monday":
+				return "1Monday"
+				break;
+			case "Tuesday":
+				return "2Tuesday"
+				break;
+			case "Wednesday":
+				return "3Wednesday"
+				break;
+			case "Thursday":
+				return "4Thursday"
+				break;
+			case "Friday":
+				return "5Friday"
+				break;
+		}
+	}
+	else
+	{
+		switch(Day)
+		{
+			case "Monday":
+				return "11Monday"
+				break;
+			case "Tuesday":
+				return "22Tuesday"
+				break;
+			case "Wednesday":
+				return "33Wednesday"
+				break;
+			case "Thursday":
+				return "44Thursday"
+				break;
+			case "Friday":
+				return "55Friday"
+				break;
+		}
+	}
+}
