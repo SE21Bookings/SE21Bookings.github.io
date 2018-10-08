@@ -1,4 +1,4 @@
-<!doctype html>
+ <!doctype html>
 <html>
 	<head>
 		<title>SE21 Make Bookings</title>
@@ -38,6 +38,7 @@
 			<div onClick="openModal(); loadinRoom('Tech4','1');" id="Tech4Btn"></div>
 			<div onClick="openModal(); loadinRoom('Tech5','1');" id="Tech5Btn"></div>
 			<div onClick="openModal(); loadinRoom('VR','1');" id="VRBtn"></div>
+			<div onClick="openModal(); loadinRoom('VRT','1');" id="VRTBtn"></div>
 		</div>
 		
 		<div id="errorModule">
@@ -142,15 +143,64 @@
 			</div>
 		</div>
 		
-		<div id="uploadFileModal" class="modal">	
+		<div id="uploadFileModal" class="modal">
 			<div class="uploadFileModal-content">
 				<span class="close4">&times;</span>
+				<center>			
+					<div id="Options">
+						<strong><label>Choose a upload source:</label></strong>
+						<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						<strong><label>Choose a upload method:</label></strong>
+						<br>
+						
+						<select onChange="checkAvailableUpload()" id="uploadSource">
+							<option selected value="invalid">UPLOAD SOURCE...</option>
+							<option value="sims">SIMS</option>
+							<option value="custom">CUSTOM</option>
+						</select>
+						
+						<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						
+						<select onChange="checkAvailableUpload()" id="uploadMethods">
+							<option selected value="invalid">UPLOAD METHOD...</option>
+							<option value="merge">MERGE</option>
+							<option value="override">OVERRIDE</option>
+						</select>
+						
+						<label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+					</div>
+					<div id="customUploadDocs">
+						<br><br>
+						<a href="../Documents/SE21_Upload_Template.zip" target="_blank">Download Template</a>
+						<label>&nbsp;||&nbsp;</label>
+						<a href="../Documents/SE21_README_UserDoc.pdf" target="_blank">Read User Documentation</a>
+						<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+					</div>
+					<div id="SimUploadDocs">
+						<br><br>
+						<em><label>[Save SIMS file as .CSV with UTF-8] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></em>
+					</div>
+				</center>
+				
 				<br><br>
-				<a href="#">Download Template</a>
+				
+				<div id="uploadBlock"></div>
+				<form id="fileLoadForm">
+					<input id="fileToLoad" type="file" accept=".csv" onChange="">
+				</form>
+				<div id="previewRoomDiv"></div>
+				<!--This Will Hold All the Options to allow users to choose between different rooms-->
 				<br><br>
-				<input id="fileToLoad" type="file">
-				<br>
-				<button onClick="upload();">Upload</button>
+				<center>
+					<div id="PreviewTable">
+						<em><p>[Preview Table]</p></em>
+					</div>
+				</center>
+				<br><br>
+				<button id="uploadButton" onClick="">Upload</button>
+				<div id="myProgressUpload">
+				  <div id="myBar">0%</div>
+				</div>
 			</div>
 		</div>
 		
@@ -165,7 +215,7 @@
 		localStorage.setItem("weekValue",null)
 		$("#navBar").load("../DynamicLoad_Modules/NavBar.html")
 		DocFunctions();//loads in the important functions on the document
-		
+		localStorage.setItem("uploadFirst","true")
 		checkWhichUser()
 		checkVariable()
 		function checkVariable()  // welcomeMsg Loader
@@ -211,6 +261,17 @@
 			}
 		}
 
+<<<<<<< HEAD
+=======
+		 if(localStorage.getItem("openUploadModal")=="true") //This will see if the upload modal was what triggered the page reload. If this is true then the upload file modal will open and let you choose your uploads
+		 {
+			 document.getElementById('uploadFileModal').style.display = "block";
+			 checkAvailableUpload()
+			 enableOptions()
+			 localStorage.setItem("openUploadModal","false")
+		 }
+		$("#welcomeMsg")
+>>>>>>> 13d1dc8af5924e8efe99d7c76f4304adb586f1c0
 	</script>
 	<script> //Timetable Modal Code
 		var modal = document.getElementById('timeTableModal');
@@ -280,7 +341,20 @@
 		var span4 = document.getElementsByClassName("close4")[0];
 		
 		OpenModalBtn.onclick = function() {
+			if(localStorage.getItem("uploadFirst")=="false")
+			{
+				location.reload()
+				localStorage.setItem("uploadFirst","true")
+			}
 			UFileModal.style.display = "block";
+			$("#fileLoadForm").val(null)
+			$("#PreviewTable").html("<em><p>[Preview Table]</p></em>")
+			$("#myProgressUpload").hide();
+			$("#customUploadDocs").hide();
+			$("#uploadSource").val("invalid")
+			$("#uploadMethods").val("invalid")
+			checkAvailableUpload()
+			enableOptions()
 		}
 		
 		// When the user clicks on <span> (x), close the modal

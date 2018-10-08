@@ -1,0 +1,17 @@
+Week:,2,Email:,designcentre@dulwich-beijing.cn,Room:,Tech1,,,,,
+,,,,,,,,,,
+Day,Period1,Period2,Break ,Period3,Period4,Lunch,Period5,Period6,AfterschoolH1,AfterschoolH2
+Monday,unbooked,unbooked,unbooked,unbooked,unbooked,unbooked,unbooked,unbooked,unbooked,unbooked
+Tuesday,unbooked,unbooked,unbooked,unbooked,unbooked,unbooked,unbooked,unbooked,unbooked,unbooked
+Wednesday,unbooked,unbooked,unbooked,unbooked,unbooked,unbooked,unbooked,unbooked,unbooked,unbooked
+Thursday,unbooked,unbooked,unbooked,unbooked,unbooked,unbooked,unbooked,unbooked,unbooked,unbooked
+Friday,unbooked,unbooked,unbooked,unbooked,unbooked,unbooked,unbooked,unbooked,unbooked,unbooked
+,,,,,,,,,,
+Action:,Input:,,Available Rooms:,,,,,,,
+Book,booked,,Tech1,,,,,,,
+Unbook,unbooked,,Tech2,,,,,,,
+Lock,locked,,Tech3,,,,,,,
+Lesson,lesson,,Tech4,,,,,,,
+,,,Tech5,,,,,,,
+,,,VR,,,,,,,
+,,,TrolleyVR,,,,,,,

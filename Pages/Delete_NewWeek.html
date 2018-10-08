@@ -18,15 +18,19 @@
 		</div>
 
 		<p id="CurrentWeek"></p>
+		
 		<div id="buttonViewPortDelete">
 			<button onClick="newWeekClear('AlternateWeek')">Alternate Week</button><br>
-			<button onClick="newWeekClear('MasterDelete')">Master Delete</button><br>
-			<button onClick="newWeekClear('DeleteTech1')">Delete Tech 1</button><br>
-			<button onClick="newWeekClear('DeleteTech2')">Delete Tech 2</button><br>
-			<button onClick="newWeekClear('DeleteTech3')">Delete Tech 3</button><br>
-			<button onClick="newWeekClear('DeleteTech4')">Delete Tech 4</button><br>
-			<button onClick="newWeekClear('DeleteTech5')">Delete Tech 5</button><br>
-			<button onClick="newWeekClear('DeleteVR')">Delete VR Room</button><br>
+			<button onClick="newWeekClear('MasterDelete')">Clear All</button><br>
+			<button onClick="newWeekClear('DeleteTech1')">Clear Tech 1</button><br>
+			<button onClick="newWeekClear('DeleteTech2')">Clear Tech 2</button><br>
+			<button onClick="newWeekClear('DeleteTech3')">Clear Tech 3</button><br>
+			<button onClick="newWeekClear('DeleteTech4')">Clear Tech 4</button><br>
+			<button onClick="newWeekClear('DeleteTech5')">Clear Tech 5</button><br>
+			<button onClick="newWeekClear('DeleteVR')">Clear VR Room</button><br>
+			<button onClick="">Clear VR Trolley</button><br>
+			<button onClick="">Lock Site</button><br>
+			<button onClick="">Unlock Site</button><br>
 		</div>
 		
 		<div id="DateViewer">
@@ -46,9 +50,9 @@
 					<label id="userPermissionValue" contenteditable="true"></label>
 					
 					<p id="dConsoleTextWrite"></p>
-				</p>
-				
+				</p>	
 			</div>
+			<button onClick="clearConsole()">Clear Console</button>
 		</div>
 
 		<div id="myProgress">
@@ -57,13 +61,17 @@
 	</body>
 	
 	<script>//Intilizers
+		var audio = new Audio('../Audio/AlertNoInternetSound.mp3');
+		var CheckCounter = 0; 
+		var errorDetected = false; 
+		$("#myProgress").hide()
 		
 		getCognitoUser();
-		$("#myProgress").hide()
 		startTime()
 		checkWeekNum()
 		checkWhichUser()
 		checkVariable()
+		
 		function checkVariable() 
 		{
 			if (email != null && adminPriv != null && localStorageWeek != null) 
@@ -88,9 +96,34 @@
 				setTimeout(checkVariable, 1000);
 			}
 		}
-	
+		function checkNetwork()// sees if theres an internet connection by loading a cat img
+		{
+			var img = new Image();   // Create new image element
+			var d=new Date();
+			img.src="../Img/se21 layout.png?"+d.getTime();
+			img.onerror = function(){
+			    $("body").css("background-color","red")
+			    audio.play();//playing audio to alert user
+				errorDetected=true;
+			};
+			img.onload = function(){
+				$("body").css("background-color","white")
+				errorDetected=false;
+			}
+		}
 		function startTime() 
 		{
+			CheckCounter +=1;
+			if(CheckCounter>=120*10)//only checks 10 every minute
+			{
+				CheckCounter=0;
+				checkNetwork();
+			}
+			else if(errorDetected==true)//if network detected false is true then it'll check every 500ms
+			{
+				checkNetwork();
+			}
+			
 			var today = new Date();
 			$("#TodayDate").html("<strong>Today: </strong>"+formatAMPM(today))
 			$("#NextDelete").html("<strong>Next Delete: </strong>"+getSaturday(today))
@@ -103,7 +136,6 @@
 			date = date.split(' ').slice(0, 5).join(' ');
 			return date;
 		}
-
 		function getSaturday(date) 
 		{
 			var resultDate = new Date(date.getTime());
@@ -112,7 +144,6 @@
 			resultDate = resultDate.split(' ').slice(0, 4).join(' ');
 			return resultDate + " 00:00:00";
 		}
-		
 		function ActivateNewWeek()
 		{
 			var today = new Date();
