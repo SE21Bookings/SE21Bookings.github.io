@@ -1982,7 +1982,7 @@ function loadinRoom(trueRoom, roomLoadWeek)
 
 
 						$("#whichWeekBtn").html("Next Week");
-						$("#whichWeekBtn").attr("onClick","loadinRoom('VR','2'); $('#timeTableTitle').html('<strong>Tech 1</strong> Timetable ["+weekBeginNext()+"]:');")
+						$("#whichWeekBtn").attr("onClick","loadinRoom('VR','2');$('#timeTableTitle').html('Reception & VR Timetable ["+weekBeginNext()+"]:');")
 					}
 					else if(trueRoom == "VR" && roomLoadWeek =="2")
 					{
@@ -1991,7 +1991,26 @@ function loadinRoom(trueRoom, roomLoadWeek)
 
 
 						$("#whichWeekBtn").html("Previous Week");
-						$("#whichWeekBtn").attr("onClick","loadinRoom('VR','1'); $('#timeTableTitle').html('Reception & VR Timetable ["+weekBeginNow()+"]:');")
+						$("#whichWeekBtn").attr("onClick","loadinRoom('VR','1');$('#timeTableTitle').html('Reception & VR Timetable ["+weekBeginNow()+"]:');")
+					}
+					
+					if(trueRoom == "VRT" && roomLoadWeek =="1")
+					{
+						$("#timeTableTitle").html("VR Trolley Timetable ["+weekBeginNow()+"]:")
+
+
+
+						$("#whichWeekBtn").html("Next Week");
+						$("#whichWeekBtn").attr("onClick","loadinRoom('VRT','2');$('#timeTableTitle').html('VR Trolley Timetable ["+weekBeginNext()+"]:');")
+					}
+					else if(trueRoom == "VRT" && roomLoadWeek =="2")
+					{
+						$("#timeTableTitle").html("VR Trolley Timetable ["+weekBeginNext()+"]:")
+
+
+
+						$("#whichWeekBtn").html("Previous Week");
+						$("#whichWeekBtn").attr("onClick","loadinRoom('VRT','1');$('#timeTableTitle').html('VR Trolley Timetable ["+weekBeginNow()+"]:');")
 					}
 					$(document).find('#timeTable').html(tbl);
 				},
