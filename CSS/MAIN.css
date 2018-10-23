@@ -10,32 +10,32 @@ body
 	top:50px;
 	left:5px;
 }
-.LoginColor
+.LoginColor /*Code for the login page red color*/
 {
-	height: auto;
-	width: 100%;
-	position: absolute;
-	top:0;
+	height: auto; /*Always full page */
+	width: 100%; /*Always full page */
+	position: absolute; /*absolute postioning*/
+	top:0; /*will be 0 pixels from the top bottom left and right*/
 	bottom: 0;
 	left:0;
 	right:0;
-	background-color: rgba(211, 0, 19, 0.5);
-	z-index: -1;
+	background-color: rgba(211, 0, 19, 0.5);/*red background color*/
+	z-index: -1; /*the higher the z-index the more on top it'll be layered. This should be layered on the very bottom of the page*/
 }
 
-#LoginForm
+#LoginForm /*Code for the login box div*/
 {
-	border-radius: 25px;
-	border: 3px solid black;
-	height:400px;
-	width: 300px;
-	z-index: 1;
-	position: absolute;
+	border-radius: 25px; /*Making it so that it's edges are rounded*/
+	border: 3px solid black; /*black border 3 pixels wide*/
+	height:400px; /*absolute height, 400 pixels*/
+	width: 300px;/*absolute width, 300 pixels*/
+	z-index: 1; /*the higher the z-index the more on top it'll be layered. This should be layered on the very top of the page*/
+	position: absolute; /*absolute - relative positioning*/
 	background-color: #dcdcce;
-	top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
+	top: 50%; /*absolute - relative positioning as a % of your screensize*/
+    left: 50%; /*absolute - relative positioning as a % of your screensize*/
+    margin-right: -50%; /*absolute - relative positioning as a % of your screensize*/
+    transform: translate(-50%, -50%); /*absolute - relative positioning as a % of your screensize*/
 	margin: 0;
 }
 

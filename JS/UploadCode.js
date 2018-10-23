@@ -216,13 +216,14 @@ function PreviewCustom() //Shows a preview table of the uploaded CSV file from t
 	var dayArray = [];
 	var tbl ="";
 	tbl +='<table class="table table-hover">'
+	
 	var fileToLoad = document.getElementById("fileToLoad").files[0];
 	
 	var fileReader = new FileReader();
 	fileReader.onload = function(fileLoadedEvent)
 	{
 		var textFromFileLoaded = fileLoadedEvent.target.result;
-		var timetable_data = textFromFileLoaded.split(/\r?\n|\r/);
+		var timetable_data = textFromFileLoaded.split(/\r?\n|\r/);//splitting the data by commas
 		//logging important variables provided by the user for the upload later
 		prevCustomRoom = timetable_data[0].split(",")[5];
 		prevCustomWeek = timetable_data[0].split(",")[1];
@@ -488,14 +489,14 @@ function uploadSims()//uploadcode from generated from a SIM File
 						}
 					}
 					
-					function uploadData(Day, Room, UpdateAttr, UpdateValue)
+					function uploadData(Day, Room, UpdateAttr, UpdateValue) // uploads data to AWS Dynamodb using AJAX jQuery request
 					{
-						console.log("Uploading......")
-						updated = false;
-						$.ajax({
-						type:'POST',
+						console.log("Uploading......") 
+						updated = false; // not yet updated
+						$.ajax({ //Request to write to AWS
+						type:'POST', //AWS write function "callname"
 						url: API_URL_Tech1,
-						data:JSON.stringify(
+						data:JSON.stringify( //the update values in a JSON format 
 							{
 								"Room":Room,
 								"Day":Day,
@@ -507,11 +508,11 @@ function uploadSims()//uploadcode from generated from a SIM File
 						success: function(data)
 							{
 								console.log("Upload Sucessful")
-								updated = true;
+								updated = true; //if upload sucessful move on to the next upload
 							},
 						error: function(data)
 							{
-								$("#errorModule").show();
+								$("#errorModule").show(); //else show an error module
 							}
 						});
 					}
@@ -619,11 +620,11 @@ function generatePrevTable()//will generate a new preview room depdning on the s
 function generateTechPreviewTable(data, roomInteration) // Will generate a table code from the given data and will selectively make a table code depeneing on what you input for the room interation
 {
 	dayCounter = 0;
-	oneRoomData = [];
+	oneRoomData = [];//stores the data for one day, all periods then uploads them into the main linked list.
 	tbl = "";
 	for(var i = (roomInteration-1)*11; i < (roomInteration-1)*11+11; i++) //Detected what room it is building
 	{//*11+11 because every room will have 11 lines dedicated to it, it'll need to iterate through all 11 lines
-		if(data[i].indexOf("Technology 1")>-1)
+		if(data[i].indexOf("Technology 1")>-1) //detecting the CSV file's timetables and pusing them into the timetable array. 
 		{
 			uploadedRoomOrder.push("Tech1");
 		}

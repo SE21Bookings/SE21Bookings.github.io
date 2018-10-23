@@ -65,23 +65,23 @@ function createNewUser(emails,password) //CreateNewUser
     var attributeList = [];
 
     var dataEmail = {
-        Name : 'email',
-        Value : emails
+        Name : 'email', //user email
+        Value : emails //the variable pushed into the method
     };
 	
-    var attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
+    var attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail); //creating a user attribuit of email
 
-    attributeList.push(attributeEmail);
+    attributeList.push(attributeEmail); //push all the attribuites into a attribute list linked-list
 
-    userPool.signUp(emails, password, attributeList, null, function(err, result){
-        if (err) {
-			document.getElementById("signUpErrMsg").style.color="red";
-            document.getElementById("signUpErrMsg").innerHTML=(err.message || JSON.stringify(err));
+    userPool.signUp(emails, password, attributeList, null, function(err, result){ //function to signup 
+        if (err) { //if signup failed 
+			document.getElementById("signUpErrMsg").style.color="red"; 
+            document.getElementById("signUpErrMsg").innerHTML=(err.message || JSON.stringify(err)); //why there is an error, output to user
             return;
         }
-        cognitoUser = result.user;
+        cognitoUser = result.user; //signup sucessful 
 		document.getElementById("signUpErrMsg").style.color="green";
-        document.getElementById("signUpErrMsg").innerHTML=("Welcome! "+ cognitoUser.getUsername() + " \nPlease access your email to verify your account");
+        document.getElementById("signUpErrMsg").innerHTML=("Welcome! "+ cognitoUser.getUsername() + " \nPlease access your email to verify your account"); //ouput sucessful to the user
     });
 }
 
