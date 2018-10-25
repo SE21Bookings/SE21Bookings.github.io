@@ -3,6 +3,8 @@
 body
 {
 	font-family: 'Roboto', sans-serif;
+	overflow-y: hidden;
+	overflow-x: hidden;
 }
 #welcomeMsg
 {
@@ -167,7 +169,7 @@ body
 	width:800px;
 	height: 500px;
 	position: absolute;
-	top: 51%;
+	top: 50.8%;
     left: 50.21%;
     margin-right: -50%;
     transform: translate(-50%, -57%);
