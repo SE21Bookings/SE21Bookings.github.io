@@ -663,7 +663,7 @@ function newWeekClear(DeletionMode) // patch will retrieve bookings, used in the
 	{
 		deleteTechs("VR");
 	}
-	else if(DeletionMode=="DeleteVR")
+	else if(DeletionMode=="DeleteVRT")
 	{
 		deleteTechs("VRT");
 	}
@@ -723,7 +723,7 @@ function newWeekClear(DeletionMode) // patch will retrieve bookings, used in the
 						{
 							$("#userPermissionValue").attr("contenteditable","false")
 							$("#myProgress").show()
-							RoomArray =[Room]
+							RoomArray =[Room] //making room arry = the room that way it'll only run the loop once and delete the VRT Room
 							widthChange=1.1111155556;
 							loop1MasterDelete()
 						}	
