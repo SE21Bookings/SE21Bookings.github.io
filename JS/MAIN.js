@@ -235,7 +235,7 @@ function checkValid(jwtToken) // Used to see if session has ended
 	}
 }
 
-function forgotPassContinue()
+function forgotPassContinue() //validates passwords entered by the user
 {
 	if(slideIndex==1)
 	{
@@ -264,9 +264,9 @@ function getMonday( date )
 	date = date.toUTCString();
 	date = date.split(' ').slice(0, 4).join(' ');
     return date;
-}
+} //get the monday of a week
 
-function manipulateDay(day, whichWeek)
+function manipulateDay(day, whichWeek)//manipulates a normal day into a primary key
 {
 	if(whichWeek == 1)
 	{
@@ -313,7 +313,7 @@ function manipulateDay(day, whichWeek)
 	
 }
 
-function manipulatePeriod(Period)
+function manipulatePeriod(Period)//manipulates periods for better viewing makes period1 into period 1
 {
 	switch(Period) 
 		{
@@ -353,7 +353,7 @@ function manipulatePeriod(Period)
 function plusDivs(n) 
 {
 	showDivs(slideIndex += n);
-}
+}//slideshow controls
 function showDivs(n) 
 {
 	var i;
@@ -364,12 +364,12 @@ function showDivs(n)
 		x[i].style.display = "none";  
 	}
 	x[slideIndex-1].style.display = "block";  
-}
+} //slideshow controls
 
 function plusDivsSettings(n) 
 {
 	showDivsSettings(slideIndex += n);
-}
+} //slideshow controls
 function showDivsSettings(n) 
 {
 	var i;
@@ -380,7 +380,7 @@ function showDivsSettings(n)
 		x[i].style.display = "none";  
 	}
 	x[slideIndex-1].style.display = "block";  
-}
+} //slideshow controls
 
 function getEmail()
 {
@@ -393,22 +393,22 @@ function getEmail()
         }
 		email = result[2]["Value"];
 	});
-}
+} // get email of user 
 
 function extractContent(s)
 {
   var span = document.createElement('span');
   span.innerHTML = s;
   return span.textContent || span.innerText;
-};
+}; //extracts the text from within a span.
 
-function preLimLoader(loadingText)
+function preLimLoader(loadingText)//used in the timetable function to load text about the user 
 {
 	$("#viewPort_Content").hide()
 	$("#preLimLoader").show()
 	$("#preLimLoader").html(loadingText)
 }
-function exitpreLimLoader()
+function exitpreLimLoader()//used to exit the prelim loader 
 {
 	$("#viewPort_Content").hide()
 	$("#preLimLoader").show()
@@ -417,13 +417,13 @@ function exitpreLimLoader()
 		$("#preLimLoader").html("[Click on a Timeslot to View Bookings]")
 	},3000)
 }
-function exitpreLimLoaderErr()
+function exitpreLimLoaderErr()//used to exit the prelim loader in the event of an error
 {
 	window.setTimeout(function(){
 		$("#preLimLoader").html("[Click on a Timeslot to View Bookings]")
 	},3000)
 }
-function checkRecurrence()
+function checkRecurrence() //checks whether user chose recurring booking or non recurring booking
 {
 	var selectR = $("#Recurrence").val()
 	if(selectR == "NPR")
@@ -437,7 +437,7 @@ function checkRecurrence()
 	}
 }
 
-function removeEventListeners()
+function removeEventListeners() //remove all event listeners from the program
 {
 	$(document).off('click', '#bookBtn')
 	$(document).off('click', '#deleteBtn')
@@ -451,7 +451,7 @@ function removeEventListeners()
 	$(document).off('focusout', '.row_data')
 }
 
-function whichTrueWeek(day)
+function whichTrueWeek(day) //returns the true week. So the week it actually is not the fake week shown. by inputting the primary key
 {
 	switch(day) 
 	{
@@ -493,9 +493,9 @@ function ReloadRoom(Room, Week)
 
 	loadinRoom(Room, overWriteTrueWeek)
 	
-}
+} //reloads the room for a particular week 
 
-function newWeekClear(DeletionMode) // patch will retrieve bookings
+function newWeekClear(DeletionMode) // patch will retrieve bookings, used in the management console. to delete bookings
 {
 	widthChange =0;
 	$("#userPermissionValue").removeAttr("keypress");
@@ -506,7 +506,7 @@ function newWeekClear(DeletionMode) // patch will retrieve bookings
 	
 	var PeriodArray = ["Period1","Period2","Break","Period3","Period4","Lunch","Period5","Period6","AfterschoolH1","AfterschoolH2"]
 	
-	var RoomArray = ["Tech1","Tech2","Tech3","Tech4","Tech5","VR"]
+	var RoomArray = ["Tech1","Tech2","Tech3","Tech4","Tech5","VR","VRT"]
 	
 	var i =0;
 	var a =0;
@@ -662,6 +662,10 @@ function newWeekClear(DeletionMode) // patch will retrieve bookings
 	else if(DeletionMode=="DeleteVR")
 	{
 		deleteTechs("VR");
+	}
+	else if(DeletionMode=="DeleteVR")
+	{
+		deleteTechs("VRT");
 	}
 	else if(DeletionMode=="NewWeekDelete")
 	{
@@ -864,7 +868,7 @@ function newWeekClear(DeletionMode) // patch will retrieve bookings
 						else
 						{
 							a = 0
-							if(i < 5)
+							if(i < RoomArray.length)
 							{
 								i += 1;
 								writeToDeleteConsole("CallingLoop1")
@@ -879,12 +883,12 @@ function newWeekClear(DeletionMode) // patch will retrieve bookings
 								{
 									DayArray =["11Monday","22Tuesday","33Wednesday","44Thursday","55Friday"]
 									
-									loop1()
+									loop1() //deleting quickbooks after weekchange
 								}
 								else if(nweek1=="2")
 								{
 									DayArray =["1Monday","2Tuesday","3Wednesday","4Thursday","5Friday"]	
-									loop1()
+									loop1() // deleting quickbooks after weekchange
 								}
 								writeToDeleteConsole("function finish excecution")
 							}
@@ -1100,7 +1104,7 @@ function newWeekClear(DeletionMode) // patch will retrieve bookings
 						else
 						{
 							a = 0
-							if(i < 5)
+							if(i < RoomArray.length)
 							{
 								i += 1;
 								writeToDeleteConsole("CallingLoop1")
