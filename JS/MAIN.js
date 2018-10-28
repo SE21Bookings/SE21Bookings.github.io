@@ -868,7 +868,7 @@ function newWeekClear(DeletionMode) // patch will retrieve bookings, used in the
 						else
 						{
 							a = 0
-							if(i < RoomArray.length)
+							if(i < RoomArray.length-1)
 							{
 								i += 1;
 								writeToDeleteConsole("CallingLoop1")
@@ -1104,7 +1104,7 @@ function newWeekClear(DeletionMode) // patch will retrieve bookings, used in the
 						else
 						{
 							a = 0
-							if(i < RoomArray.length)
+							if(i < RoomArray.length-1)
 							{
 								i += 1;
 								writeToDeleteConsole("CallingLoop1")
@@ -1400,7 +1400,7 @@ function moveProgressBar()
   var elem = document.getElementById("myBar");   
   frame()
   function frame() {
-    width+=0.06172839506*2; 
+    width+=0.1111111111; 
     elem.style.width = width + '%'; 
     elem.innerHTML = Math.round( width * 10 ) / 10 + '%';
   }

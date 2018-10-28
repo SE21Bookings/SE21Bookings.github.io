@@ -738,8 +738,8 @@ function generateTechPreviewTable(data, roomInteration) // Will generate a table
 			}
 			else
 			{
-				tbl +='<td ><div class="lesson row_data pointerCursor disable" edit_type="click" col_name="Period1">lesson <span class="hidden">designcentre@dulwich-beijing.cn lock1</span></div></td>';
-				oneRowData.push("lesson <span class='hidden'>designcentre@dulwich-beijing.cn lock1</span>")
+				tbl +='<td ><div class="lesson row_data pointerCursor disable" edit_type="click" col_name="Period1">lesson <span class="hidden">designcentre@dulwich-beijing.cn lock2</span></div></td>';
+				oneRowData.push("lesson <span class='hidden'>designcentre@dulwich-beijing.cn lock2</span>")
 			}
 
 		}//add 2 Empty ECAs
