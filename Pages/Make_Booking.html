@@ -237,6 +237,13 @@
 					   $("#MAdminUser").show();
 					   $("#PageLoader").fadeOut()
 					   $("#UploadFileBtn").show();
+					   if(localStorage.getItem("openUploadModal")=="true") //This will see if the upload modal was what triggered the page reload. If this is true then the upload file modal will open and let you choose your uploads
+					   {
+							document.getElementById('uploadFileModal').style.display = "block";
+						 	checkAvailableUpload()
+							enableOptions()
+							localStorage.setItem("openUploadModal","false")
+					   }
 				   }
 				   else
 				   {
@@ -260,13 +267,6 @@
 				setTimeout(checkVariable, 1000);
 			}
 		}
-		 if(localStorage.getItem("openUploadModal")=="true") //This will see if the upload modal was what triggered the page reload. If this is true then the upload file modal will open and let you choose your uploads
-		 {
-			 document.getElementById('uploadFileModal').style.display = "block";
-			 checkAvailableUpload()
-			 enableOptions()
-			 localStorage.setItem("openUploadModal","false")
-		 }
 	</script>
 	<script> //Timetable Modal Code
 		var modal = document.getElementById('timeTableModal');
@@ -290,6 +290,9 @@
 		
 		openEmailbtn.onclick = function() {
 			//modal.style.display = "none";
+			$("#toEmail").val("");
+			$("#subject").val("");
+			nicEditors.findEditor( "emailText" ).setContent( '' );
 			emailmodal.style.display = "block";
 			
 		}
