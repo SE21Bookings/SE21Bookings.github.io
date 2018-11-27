@@ -1338,7 +1338,7 @@ function newWeekClear(DeletionMode) // patch will retrieve bookings, used in the
 	}
 }
 
-function clearConsole()
+function clearConsole() //clears the console and hides progressbar
 {
 	$("#myProgress").hide()
 	$("#dConsoleTextWrite").html("")
@@ -1346,7 +1346,7 @@ function clearConsole()
 	$("#userPermissionValue").html("")
 }
 
-function checkWeekNum()
+function checkWeekNum() //checks the true week number. The fake week's trueweek
 {
 	$.ajax({
 		type:'PATCH',
@@ -1373,7 +1373,7 @@ function checkWeekNum()
 	});
 }
 
-function weekBeginNext()
+function weekBeginNext() //getting the week begining next week
 {
 	var nextWeekDate = new Date();
 	var weekInMilliseconds = 7 * 24 * 60 * 60 * 1000;
@@ -1384,7 +1384,7 @@ function weekBeginNext()
 	}
 	return getMonday(nextWeekDate) + " Week "+trueWeek
 }
-function weekBeginNow()
+function weekBeginNow() // getting the week begining data right now
 {
 	var today = new Date();
 	if(today.getDay()==0)
@@ -1395,7 +1395,7 @@ function weekBeginNow()
 	return getMonday(today)+ " Week "+trueWeek
 }
 			
-function moveProgressBar() 
+function moveProgressBar() //move the progressbar
 {
   var elem = document.getElementById("myBar");   
   frame()
@@ -1405,7 +1405,7 @@ function moveProgressBar()
     elem.innerHTML = Math.round( width * 10 ) / 10 + '%';
   }
 }
-function moveProgressBarMasterDelete() 
+function moveProgressBarMasterDelete() //move the progressbar
 {
   var elem = document.getElementById("myBar");   
   frame()
@@ -1415,21 +1415,21 @@ function moveProgressBarMasterDelete()
     elem.innerHTML = Math.round( width * 10 ) / 10 + '%';
   }
 }
-function clearProgressBar()
+function clearProgressBar() //clears progressbar
 {
 	var elem = document.getElementById("myBar");
 	elem.style.width = 0 + '%';
-}
+} 
 
 function writeToDeleteConsole(Text)
 {
 	$("#dConsoleTextWrite").append(Text+"<br>")
-}
+} //writes to the delte console
 
 function deleteConsoleScroll()
 {
 	$('#DeleteConsole').animate({scrollTop: $('#DeleteConsole').prop("scrollHeight")}, 10);
-}
+} //scrolls the delete console on the deletenewpage
 
 function checkIfEditing()
 {
@@ -1455,9 +1455,9 @@ function checkIfEditing()
 			$("#errorModule").show();
 		}
 	});
-}
+} //checking if timetable is editing 
 
-function PushEditing(NewStatus)
+function PushEditing(NewStatus) //locking/unlocking timetable pushing "Edited" or "Editing"
 {
 	editingPushed=null
 	$.ajax
@@ -1486,3 +1486,42 @@ function PushEditing(NewStatus)
 		});
 }
 
+function getTimeStamp() //getting the offical timestamp
+{
+	var today = new Date();
+	var date =(today.getMonth()+1)+'/'+today.getDate()+"_"+getDayFromNum();
+	var dateTime = date+"_"+formatAMPM(today);
+	return (dateTime);
+}
+
+function getDayFromNum() //get the day from the number
+{
+	var d = new Date();
+	var weekday = new Array(7);
+	weekday[0] =  "Sun";
+	weekday[1] = "Mon";
+	weekday[2] = "Tue";
+	weekday[3] = "Wed";
+	weekday[4] = "Thur";
+	weekday[5] = "Fri";
+	weekday[6] = "Sat";
+
+	return weekday[d.getDay()];
+}
+
+function formatAMPM(date) //format time in AMPM
+{
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes + '_' + ampm;
+  return strTime;
+}
+
+function WordCount(str) //count number of words
+{ 
+  return str.split(" ").length;
+}

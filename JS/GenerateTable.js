@@ -3,6 +3,8 @@ var Period;
 var PrevSelect;
 var clickedBookedEmail;
 var currentStatus;
+var bookingStatus;
+var timeStamp;
 var welcomeMsgEmail;
 var API_URL_Tech1="https://7l7do5pc6f.execute-api.ap-southeast-1.amazonaws.com/ReadWriteFromTableSE21/tech1";
 var API_URL_Admin="https://7l7do5pc6f.execute-api.ap-southeast-1.amazonaws.com/ReadWriteFromTableSE21/adminusers";
@@ -17,7 +19,7 @@ var doneLoading;
 var masterWeek;
 var overWriteTrueWeek;
 
-function PostData(whichRoom,WhichWeek)
+function PostData(whichRoom,WhichWeek) //posts booking recuring data to the cloud. first number is true week, second number is fake week. (the fake week is the week that first appears when you click on a booking)
 {
 	if(WhichWeek == 11)
 	{
@@ -162,14 +164,14 @@ function DocFunctions()
 			
 			if(PrevSelect!=null)
 			{
-				PrevSelect.removeClass("selected");
+				PrevSelect.removeClass("selected");// remove the select look from the previously selected cell 
 			}
 			
 			var row_div = $(this)
 			row_div.addClass("selected");
-			PrevSelect = row_div;
+			PrevSelect = row_div;//storing the selected cell
 			//Populating Details Start
-			if(overWriteTrueWeek =="1")
+			if(overWriteTrueWeek =="1")//if the current week is then show 1, otherwise show 2.
 			{
 				$("#bookingDetails").html("<strong>Week Beginning: </strong>" + weekBeginNow());
 			}
@@ -192,7 +194,11 @@ function DocFunctions()
 			
 			//Seeing if the room is already Booked
 			
-			currentStatus = row_div.html();
+			currentStatus = row_div.html();//Entire Text from the cell
+					
+			//getting the timestamp by deleting the bookingStatus from the string. Doing string manipulation. Deleting the first word.			
+			//removing the timestamp from the bookingStatus
+			
 			if(currentStatus == "unbooked")
 			{
 				$("#bookBtn").show();
@@ -217,7 +223,7 @@ function DocFunctions()
 			else if(currentStatus.split(' ')[0] == "booked")
 			{
 				 
-				clickedBookedEmail = extractContent(currentStatus.substr(currentStatus.indexOf(' ')+1))
+				clickedBookedEmail = extractContent(currentStatus.substr(currentStatus.indexOf(' ')+1))//extracting contents from the span class.
 				
 				if(clickedBookedEmail.indexOf(' ')!=-1) // If Reccuring Booking
 				{
@@ -263,12 +269,25 @@ function DocFunctions()
 					$("#Description").append("<em>[ECA Information N.A for Quickbooks]</em>")
 				}
 
-				clickedBookedEmail = clickedBookedEmail.split(' ')[0]
-				welcomeMsgEmail = $("#welcomeMsg").html().substr($("#welcomeMsg").html().indexOf(' ')+1)
+				clickedBookedEmail = clickedBookedEmail.split(' ')[0];
+				welcomeMsgEmail = $("#welcomeMsg").html().substr($("#welcomeMsg").html().indexOf(' ')+1);
 				
-				if(welcomeMsgEmail == clickedBookedEmail)
+				timeStamp = clickedBookedEmail.split('_').join(' ')//removing the underscores from the text
+				clickedBookedEmail = timeStamp.split(' ')[0]; //isolating the clickedBookedEmail
+				
+				if(WordCount(timeStamp) == 1)
 				{
-					$("#bookingStatus").html("<strong>Status: </strong> booked<br><strong>Email: </strong>"+clickedBookedEmail)
+					timeStamp = "Legacy Booking"
+				}
+				else
+				{
+					timeStamp = timeStamp.substr(timeStamp.indexOf(" ") + 1);//getting timestamp
+				}
+				
+				
+				if(welcomeMsgEmail == clickedBookedEmail)//if user is the one who made the booking
+				{
+					$("#bookingStatus").html("<strong>Status: </strong> booked <strong><em>[Timestamp: "+timeStamp+"]</em></strong><br><strong>Email: </strong>"+clickedBookedEmail)
 					$("#deleteBtn").show();
 					if($(this).hasClass("disable"))
 					{
@@ -285,7 +304,7 @@ function DocFunctions()
 				}
 				else
 				{
-					$("#bookingStatus").html("<strong>Status: </strong> booked<br><strong>Email: </strong>"+clickedBookedEmail)
+					$("#bookingStatus").html("<strong>Status: </strong> booked <strong><em>[Timestamp: "+timeStamp+"]</em></strong><br><strong>Email: </strong>"+clickedBookedEmail)
 					$("#contactBtn").show();
 					if($(this).hasClass("disable"))
 					{
@@ -423,7 +442,7 @@ function DocFunctions()
 									"Day":manipulateDay(Day, trueWeek),
 									"Room":WhichRoom,
 									"updateAttr":Period,
-									"updateValue":"booked " + email
+									"updateValue":"booked "+ email+"_"+getTimeStamp()
 								}
 							  ),
 
@@ -594,7 +613,7 @@ function DocFunctions()
 					{
 						w=1
 					}
-					newValue = "booked " + email +" "+week12Lock+" "+ ECA +" "+ECADes +" "+ howmanyWeeks
+					newValue = "booked " + email+"_"+getTimeStamp() +" "+week12Lock+" "+ ECA +" "+ECADes +" "+ howmanyWeeks
 					if(week12Lock =="lock1")
 					{
 						$.ajax({
@@ -1360,6 +1379,7 @@ function loadinRoom(trueRoom, roomLoadWeek)
 
 										newString = val['Period1'];
 										bookState = val['Period1'].split(' ')[0]
+										
 										if(bookState=="booked")
 										{
 											hiddenTxt = val['Period1'].substr(val['Period1'].indexOf(' ')+1)	
