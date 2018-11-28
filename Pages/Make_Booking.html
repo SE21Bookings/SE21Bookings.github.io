@@ -120,13 +120,17 @@
 			<div class="ManageUsers-content">
 				<div class="SettingsSlides">
 					<div id="SettingBtnsViewport">
-						<div id="AdminUserBtn" onClick="generateAdminTable(); plusDivsSettings(1);">
-							<br><br><br><br><br><br><br><br><br>
+						<div id="AdminUserBtn" class="settingsBtn" onClick="generateAdminTable(); plusDivsSettings(1);">
 							<p>Admin Users</p>
 						</div>
-						<div id="ManageTimeBtn" onClick="window.open('Delete_NewWeek.html');">
-							<br><br><br><br><br><br><br><br><br>
+						<div id="ManageTimeBtn" class="settingsBtn" onClick="window.open('Delete_NewWeek.html');">
 							<p>Manage Timetable</p>
+						</div>
+						<div id="roomReport" class="settingsBtn" onClick="plusDivsSettings(2);">
+							<p>Generate Room Report</p>
+						</div>
+						<div id="dataAnalysis" class="settingsBtn" onClick="">
+							<p>Data Analysis</p>
 						</div>
 					</div>
 				</div>
@@ -137,9 +141,29 @@
 					<input placeholder="Email" id="emailInput">
 					<button id="addUserBtn">Add User</button>
 					<div id="AdminUserTable"></div>
-					<div id="LoaderUser">
+					<div id="LoaderUser" class="settingsLoader">
 						<img width="30%" src="../Img/copper-loader.gif">
 					</div>
+				</div>
+				<div class="SettingsSlides">
+					<span class="close3">&times;</span>
+					<img src="../Img/Back.png" width="3.5%" style="cursor: pointer;" onClick="plusDivsSettings(-2)">
+					<h1>Room Report</h1>
+					<br>
+					<h4 class="noMargins">Select Time Range:</h4>
+					<select id="reportTimeRange">
+						<option value="24H">Last 24 Hours</option>
+						<option value="12H">Last 12 Hours</option>
+						<option value="6H">Last 6 Hours</option>
+					</select>
+					<br><br>
+					<button id="generateReport">Generate Report</button>
+					<br>
+					<div id="LoaderRoomReport" class="settingsLoader">
+						<img width="15%" src="../Img/loaderRipple.gif">
+					</div>
+					<div id="RoomReportContainer"></div>
+					
 				</div>
 			</div>
 		</div>

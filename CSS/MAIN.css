@@ -697,7 +697,7 @@ viewPort_Content
 	margin: auto;
 }
 
-#LoaderUser
+.settingsLoader
 {
 	height: 100%;
 	width: 100%;
@@ -706,7 +706,7 @@ viewPort_Content
 	/*background-color: rgb(24,24,31);*/
 	z-index: 5;
 }
-#LoaderUser img
+.settingsLoader img
 {
 	display: block;
 	margin: auto;
@@ -961,33 +961,20 @@ viewPort_Content
 	height: 400px;
 	width:100%;
 }
-#AdminUserBtn
+
+.settingsBtn
 {
-	height: 400px;
-	width: 47%;
-	float: left;
+	height: 50px;
+	width: 100%;
 	cursor: pointer;
 	background-color: #EFEFEF;
 }
-#AdminUserBtn p
+.settingsBtn p
 {
 	text-align: center;
 	font-weight: 300;
 	font-size: 17px;
-}
-#ManageTimeBtn
-{
-	height: 400px;
-	width: 47%;
-	float: right;
-	cursor: pointer;
-	background-color: #EFEFEF;
-}
-#ManageTimeBtn p
-{
-	text-align: center;
-	font-weight: 300;
-	font-size: 17px;
+	padding-top: 13px;
 }
 #previewRoomDiv
 {
@@ -1009,4 +996,9 @@ viewPort_Content
 #fileLoadForm
 {
 	display: inline-block;
+}
+.noMargins
+{
+	margin: 0px;
+	padding: 0px;
 }
