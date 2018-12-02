@@ -506,6 +506,8 @@ function newWeekClear(DeletionMode) // patch will retrieve bookings, used in the
 	
 	var PeriodArray = ["Period1","Period2","Break","Period3","Period4","Lunch","Period5","Period6","AfterschoolH1","AfterschoolH2"]
 	
+	var npBookingsDeletionAray = [];
+	
 	var RoomArray = ["Tech1","Tech2","Tech3","Tech4","Tech5","VR","VRT"]
 	
 	var i =0;
@@ -882,12 +884,13 @@ function newWeekClear(DeletionMode) // patch will retrieve bookings, used in the
 								if(nweek1=="1")
 								{
 									DayArray =["11Monday","22Tuesday","33Wednesday","44Thursday","55Friday"]
-									
+									npBookingsDeletionAray = ["1Monday","2Tuesday","3Wednesday","4Thursday","5Friday"];
 									loop1() //deleting quickbooks after weekchange
 								}
 								else if(nweek1=="2")
 								{
 									DayArray =["1Monday","2Tuesday","3Wednesday","4Thursday","5Friday"]	
+									npBookingsDeletionAray = ["11Monday","22Tuesday","33Wednesday","44Thursday","55Friday"];
 									loop1() // deleting quickbooks after weekchange
 								}
 								writeToDeleteConsole("function finish excecution")
@@ -1109,6 +1112,151 @@ function newWeekClear(DeletionMode) // patch will retrieve bookings, used in the
 								i += 1;
 								writeToDeleteConsole("CallingLoop1")
 								loop1()
+							}
+							else
+							{
+								i =0;
+								a =0;
+								b = 0;
+								localStorageWeek = null;
+								checkWeekNum()
+								checkVariable()
+								function checkVariable() 
+								{
+									if (localStorageWeek != null) 
+									{
+										deletionNPBookingsLoop1();
+									}
+									else
+									{
+										setTimeout(checkVariable, 1000);
+									}
+								}
+								
+							}
+
+						}
+					}
+					
+					function nextLoop3()
+					{
+						b+=1
+						if(b<10)
+						{
+							moveProgressBar()
+							loop3();
+						}
+						else
+						{
+							b = 0;
+							next();
+						}
+					}
+					
+				});
+			},
+			error: function(data)
+			{
+				$("#errorModule").show();
+			}
+		});
+	}
+	
+	function deletionNPBookingsLoop1()
+	{
+		deletionNPBookingsLoop2()
+	}
+	function deletionNPBookingsLoop2()
+	{
+		writeToDeleteConsole("Checking N.P bookings in the next week")
+		writeToDeleteConsole(RoomArray[i]+" "+npBookingsDeletionAray[a])
+		$.ajax({
+		type:'PATCH',
+		url: API_URL_Tech1,
+		data:JSON.stringify(
+			{
+				"Key":"Room",
+				"Key2":"Day",
+				"searchAttr":RoomArray[i],
+				"searchAttr2":npBookingsDeletionAray[a]
+			}
+			),
+		contentType:"application/json",
+		success: function(data)
+			{
+				$.each(data.Items, function(index, val) 
+				{
+					loop3()
+					function loop3()
+					{
+						deleteConsoleScroll()
+						deleted = false;
+						deleting = false;
+						checkVar()
+						function checkVar()
+						{
+							writeToDeleteConsole("CheckingVar: "+val[PeriodArray[b]] + " " +PeriodArray[b])						
+														
+							if(val[PeriodArray[b]]!= "unbooked" && (val[PeriodArray[b]].indexOf("lock1") >= 0 || val[PeriodArray[b]].indexOf("lock2") >=0 ))
+								{
+									
+									var n = val[PeriodArray[b]].split(" ");
+									var lastNum = n[n.length - 1];
+									writeToDeleteConsole(lastNum)
+									if(lastNum != "-1")//if its a N.P Booking
+									{
+										var lastIndex = val[PeriodArray[b]].lastIndexOf(" ");
+										var newStr = val[PeriodArray[b]].substring(0, lastIndex);
+										var newrBookWeek = newStr + " " + (parseInt(lastNum)-1).toString()
+										if((parseInt(lastNum)-1)<=0)// if num of weeks ran out
+										{
+											if(deleted == true)
+											{
+												nextLoop3()
+												return;
+											}
+											else
+											{
+												if(deleting == false)
+												{
+													writeToDeleteConsole("Weeks Exceeded Limit...: "+ npBookingsDeletionAray[a]+" "+RoomArray[i]+" "+PeriodArray[b])
+													excecuteDelete(npBookingsDeletionAray[a],RoomArray[i],PeriodArray[b])
+													deleting = true;
+												}
+												checkVarInterval = window.setTimeout(checkVar,500);
+											}
+										}
+									}
+									else
+									{
+										nextLoop3()	
+									}
+								}
+								else
+								{
+									nextLoop3()	
+									return;
+								}
+						}
+						
+					}
+					
+					function next()
+					{
+						a+=1;
+						if (a < npBookingsDeletionAray.length) 
+						{            
+							deletionNPBookingsLoop2()
+							writeToDeleteConsole("CallingLoop2")
+						}
+						else
+						{
+							a = 0
+							if(i < RoomArray.length-1)
+							{
+								i += 1;
+								writeToDeleteConsole("CallingLoop1")
+								deletionNPBookingsLoop1()
 							}
 							else
 							{
@@ -1524,4 +1672,70 @@ function formatAMPM(date) //format time in AMPM
 function WordCount(str) //count number of words
 { 
   return str.split(" ").length;
+}
+
+function generateRoomReport(PrevHrs)//generates Room Report
+{
+	var Weeks = ["1","2"];
+	var Rooms = ["Tech1","Tech2","Tech3","Tech4","Tech5","VR","VRT"]
+	var timeStampTable; 
+	
+	var i = 0; //Week
+	var a = 0; //Room
+	var b = 0; //Each Timestamp
+	
+	function weekLoop()
+	{
+		roomLoop();
+	}
+	function roomLoop()
+	{
+		$.ajax
+		({
+			type:'PATCH',
+			url: API_URL_Tech1,
+			data:JSON.stringify(
+					{
+						"Key":"Room",
+						"Key2":"WeekCount",
+						"searchAttr":Rooms[a],
+						"searchAttr2":Weeks[i]
+					}
+				),
+			contentType:"application/json",
+			success: function(data)
+			{
+				timeStampTable +='<table class="table table-hover">'
+
+				//--->create table header > start
+				timeStampTable +='<thead>';
+					timeStampTable +='<tr>';
+					timeStampTable +='<th>Room</th>';
+					timeStampTable +='<th>User</th>';
+					timeStampTable +='<th>Room</th>';
+					timeStampTable +='</tr>';
+				timeStampTable +='</thead>';
+				//--->create table header > end
+
+
+				//--->create table body > start
+				timeStampTable +='<tbody>';
+				$.each(data.Items, function(index, val) 
+				{
+					
+				});
+			},
+			error:function(data)
+			{
+				$("#errorModule").show()
+			}
+		});
+	}
+}
+
+function timeStampPrelim() //prelimary functions that load when the timestamp is clicked. 
+{
+	$("#ReportByDay").hide();
+	$("#ReportByTimestamp").hide();
+	$("#LoaderRoomReport").hide();
 }

@@ -126,7 +126,7 @@
 						<div id="ManageTimeBtn" class="settingsBtn" onClick="window.open('Delete_NewWeek.html');">
 							<p>Manage Timetable</p>
 						</div>
-						<div id="roomReport" class="settingsBtn" onClick="plusDivsSettings(2);">
+						<div id="roomReport" class="settingsBtn" onClick="plusDivsSettings(2); timeStampPrelim();">
 							<p>Generate Room Report</p>
 						</div>
 						<div id="dataAnalysis" class="settingsBtn" onClick="">
@@ -150,14 +150,28 @@
 					<img src="../Img/Back.png" width="3.5%" style="cursor: pointer;" onClick="plusDivsSettings(-2)">
 					<h1>Room Report</h1>
 					<br>
-					<h4 class="noMargins">Select Time Range:</h4>
-					<select id="reportTimeRange">
-						<option value="24H">Last 24 Hours</option>
-						<option value="12H">Last 12 Hours</option>
-						<option value="6H">Last 6 Hours</option>
+					<h4 class="noMargins">Select Report Method</h4>
+					<select id="reportChoose">
+						<option value="upcoming">Upcoming Bookings</option>
+						<option value="latest">Lastest Bookings</option>
 					</select>
+					<div id="ReportByTimestamp">
+						<h4 class="noMargins">Select Time Range:</h4>
+						<select id="reportTimeRangeTimestamp">
+							<option value="24H">Last 24 Hours</option>
+							<option value="12H">Last 12 Hours</option>
+							<option value="6H">Last 6 Hours</option>
+						</select>
+					</div>
+					<div id="ReportByDay">
+						<h4 class="noMargins">Select Time Range:</h4>
+						<select id="reportTimeRangeDay">
+							<option value="Today">Upcoming Today</option>
+							<option value="Tomorrow">Upcoming Tomorrow</option>
+						</select>
+					</div>
 					<br><br>
-					<button id="generateReport">Generate Report</button>
+					<button id="generateReport" onClick="generateRoomReport();">Generate Report</button>
 					<br>
 					<div id="LoaderRoomReport" class="settingsLoader">
 						<img width="15%" src="../Img/loaderRipple.gif">
