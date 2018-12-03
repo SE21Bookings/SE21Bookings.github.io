@@ -1033,7 +1033,7 @@ function newWeekClear(DeletionMode) // patch will retrieve bookings, used in the
 							}
 							else
 							{	
-								if(val[PeriodArray[b]]!= "unbooked" && (val[PeriodArray[b]].indexOf("lock1") >= 0 || val[PeriodArray[b]].indexOf("lock2") >=0 ))
+								if(val[PeriodArray[b]]!= "unbooked" && (val[PeriodArray[b]].indexOf("lock1") >= 0 || val[PeriodArray[b]].indexOf("lock2") >=0) && val[PeriodArray[b]].indexOf("lesson") ==-1 && val[PeriodArray[b]].indexOf("locked") ==-1)
 								{
 									
 									var n = val[PeriodArray[b]].split(" ");
@@ -1197,7 +1197,7 @@ function newWeekClear(DeletionMode) // patch will retrieve bookings, used in the
 						{
 							writeToDeleteConsole("CheckingVar: "+val[PeriodArray[b]] + " " +PeriodArray[b])						
 														
-							if(val[PeriodArray[b]]!= "unbooked" && (val[PeriodArray[b]].indexOf("lock1") >= 0 || val[PeriodArray[b]].indexOf("lock2") >=0 ))
+							if(val[PeriodArray[b]]!= "unbooked" && (val[PeriodArray[b]].indexOf("lock1") >= 0 || val[PeriodArray[b]].indexOf("lock2") >=0) && val[PeriodArray[b]].indexOf("lesson") ==-1 && val[PeriodArray[b]].indexOf("locked") ==-1)
 								{
 									
 									var n = val[PeriodArray[b]].split(" ");
