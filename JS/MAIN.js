@@ -505,9 +505,7 @@ function newWeekClear(DeletionMode) // patch will retrieve bookings, used in the
 	var DayArray = ["1Monday","2Tuesday","3Wednesday","4Thursday","5Friday","11Monday","22Tuesday","33Wednesday","44Thursday","55Friday"] 
 	
 	var PeriodArray = ["Period1","Period2","Break","Period3","Period4","Lunch","Period5","Period6","AfterschoolH1","AfterschoolH2"]
-	
-	var npBookingsDeletionAray = [];
-	
+		
 	var RoomArray = ["Tech1","Tech2","Tech3","Tech4","Tech5","VR","VRT"]
 	
 	var i =0;
@@ -884,13 +882,11 @@ function newWeekClear(DeletionMode) // patch will retrieve bookings, used in the
 								if(nweek1=="1")
 								{
 									DayArray =["11Monday","22Tuesday","33Wednesday","44Thursday","55Friday"]
-									npBookingsDeletionAray = ["1Monday","2Tuesday","3Wednesday","4Thursday","5Friday"];
 									loop1() //deleting quickbooks after weekchange
 								}
 								else if(nweek1=="2")
 								{
 									DayArray =["1Monday","2Tuesday","3Wednesday","4Thursday","5Friday"]	
-									npBookingsDeletionAray = ["11Monday","22Tuesday","33Wednesday","44Thursday","55Friday"];
 									loop1() // deleting quickbooks after weekchange
 								}
 								writeToDeleteConsole("function finish excecution")
@@ -1169,7 +1165,7 @@ function newWeekClear(DeletionMode) // patch will retrieve bookings, used in the
 	function deletionNPBookingsLoop2()
 	{
 		writeToDeleteConsole("Checking N.P bookings in the next week")
-		writeToDeleteConsole(RoomArray[i]+" "+npBookingsDeletionAray[a])
+		writeToDeleteConsole(RoomArray[i]+" "+DayArray[a])
 		$.ajax({
 		type:'PATCH',
 		url: API_URL_Tech1,
@@ -1178,7 +1174,7 @@ function newWeekClear(DeletionMode) // patch will retrieve bookings, used in the
 				"Key":"Room",
 				"Key2":"Day",
 				"searchAttr":RoomArray[i],
-				"searchAttr2":npBookingsDeletionAray[a]
+				"searchAttr2":DayArray[a]
 			}
 			),
 		contentType:"application/json",
@@ -1219,8 +1215,26 @@ function newWeekClear(DeletionMode) // patch will retrieve bookings, used in the
 											{
 												if(deleting == false)
 												{
-													writeToDeleteConsole("Weeks Exceeded Limit...: "+ npBookingsDeletionAray[a]+" "+RoomArray[i]+" "+PeriodArray[b])
-													excecuteDelete(npBookingsDeletionAray[a],RoomArray[i],PeriodArray[b])
+													writeToDeleteConsole("Weeks Exceeded Limit...: "+ DayArray[a]+" "+RoomArray[i]+" "+PeriodArray[b])
+													excecuteDelete(DayArray[a],RoomArray[i],PeriodArray[b])
+													deleting = true;
+												}
+												checkVarInterval = window.setTimeout(checkVar,500);
+											}
+										}
+										else
+										{
+											if(deleted == true)
+											{
+												nextLoop3()
+												return;
+											}
+											else
+											{
+												if(deleting == false)
+												{
+													writeToDeleteConsole("UpdatingArray...: "+ DayArray[a]+" "+RoomArray[i]+" "+PeriodArray[b])
+													excecuteWeekUpdate(DayArray[a],RoomArray[i],PeriodArray[b],newrBookWeek)
 													deleting = true;
 												}
 												checkVarInterval = window.setTimeout(checkVar,500);
@@ -1244,7 +1258,7 @@ function newWeekClear(DeletionMode) // patch will retrieve bookings, used in the
 					function next()
 					{
 						a+=1;
-						if (a < npBookingsDeletionAray.length) 
+						if (a < DayArray.length) 
 						{            
 							deletionNPBookingsLoop2()
 							writeToDeleteConsole("CallingLoop2")
