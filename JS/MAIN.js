@@ -506,7 +506,7 @@ function newWeekClear(DeletionMode) // patch will retrieve bookings, used in the
 	
 	var PeriodArray = ["Period1","Period2","Break","Period3","Period4","Lunch","Period5","Period6","AfterschoolH1","AfterschoolH2"]
 		
-	var RoomArray = ["Tech1","Tech2","Tech3","Tech4","Tech5","VR","VRT"]
+	var RoomArray = ["Tech1","Tech2","Tech3","Tech4","Tech5","VR","VRT","GSS"]
 	
 	var i =0;
 	var a =0;

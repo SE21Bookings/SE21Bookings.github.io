@@ -284,6 +284,19 @@ body
 {
 	background-color: rgba(211,0,19,0.3)
 }
+#GSSBtn
+{
+	position: absolute;
+	top:372px;
+	left:316px;
+	height:88px;
+	width:75px;
+	cursor: pointer;
+}
+#GSSBtn:hover
+{
+	background-color: rgba(211,0,19,0.3)
+}
 #viewPort
 {
 	height: 150px;

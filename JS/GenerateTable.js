@@ -2032,6 +2032,24 @@ function loadinRoom(trueRoom, roomLoadWeek)
 						$("#whichWeekBtn").html("Previous Week");
 						$("#whichWeekBtn").attr("onClick","loadinRoom('VRT','1');$('#timeTableTitle').html('VR Trolley Timetable ["+weekBeginNow()+"]:');")
 					}
+					if(trueRoom == "GSS" && roomLoadWeek =="1")
+					{
+						$("#timeTableTitle").html("Greenscreen Studio Timetable ["+weekBeginNow()+"]:")
+
+
+
+						$("#whichWeekBtn").html("Next Week");
+						$("#whichWeekBtn").attr("onClick","loadinRoom('GSS','2');$('#timeTableTitle').html('Greenscreen Studio ["+weekBeginNext()+"]:');")
+					}
+					else if(trueRoom == "GSS" && roomLoadWeek =="2")
+					{
+						$("#timeTableTitle").html("Greenscreen Studio Timetable ["+weekBeginNext()+"]:")
+
+
+
+						$("#whichWeekBtn").html("Previous Week");
+						$("#whichWeekBtn").attr("onClick","loadinRoom('GSS','1');$('#timeTableTitle').html('Greenscreen Studio ["+weekBeginNow()+"]:');")
+					}
 					$(document).find('#timeTable').html(tbl);
 				},
 
