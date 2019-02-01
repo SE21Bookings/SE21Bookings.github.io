@@ -81,7 +81,7 @@ function createNewUser(emails,password) //CreateNewUser
         }
         cognitoUser = result.user; //signup sucessful 
 		document.getElementById("signUpErrMsg").style.color="green";
-        document.getElementById("signUpErrMsg").innerHTML=("Welcome! "+ cognitoUser.getUsername() + " \nPlease access your email to verify your account"); //ouput sucessful to the user
+        document.getElementById("signUpErrMsg").innerHTML=("Welcome! "+ cognitoUser.getUsername() + " \nPlease access your email to verify your account. <br> <strong>Please Check Your Junk Folder</strong>"); //ouput sucessful to the user
     });
 }
 
