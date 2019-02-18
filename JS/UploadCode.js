@@ -325,7 +325,7 @@ function uploadSims()//uploadcode from generated from a SIM File
 	var week2Weight = 0; //this variable will add a weight to week 2 days that allows the loop to access the 3D array's week 2 days when it goes to second w2 Primary Keys
 	var RoomArray = nonManipulatedRoomOrder;
 	var DayArray = PrimaryKeyW1;
-	uploadSimsLoop1()
+	uploadSimsLoop1()//upload function 1
 	function uploadSimsLoop1() 
 	{
 		uploadSimsLoop2()	
@@ -408,13 +408,13 @@ function uploadSims()//uploadcode from generated from a SIM File
 								console.log(RoomArray[i]+" "+DayArray[a]+" "+PeriodArray[b]+": "+nonManipulatedRoomData[i][a+week2Weight][b])
 								if(nonManipulatedRoomData[i][a+week2Weight][b] != val[PeriodArray[b]])//only activate if the current slot is different from the uploaded slot
 								{						
-									if(updating==false)
+									if(updating==false) //if the you are currently not uploading the period to the cloud
 									{
-										console.log("Updating: " + DayArray[a] + " " + RoomArray[i] + " "+ PeriodArray[b] +" To: "+nonManipulatedRoomData[i][a+week2Weight][b])
-										uploadData(DayArray[a],RoomArray[i],PeriodArray[b],nonManipulatedRoomData[i][a+week2Weight][b])
+										console.log("Updating: " + DayArray[a] + " " + RoomArray[i] + " "+ PeriodArray[b] +" To: "+nonManipulatedRoomData[i][a+week2Weight][b]) //output the upload
+										uploadData(DayArray[a],RoomArray[i],PeriodArray[b],nonManipulatedRoomData[i][a+week2Weight][b]) //update the period by calling the upload
 
-										updating=true
-										checkVar();
+										updating=true //letting the computer know that it's currently being updated so that the function won't be called twice
+										checkVar(); //concurrent loop that constaly checks whether or not the data has finished uploading before it activates the next one. 
 									}
 									else
 									{
@@ -538,7 +538,7 @@ function PreviewSims()
 	fileReader.onload = function(fileLoadedEvent)//formatting timetableData for Sims Upload
 	{
 		var textFromFileLoaded = fileLoadedEvent.target.result;
-	  	timetable_data = textFromFileLoaded.split(/\r?\n|\r/);
+	  	timetable_data = textFromFileLoaded.split(/\r?\n|\r/);//splitting the CSV into a list
 		var index = timetable_data.indexOf("")
 		if (index > -1) {
 			timetable_data.splice(index, 1);
@@ -549,30 +549,30 @@ function PreviewSims()
 			for (var cell_count = 0; cell_count < cell_data.length; cell_count++) 
 			{	
 				
-				if(cell_data[cell_count].trim()=="Bus")
+				if(cell_data[cell_count].trim()=="Bus") // getting rid of everything that has to do with buses into a deletion array
 				{
-					deletingIndex.push(count)
+					deletingIndex.push(count) //pushing the index of the position of the bus into a deletion array
 				}
-				else if(cell_data[cell_count].trim()=="Reg")
+				else if(cell_data[cell_count].trim()=="Reg")// getting rid of everything that has to do with regitration into a deletion array
 				{
-					deletingIndex.push(count)
+					deletingIndex.push(count) // pushing the index of the position of the registration times into a deletion array
 					deletingIndex.push(count+1)
 				}
-				else if(cell_data[cell_count].trim()=="1"||cell_data[cell_count].trim()=="2"||cell_data[cell_count].trim()=="3"||cell_data[cell_count].trim()=="4"||cell_data[cell_count].trim()=="5"||cell_data[cell_count].trim()=="6")//will delete all empty lines containing random ass numbers 
+				else if(cell_data[cell_count].trim()=="1"||cell_data[cell_count].trim()=="2"||cell_data[cell_count].trim()=="3"||cell_data[cell_count].trim()=="4"||cell_data[cell_count].trim()=="5"||cell_data[cell_count].trim()=="6")//will delete all empty lines containing random numbers 
 				{
 					deletingIndex.push(count+1)//telling them which lines to delete and storing the lines they needa delete in an array
 				}
 			}
 		}
-		for(var i = 0; i<deletingIndex.length;i++)
+		for(var i = 0; i<deletingIndex.length;i++) // deleting specified content
 		{
-			timetable_data.splice(deletingIndex[i]-i, 1);//will delete backwards to prevent deletion structure collasp when it starts to jenga itself to death cuz ure retard. 
+			timetable_data.splice(deletingIndex[i]-i, 1);//will delete backwards to prevent deletion structure collasp because the pointer index moves everthing when it deletes from the top.
 		}
 		for(var count=0; count<timetable_data.length;count++)
 		{
-			index = timetable_data.indexOf(",,,,,,,,,,");
+			index = timetable_data.indexOf(",,,,,,,,,,");// finding empty rows
 			if (index > -1) {
-				timetable_data.splice(index, 1);
+				timetable_data.splice(index, 1); // deleting all empty rows
 			}
 		}
 		numOfRooms = timetable_data.length/11;
@@ -743,16 +743,16 @@ function generateTechPreviewTable(data, roomInteration) // Will generate a table
 			}
 
 		}//add 2 Empty ECAs
-		tbl +='<td ><div class="unbooked row_data pointerCursor disable" edit_type="click" col_name="Period1">unbooked</div></td>';
-		tbl +='<td ><div class="unbooked row_data pointerCursor disable" edit_type="click" col_name="Period1">unbooked</div></td>';
+		tbl +='<td ><div class="unbooked row_data pointerCursor disable" edit_type="click" col_name="Period1">unbooked</div></td>';//adding a new datapoint to the row to the HTML Table list
+		tbl +='<td ><div class="unbooked row_data pointerCursor disable" edit_type="click" col_name="Period1">unbooked</div></td>';//adding a new datapoint to the row to the HTML Table list
 		tbl += '</tr>';
-		oneRowData.push("unbooked")
-		oneRowData.push("unbooked")
-		oneRoomData.push(oneRowData)
-		oneRowData = [];
+		oneRowData.push("unbooked")//adding a new datapoint on the row to the 4D linked list
+		oneRowData.push("unbooked")//adding a new datapoint on the row to the 4D linked list
+		oneRoomData.push(oneRowData)// puhsing the row into a bigger linked list
+		oneRowData = [];//clearing the row 
 	}
 	tbl+="</table>"
-	fullRoomsData.push(oneRoomData);
+	fullRoomsData.push(oneRoomData);//pushing the full Room data into the Root List for the 4D Linked list
 	return tbl;
 }
 function checkAvailableUpload()//this method will check what option has been chosen for the upload code and then populate the modal accordingly by hiding and showing the different modals. 
