@@ -1,16 +1,16 @@
 <!doctype html>
 <html>
-	<head>
+	<head><!--Uploading of all libaries-->
 		<title>SE21 Make Bookings</title>
-		<link rel="shortcut icon" type="image/ico" href="/favicon.ico"/>
-		<link rel="stylesheet" href="../CSS/MAIN.css">
-		<link rel="stylesheet" href="../CSS/bootstrap.css">
-		<script src="../JS/jquery.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../JS/MAIN.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../JS/GenerateTable.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../JS/aws-cognito.js"></script>
-		<script src="../JS/NicEdit.js" type="text/javascript"></script>
-		<script src="../JS/UploadCode.js"></script>
+		<link rel="shortcut icon" type="image/ico" href="/favicon.ico"/><!--Projects favicon-->
+		<link rel="stylesheet" href="../CSS/MAIN.css"><!--Main CSS-->
+		<link rel="stylesheet" href="../CSS/bootstrap.css"><!--Bootstrap CSS-->
+		<script src="../JS/jquery.js" type="text/javascript" charset="utf-8"></script><!--Jquery-->
+		<script src="../JS/MAIN.js" type="text/javascript" charset="utf-8"></script><!--Main JS-->
+		<script src="../JS/GenerateTable.js" type="text/javascript" charset="utf-8"></script><!--Generation of Tables JS-->
+		<script src="../JS/aws-cognito.js"></script><!--AWS Congito Libarary-->
+		<script src="../JS/NicEdit.js" type="text/javascript"></script><!--TextEdit-->
+		<script src="../JS/UploadCode.js"></script><!--Upload CSV-->
 		<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
 		<script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
 		<script type="text/javascript">
@@ -20,18 +20,18 @@
 		</script>
 	</head>
 	
-	<body id="bookingsBody">
-		<div id="navBar"></div>
-		<p id="welcomeMsg">Welcome:</p>
-		<button id="MAdminUser">Settings</button>
-		<button id="UploadFileBtn">Upload</button>
+	<body id="bookingsBody"> <!--booking body, where all the buttons for the different rooms and the image lives-->
+		<div id="navBar"></div><!--Navigation bar, dymaically loaded in later in the JS-->
+		<p id="welcomeMsg">Welcome:</p> <!--Welcome Msg-->
+		<button id="MAdminUser">Settings</button><!--Settings button, only admin users have access-->
+		<button id="UploadFileBtn">Upload</button><!--Upload button, only admin users have access-->
 		
-		<div id="imgnHeaderDiv">
+		<div id="imgnHeaderDiv"><!--SE21 MAP-->
 			<center><em><h1 style="font-weight:300;">[Click on a room to book it]</h1></em></center>
 			<img src="../Img/se21 layout.png" id="frontPageMap" border="3px">
 		</div>
 		
-		<div id="mapBtnsDiv">
+		<div id="mapBtnsDiv"><!--room buttons, will activate function to open up the correct timetable-->
 			<div onClick="openModal(); loadinRoom('Tech1','1');" id="Tech1Btn"></div>
 			<div onClick="openModal(); loadinRoom('Tech2','1');"  id="Tech2Btn"></div>
 			<div onClick="openModal(); loadinRoom('Tech3','1');" id="Tech3Btn"></div>
@@ -42,20 +42,20 @@
 			<div onClick="openModal(); loadinRoom('GSS','1');" id="GSSBtn"></div>
 		</div>
 		
-		<div id="errorModule">
+		<div id="errorModule"><!--Error Module--> 
 			<div id="ErrorBox" class="ErrorColor">
 				<p>Error: timetable connection broken</p>
 				<button onClick="location.reload();">Reload</button>
 			</div>
 		</div>
 		
-		<div id="timeTableModal" class="modal">
+		<div id="timeTableModal" class="modal"> <!--Timetable Module-->
 		  <div class="timeTableModal-content">
 			<span class="close">&times;</span>	
 				<h3 id="timeTableTitle">Timetable:</h3>
 				<button id="whichWeekBtn"></button>
 				<div id="viewPort">
-					<div id="viewPort_Content">
+					<div id="viewPort_Content"> <!--Viewport, where all the buttons and eca infomation shows-->
 						<div id="DivDescription">
 							<label id="Description"></label>
 						</div>
@@ -77,14 +77,14 @@
 				
 				<div id="timeTable"></div>
 				
-				<div id="Loader">
+				<div id="Loader"> <!--loader for when the page loads within the timetable modolue-->
 					<img width="30%" src="../Img/copper-loader.gif">
 				</div>
 		  </div>
 		</div>
 		
 		
-		<div id="emailModal" class="HigherModal">
+		<div id="emailModal" class="HigherModal"> <!--email module, its at a higher z-index than everyone-->
 			<div class="emailModal-content">
 				<span class="close1">&times;</span>
 				<input disabled type="email" id="toEmail"><br>
@@ -95,6 +95,7 @@
 			</div>
 		</div>
 		
+		<!--Reucrreing booking module, same class of a high z-index-->
 		<div id="BookRecuring" class="HigherModal">
 			<div class="BookRecuring-content">
 				<span class="close2">&times;</span>
@@ -117,7 +118,7 @@
 			</div>
 		</div>
 		
-		<div id="ManageUsers" class="modal">
+		<div id="ManageUsers" class="modal"> <!--The Settings Modal-->
 			<div class="ManageUsers-content">
 				<div class="SettingsSlides">
 					<div id="SettingBtnsViewport">
@@ -183,11 +184,12 @@
 			</div>
 		</div>
 		
-		<div id="uploadFileModal" class="modal">
+		<div id="uploadFileModal" class="modal"> <!--The Upload Modal-->
 			<div class="uploadFileModal-content">
 				<span class="close4">&times;</span>
 				<em><p style="color:red;">Greenscreen Studio Upload Not Yet Supported</p></em>
-				<center>			
+				<center>		
+					<!--The upload options-->	
 					<div id="Options">
 						<strong><label>Choose a upload source:</label></strong>
 						<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
@@ -210,6 +212,7 @@
 						
 						<label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
 					</div>
+					<!--If Cutom upload is chosen the doc will show-->
 					<div id="customUploadDocs">
 						<br><br>
 						<a href="../Documents/SE21_Upload_Template.zip" target="_blank">Download Template</a>
@@ -217,6 +220,7 @@
 						<a href="../Documents/SE21_README_UserDoc.pdf" target="_blank">Read User Documentation</a>
 						<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 					</div>
+					<!--If SIm upload is chosen the doc will show-->
 					<div id="SimUploadDocs">
 						<br><br>
 						<em><label>[Save SIMS file as .CSV with UTF-8] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></em>
@@ -224,7 +228,7 @@
 				</center>
 				
 				<br><br>
-				
+				<!--iNput File HTML-->
 				<div id="uploadBlock"></div>
 				<form id="fileLoadForm">
 					<input id="fileToLoad" type="file" accept=".csv" onChange="">
@@ -238,6 +242,7 @@
 					</div>
 				</center>
 				<br><br>
+				<!--upload modal footer, progressbar and upload button-->
 				<button id="uploadButton" onClick="">Upload</button>
 				<div id="myProgressUpload">
 				  <div id="myBar">0%</div>
@@ -245,7 +250,7 @@
 			</div>
 		</div>
 		
-		<div class="Loader" id="PageLoader">
+		<div class="Loader" id="PageLoader"> <!--Full Page Loader-->
 			<img width="30%" src="../Img/copper-loader.gif">
 			<p id="loaderTxt"></p>
 		</div>
@@ -259,20 +264,20 @@
 		localStorage.setItem("uploadFirst","true");
 		checkWhichUser();
 		checkVariable();
-		function checkVariable()  // welcomeMsg Loader
+		function checkVariable()  // welcomeMsg Loader, this is the inifinte loop concurrent lock. Check variable will always call itself until all nessiary things have loaded. 
 		{
 			if (email != null && adminPriv != null && EditStatus!=null) 
 			{	   
-			   if(EditStatus=="Edited")
+			   if(EditStatus=="Edited") //if page isn't being edited by the management console. 
 			   {
-				   if(adminPriv == false)
+				   if(adminPriv == false) //if not admin
 				   {
 					   $("#welcomeMsg").html("Welcome: " + email)
 					   $("#MAdminUser").hide();
 					   $("#UploadFileBtn").hide();
 					   $("#PageLoader").fadeOut()
 				   }
-				   else if(adminPriv == true)
+				   else if(adminPriv == true)// if you are an admin
 				   {
 					   $("#welcomeMsg").html("Welcome_Admin: " + email)
 					   $("#MAdminUser").show();
@@ -291,13 +296,13 @@
 					   self.location = "../index.html"
 				   }
 			   }
-			   else if(EditStatus=="Editing")
+			   else if(EditStatus=="Editing") //if page is currently undergoing a weekchange/delete
 			   {
-				   if(adminPriv==true)
+				   if(adminPriv==true) //if youre an admin itll take you to the admin console. 
 				   {
 					   self.location = "Delete_NewWeek.html"
 				   }
-				   else
+				   else //else it'll show u an err msg telling you to wait. 
 				   {
 					   $("#loaderTxt").html("TIMETABLE UNDER MAINTENANCE...... Please check again in 6-8 minutes")
 				   } 
@@ -323,6 +328,7 @@
 			modal.style.display = "none";
 			btnActivated = false;
 		}
+	</script>
 	</script>
 	<script>//email Modal Code
 		var emailmodal = document.getElementById('emailModal');
