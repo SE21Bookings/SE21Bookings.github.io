@@ -390,38 +390,38 @@ function DocFunctions()
 	$(document).on('click', '#bookBtn', function(event) 
 	{
 			
-			preLimLoader("Booking...")
-			event.preventDefault();
-			var tbl_row = $(this).closest('tr');
-			var row_id = tbl_row.attr('row_id');
-			$.ajax({
+			preLimLoader("Booking...") //output showing user the room is currently being booked
+			event.preventDefault(); //prevent's default function from excecuting
+			var tbl_row = $(this).closest('tr'); //getting the table row you clicked on
+			var row_id = tbl_row.attr('row_id'); //getting the row ID
+			$.ajax({ //AJAX request checking Prefetching the period to see whether the room was booked 
 				type:'PATCH',
 				url: API_URL_Tech1,
 				data:JSON.stringify(
 					{
-						"Key":"Room",
+						"Key":"Room",//search key for the database
 						"Key2":"Day",
-						"searchAttr":WhichRoom,
-						"searchAttr2":manipulateDay(Day, trueWeek)
+						"searchAttr":WhichRoom, //the room you are currently in
+						"searchAttr2":manipulateDay(Day, trueWeek) //turning the day into a primary key
 					}
 					),
 				contentType:"application/json",
 				success: function(data)
 					{
-						if(data.Items[0][Period] == "unbooked")
+						if(data.Items[0][Period] == "unbooked") //if room is booked validate the booking and book the room
 						{
 							validatedBook()
 						}
 						else
-						{
+						{//output error message showing that the timeslot was booked by someone else
 							preLimLoader("Error: Slot in Week 1 is already booked")
-							exitpreLimLoaderErr()
-							ReloadRoom(WhichRoom,trueWeek)
+							exitpreLimLoaderErr() //exiting the err output after a few seconds
+							ReloadRoom(WhichRoom,trueWeek) //refreshes the room
 						}
 					},
 					error: function(data)
 					{
-						$("#errorModule").show();
+						$("#errorModule").show(); //if the internet fails a error module will show. 
 					}
 				});
 			
