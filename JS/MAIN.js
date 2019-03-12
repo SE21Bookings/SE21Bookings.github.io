@@ -9,6 +9,13 @@ var width = 0;
 var widthChange;
 var EditStatus;
 var editingPushed;
+var remainingOps;
+var startTime, endTime;
+var ElaspedSeconds = 0;
+var ElaspedMins = 0;
+var EstTime = 0;
+var firstMove = true;
+var secondMove= false;
 
 function Login(usernames, passwords) //used to log a user into the main page
 {
@@ -102,12 +109,12 @@ function forgotPassword(username)
 		// call forgotPassword on cognitoUser
 		cognitoUser.forgotPassword({
 			onSuccess: function(result) {
-				writeToDeleteConsole('call result: ' + (result.message || JSON.stringify(result)));
+				console.log('call result: ' + (result.message || JSON.stringify(result)));
 				$("#ForgotPasswordErrMsg").html("");
 				plusDivs(1);
 			},
 			onFailure: function(err) {
-				writeToDeleteConsole((err.message || JSON.stringify(err)));
+				console.log((err.message || JSON.stringify(err)));
 				$("#ForgotPasswordErrMsg").html((err.message || JSON.stringify(err)));
 			}
 		});	
@@ -1556,15 +1563,48 @@ function weekBeginNow() // getting the week begining data right now
 	
 	return getMonday(today)+ " Week "+trueWeek
 }
-			
+	
+
+function start() {
+  startTime = new Date();
+};
+
+function end() {
+  endTime = new Date();
+  var timeDiff = endTime - startTime; //in ms
+  // strip the ms
+  timeDiff /= 1000;
+
+  // get seconds 
+  ElaspedSeconds = Math.round(timeDiff);
+  ElaspedMins = ElaspedSeconds/60;
+}
 function moveProgressBar() //move the progressbar
 {
-  var elem = document.getElementById("myBar");   
-  frame()
-  function frame() {
-    width+=0.1111111111; 
+	if(firstMove==true)//finding elasped time
+		{
+			firstMove=false;
+			secondMove=true;
+			start();
+		}
+    else if(secondMove==true)
+		{
+			firstMove=true;
+			secondMove=false;
+			end();
+		}
+  	var elem = document.getElementById("myBar");   
+  	frame()
+  	function frame() {
+    width+=0.0694444444444444;
+	remainingOps = 1440-(width/0.0694444444444444);
+	EstTime = remainingOps*ElaspedMins;
+	if(EstTime==0)
+	{
+		EstTime=-1;
+	}
     elem.style.width = width + '%'; 
-    elem.innerHTML = Math.round( width * 10 ) / 10 + '%';
+    elem.innerHTML = Math.round( width * 10 ) / 10 + '% || Est. Time: '+EstTime+" Mins";
   }
 }
 function moveProgressBarMasterDelete() //move the progressbar

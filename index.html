@@ -8,7 +8,7 @@
 		<script src="JS/jquery.js" type="text/javascript" charset="utf-8"></script>
 		<script src="JS/MAIN.js" type="text/javascript" charset="utf-8"></script>
  	</head>
-	
+	<!--Background Img-->
 	<style>
 		html 
 		{ 
@@ -21,8 +21,10 @@
 	</style>
 	
 	<body>
+		<!--Login Color, red-->
 		<div class="LoginColor"></div>
 		
+		<!--Login Modal-->
 		<div class="loginMaster">
 			<div id="LoginForm">
 				<p id="signInErrMsg"></p>
@@ -33,12 +35,16 @@
 					<h1>Sign In</h1>
 					<input placeholder="Email" id="username" type="email"><br>
 					<input placeholder="Password" type="password" id="password"><br>
-					<button id="loginBtn" onClick="LoginNow();">Login</button><br>
+					<button id="loginBtn" onClick="LoginNow();">Login</button><br> 
+					<!--Login Button-->
 				</center>
 				<a href="#" id="SignUpNow">Sign Up</a>
+				<!--Sign Up Hyperlink-->
 				<div id="forgotPasswordDiv"><a href="#" id="ForgotPassLink">Forgot Password</a></div>
+				<!--Forgot Pass Hyperlink-->
 			</div>
-
+			
+			<!--Signup Modal-->
 			<div id="SignUp" class="SignUpmodal">
 				<div class="SignUp-content">
 					<span class="close" id="SignUpClose">&times;</span>	
@@ -54,7 +60,7 @@
 					</center>
 				</div>
 			</div>
-			
+			<!--Forgot Password-->
 			<div id="ForgotPassword" class="SignUpmodal">
 				<div class="SignUp-content">
 					<span class="close" id="ForgotPasswordClose">&times;</span>	
@@ -68,7 +74,7 @@
 							<input id="forgotPassEmail" placeholder="Enter Your Email" type="email">
 						</div>
 						<div class="ForgotPasswordSlides">
-							<input id="forgotPassCode" placeholder="Enter Verification Code" type="text">
+							<input id="forgotPassCode" placeholder="Enter Verification Code (Check Email Junk Folder)" type="text">
 							<input id="forgotPassNPassword" placeholder="New Password" type="password">
 							<input id="forgotPassConfirmPassword" placeholder="Confirm New Password" type="password">
 						</div>
