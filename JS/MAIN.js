@@ -46,6 +46,7 @@ function Login(usernames, passwords) //used to log a user into the main page
         onFailure: function(err) {
 			document.getElementById("signInErrMsg").style.color="red"
             document.getElementById("signInErrMsg").innerHTML=(err.message || JSON.stringify(err));
+			$("#loginMsg").show();
         }
     });
 }
@@ -88,7 +89,8 @@ function createNewUser(emails,password) //CreateNewUser
         }
         cognitoUser = result.user; //signup sucessful 
 		document.getElementById("signUpErrMsg").style.color="green";
-        document.getElementById("signUpErrMsg").innerHTML=("Welcome! "+ cognitoUser.getUsername() + " \nPlease access your email to verify your account. <br> <strong>Please Check Your Junk Folder</strong>"); //ouput sucessful to the user
+        document.getElementById("signUpErrMsg").innerHTML=("Welcome! "+ cognitoUser.getUsername() + " <br>Please access your email to verify your account. <br><br><em><strong>Please Check Your Junk Folder</strong></em><br><br>"); //ouput sucessful to the user
+		$("#signupMsg").hide();
     });
 }
 
@@ -110,7 +112,9 @@ function forgotPassword(username)
 		cognitoUser.forgotPassword({
 			onSuccess: function(result) {
 				console.log('call result: ' + (result.message || JSON.stringify(result)));
-				$("#ForgotPasswordErrMsg").html("");
+				$("#ForgotPasswordErrMsg").css("color","green")
+				$("#ForgotPasswordErrMsg").html("Code sent to your registered email<br><br><em><strong>Please Check your Junk Folder</strong></em>");
+				$("#forgotPassMsg").hide();
 				plusDivs(1);
 			},
 			onFailure: function(err) {
